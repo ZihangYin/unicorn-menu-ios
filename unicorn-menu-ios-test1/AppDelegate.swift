@@ -12,12 +12,17 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var filterWindow: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        self.filterWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
+        self.filterWindow!.rootViewController =  FilterViewController()
+        self.filterWindow?.makeKeyAndVisible()
+        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor();
-        self.window!.rootViewController = ViewController()
+        self.window!.rootViewController = PullDownNavigationController.init(rootViewController: DiscoverViewController())
         self.window!.makeKeyAndVisible()
         return true
     }

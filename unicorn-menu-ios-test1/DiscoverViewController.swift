@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
+class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
     
     lazy var cellSizes: [CGSize] = {
         var _cellSizes = [CGSize]()
@@ -20,17 +20,27 @@ class ViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayou
         return _cellSizes
     }()
     
-    var navView: NavView?
+//    var navView: NavView?
+    var navController: PullDownNavigationController?
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
-        self.navView = NavView(frame: CGRectMake(0, 20, self.view.frame.width, 40))
-        self.navView!.layer.borderWidth = 1.0
-        self.navView!.layer.borderColor =  UIColor.blackColor().CGColor
-        self.view.addSubview(navView!)
+//        self.navView = NavView(frame: CGRectMake(0, 20, self.view.frame.width, 40))
+//        self.navView!.layer.borderWidth = 1.0
+//        self.navView!.layer.borderColor =  UIColor.blackColor().CGColor
+//        self.view.addSubview(navView!)
+        
+        self.title = "Discover"
+        self.automaticallyAdjustsScrollViewInsets = false;
+        
+        self.navController = self.navigationController as? PullDownNavigationController
+        self.navController!.setNavigationBarHidden(false, animated: false)
+        self.navController!.activatePullDownNavigationBar()
+        
+        var rightBarButton = UIBarButtonItem(image: UIImage(named: "scan@3x.png"), style: .Plain, target: self, action: "menuPressed")
+        self.navigationItem.rightBarButtonItem = rightBarButton
         
         let layout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -39,7 +49,8 @@ class ViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayou
         layout.minimumColumnSpacing = 7
         layout.minimumInteritemSpacing = 7
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, 60, self.view.frame.width, self.view.frame.height - 70), collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: CGRectMake(0, self.navController!.navigationBar.frame.origin.y + self.navController!.navigationBar.frame.height,
+            self.view.frame.width, self.view.frame.height), collectionViewLayout: layout)
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
         self.collectionView!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -49,6 +60,8 @@ class ViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayou
         self.collectionView!.layer.borderColor =  UIColor.blackColor().CGColor
         self.view.addSubview(collectionView!)
         self.view.sendSubviewToBack(collectionView!)
+        
+        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -83,6 +96,10 @@ class ViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayou
         }
         
         return reusableView
+    }
+    
+    func menuPressed() -> Void {
+        self.navController!.pullDownAndUpNavigationBar()
     }
     
     override func didReceiveMemoryWarning() {
