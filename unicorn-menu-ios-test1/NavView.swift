@@ -24,11 +24,11 @@ class NavView: UINavigationBar {
         super.init(frame: frame)
 
         gridBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        gridBtn.frame = CGRectMake(5, 0, 60, 60)
+        gridBtn.frame = CGRectMake(5, 0, 45, 45)
         gridBtn.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
         self.addSubview(gridBtn)
 
-        upImgView = UIImageView(frame: CGRectMake(self.frame.size.width / 2 - 10 , 0, 25, 25));
+        upImgView = UIImageView(frame: CGRectMake(self.frame.size.width / 2 - 10 , 0, 20, 20));
         var upImg = UIImage(named: "up.png")
         upImgView.image = upImg;
         self.addSubview(upImgView);
@@ -42,7 +42,7 @@ class NavView: UINavigationBar {
         self.addSubview(textLabel)
         
         mapBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        mapBtn.frame = CGRectMake(self.frame.width - 65, 0, 60, 60)
+        mapBtn.frame = CGRectMake(self.frame.width - 50, 0, 45, 45)
         mapBtn.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
         self.addSubview(mapBtn)
     }

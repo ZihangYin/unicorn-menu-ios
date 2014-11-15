@@ -35,7 +35,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         
 //        self.automaticallyAdjustsScrollViewInsets = false;
         
-//        self.navController = self.navigationController as? PullDownNavigationController
+        self.navController = self.navigationController as? PullDownNavigationController
 //        self.navController!.activatePullDownNavigationBar()
 //
 //        var gridBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
@@ -64,9 +64,11 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         layout.minimumColumnSpacing = 7
         layout.minimumInteritemSpacing = 7
         
-        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-//        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: self.view.frame.height), collectionViewLayout: layout)
-        self.collectionView!.autoresizingMask = .FlexibleHeight
+//        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), collectionViewLayout: layout)
+//        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+//        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView!.autoresizingMask = .FlexibleHeight | .FlexibleWidth
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
         self.collectionView!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -75,6 +77,38 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         
         self.view.addSubview(collectionView!)
         self.view.sendSubviewToBack(collectionView!)
+        
+//        println("\(UIApplication.sharedApplication().statusBarFrame.size.height)")  //40 20
+//        println("\(UIScreen.mainScreen().bounds.size.height)")  //568 268
+//        println("\(self.view.frame.origin.y)")  //20    0
+//        println("\(self.view.frame.size.height)")   //548   568
+//        self.navController!.navBar = NavView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 50 - self.view.frame.origin.y, self.view.frame.width, 50))
+//        self.navController!.navBar!.backgroundColor = UIColor.blackColor()
+//        println("\(self.navController!.navBar!.frame)")
+//        self.navController!.view.addSubview(self.navController!.navBar!)    //498   518
+        
+//        var viewsDictionary = ["collectionView": self.collectionView!]
+//        let view1_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[collectionView(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        let view1_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[collectionView(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        
+//        self.collectionView!.addConstraints(view1_constraint_H)
+//        self.collectionView!.addConstraints(view1_constraint_V)
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+        self.updateLayoutForOrientation(toInterfaceOrientation);
+    }
+    
+    func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
+        let layout = self.collectionView!.collectionViewLayout as? CollectionViewWaterfallFlowLayout
+        layout!.columnCount = UIInterfaceOrientationIsPortrait(orientation) ? 2 : 3;
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

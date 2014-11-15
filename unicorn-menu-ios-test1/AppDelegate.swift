@@ -24,10 +24,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
 
         self.window!.backgroundColor = UIColor.whiteColor();
-//        var navigationController = PullDownNavigationController.init(navigationBarClass: NavView.self, toolbarClass: nil)
-//        navigationController.pushViewController(DiscoverViewController(), animated: false)
-//        self.window!.rootViewController = navigationController
-        self.window!.rootViewController = UINavigationController.init(rootViewController: DiscoverViewController())
+        var navigationController = PullDownNavigationController.init(navigationBarClass: NavView.self, toolbarClass: nil)
+        navigationController.pushViewController(DiscoverViewController(), animated: false)
+        self.window!.rootViewController = navigationController
+//        self.window!.rootViewController = UINavigationController.init(rootViewController: DiscoverViewController())
         self.window!.makeKeyAndVisible()
         
 //        UINavigationBar.appearance().barTintColor = UIColor.blackColor()
