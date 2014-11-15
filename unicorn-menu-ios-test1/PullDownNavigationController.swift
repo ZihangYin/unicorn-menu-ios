@@ -28,13 +28,7 @@ class PullDownNavigationController: UINavigationController {
         self.window!.layer.shadowColor = UIColor.blackColor().CGColor
         self.window!.layer.shadowOpacity = 0.8
 
-//        self.navigationBarHidden = true
-//        println("\(UIApplication.sharedApplication().statusBarFrame.size.height)")
-//        println("\(UIScreen.mainScreen().bounds.size.height)")
-//        
-//        println("\(self.view.frame.origin.y)")
-//        println("\(self.view.frame.size.height)")
-
+        self.navigationBarHidden = true
     }
     
     func activatePullDownNavigationBar() -> Void {

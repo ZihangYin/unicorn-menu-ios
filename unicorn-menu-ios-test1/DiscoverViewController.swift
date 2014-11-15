@@ -20,7 +20,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         return _cellSizes
     }()
     
-    var navView: NavView?
+//    var navView: NavView?
     var navController: PullDownNavigationController?
     var collectionView: UICollectionView?
     
@@ -35,7 +35,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         
 //        self.automaticallyAdjustsScrollViewInsets = false;
         
-        self.navController = self.navigationController as? PullDownNavigationController
+        
 //        self.navController!.activatePullDownNavigationBar()
 //
 //        var gridBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
@@ -56,6 +56,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         
         self.title = "DISCOVER"
         self.edgesForExtendedLayout = .None
+        self.navController = self.navigationController as? PullDownNavigationController
         
         let layout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -79,21 +80,29 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         self.view.addSubview(collectionView!)
         self.view.sendSubviewToBack(collectionView!)
         
-//        println("\(UIApplication.sharedApplication().statusBarFrame.size.height)")  //40 20
-//        println("\(UIScreen.mainScreen().bounds.size.height)")  //568 268
-//        println("\(self.view.frame.origin.y)")  //20    0
-//        println("\(self.view.frame.size.height)")   //548   568
+        self.navController!.navBar = NavView(frame: CGRectZero)
+        self.navController!.navBar!.backgroundColor = UIColor.blackColor()
+        self.navController!.navBar!.layer.borderWidth = 1.0
+        self.navController!.navBar!.layer.borderColor = UIColor.grayColor().CGColor
+        self.navController!.navBar!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.view.addSubview(self.navController!.navBar!)
+        self.navController!.activatePullDownNavigationBar()
+        
 //        self.navController!.navBar = NavView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.size.height - 50 - self.view.frame.origin.y, self.view.frame.width, 50))
 //        self.navController!.navBar!.backgroundColor = UIColor.blackColor()
 //        println("\(self.navController!.navBar!.frame)")
 //        self.navController!.view.addSubview(self.navController!.navBar!)    //498   518
         
-        var viewsDictionary = ["collectionView": self.collectionView!, "topLayoutGuide": self.topLayoutGuide]
-        let view1_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let view1_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        var viewsDictionary = ["collectionView": self.collectionView!, "topLayoutGuide": self.topLayoutGuide, "navBarView": self.navController!.navBar!]
         
-        self.view.addConstraints(view1_constraint_H)
-        self.view.addConstraints(view1_constraint_V)
+        
+        let navView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[navBarView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let collectionView_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-7-[navBarView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(navView_constraint_H)
+        self.view.addConstraints(collectionView_constraint_H)
+        self.view.addConstraints(view_constraint_V)
 
     }
     
