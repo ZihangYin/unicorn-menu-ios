@@ -64,11 +64,12 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         layout.minimumColumnSpacing = 7
         layout.minimumInteritemSpacing = 7
         
+        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
+        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
+
 //        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
-        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), collectionViewLayout: layout)
-//        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-//        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.collectionView!.autoresizingMask = .FlexibleHeight | .FlexibleWidth
+//        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height), collectionViewLayout: layout)
+//        self.collectionView!.autoresizingMask = .FlexibleHeight | .FlexibleWidth
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
         self.collectionView!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
@@ -87,12 +88,12 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
 //        println("\(self.navController!.navBar!.frame)")
 //        self.navController!.view.addSubview(self.navController!.navBar!)    //498   518
         
-//        var viewsDictionary = ["collectionView": self.collectionView!]
-//        let view1_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:[collectionView(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-//        let view1_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:[collectionView(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-//        
-//        self.collectionView!.addConstraints(view1_constraint_H)
-//        self.collectionView!.addConstraints(view1_constraint_V)
+        var viewsDictionary = ["collectionView": self.collectionView!, "topLayoutGuide": self.topLayoutGuide]
+        let view1_constraint_H:Array = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let view1_constraint_V:Array = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(view1_constraint_H)
+        self.view.addConstraints(view1_constraint_V)
 
     }
     
