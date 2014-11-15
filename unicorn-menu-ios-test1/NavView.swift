@@ -8,11 +8,11 @@
 
 import UIKit
 
-class NavView: UIView {
+class NavView: UINavigationBar {
     
     let gridBtn: UIButton!
-    let menuBtn: UIButton!
-    let menuBtnSub: UIButton!
+    let upImgView: UIImageView!
+    let textLabel: UILabel!
     let mapBtn: UIButton!
     
     required init(coder aDecoder: NSCoder) {
@@ -22,31 +22,28 @@ class NavView: UIView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+
         gridBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        gridBtn.frame = CGRectMake(0, 0, 40, 40)
-        gridBtn.tintColor = UIColor.blackColor()
-        gridBtn.setImage(UIImage(named: "scan@3x.png"), forState: UIControlState.Normal)
+        gridBtn.frame = CGRectMake(5, 0, 60, 60)
+        gridBtn.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
         self.addSubview(gridBtn)
+
+        upImgView = UIImageView(frame: CGRectMake(self.frame.size.width / 2 - 10 , 0, 25, 25));
+        var upImg = UIImage(named: "up.png")
+        upImgView.image = upImg;
+        self.addSubview(upImgView);
         
-        menuBtn = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        menuBtn.frame = CGRectMake(frame.size.width/4, 5, frame.size.width/2, 20)
-        menuBtn.tintColor = UIColor.blackColor()
-        menuBtn.setTitle("Asian Food", forState: UIControlState.Normal)
-        menuBtn.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: 11)
-        self.addSubview(menuBtn)
-        
-        menuBtnSub = UIButton.buttonWithType(UIButtonType.System) as UIButton
-        menuBtnSub.frame = CGRectMake(frame.size.width/4, 20, frame.size.width/2, 20)
-        menuBtnSub.tintColor = UIColor.blackColor()
-        menuBtnSub.setTitle("Dinner", forState: UIControlState.Normal)
-        menuBtnSub.titleLabel!.font = UIFont(name: "ProximaNova-Light", size: 11)
-        self.addSubview(menuBtnSub)
+        let textFrame = CGRect(x: 0, y: 0, width: self.frame.size.width, height: self.frame.size.height)
+        textLabel = UILabel(frame: textFrame)
+        textLabel.font = UIFont(name: "ProximaNova-Light", size: 20)
+        textLabel.textColor = UIColor.whiteColor()
+        textLabel.textAlignment = .Center
+        textLabel.text = "DISCOVER"
+        self.addSubview(textLabel)
         
         mapBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        mapBtn.frame = CGRectMake(frame.size.width - 40, 0, 40, 40)
-        mapBtn.tintColor = UIColor.blackColor()
-        mapBtn.setImage(UIImage(named: "map2.png"), forState: UIControlState.Normal)
+        mapBtn.frame = CGRectMake(self.frame.width - 65, 0, 60, 60)
+        mapBtn.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
         self.addSubview(mapBtn)
     }
 }

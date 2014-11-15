@@ -15,15 +15,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var filterWindow: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    
         // Override point for customization after application launch.
-        self.filterWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.filterWindow!.rootViewController =  FilterViewController()
-        self.filterWindow?.makeKeyAndVisible()
+//        self.filterWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        self.filterWindow!.rootViewController =  FilterViewController()
+//        self.filterWindow?.makeKeyAndVisible()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
+
         self.window!.backgroundColor = UIColor.whiteColor();
-        self.window!.rootViewController = PullDownNavigationController.init(rootViewController: DiscoverViewController())
+//        var navigationController = PullDownNavigationController.init(navigationBarClass: NavView.self, toolbarClass: nil)
+//        navigationController.pushViewController(DiscoverViewController(), animated: false)
+//        self.window!.rootViewController = navigationController
+        self.window!.rootViewController = UINavigationController.init(rootViewController: DiscoverViewController())
         self.window!.makeKeyAndVisible()
+        
+//        UINavigationBar.appearance().barTintColor = UIColor.blackColor()
         return true
     }
 
@@ -48,7 +55,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
-
-
 }
 

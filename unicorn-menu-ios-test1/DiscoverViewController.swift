@@ -20,27 +20,42 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         return _cellSizes
     }()
     
-//    var navView: NavView?
+    var navView: NavView?
     var navController: PullDownNavigationController?
     var collectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         // Do any additional setup after loading the view, typically from a nib.
-//        self.navView = NavView(frame: CGRectMake(0, 20, self.view.frame.width, 40))
+//        self.navView = NavView(frame: CGRectMake(0, 0, self.view.frame.width, 40))
 //        self.navView!.layer.borderWidth = 1.0
 //        self.navView!.layer.borderColor =  UIColor.blackColor().CGColor
 //        self.view.addSubview(navView!)
         
-        self.title = "Discover"
-        self.automaticallyAdjustsScrollViewInsets = false;
+//        self.automaticallyAdjustsScrollViewInsets = false;
         
-        self.navController = self.navigationController as? PullDownNavigationController
-        self.navController!.setNavigationBarHidden(false, animated: false)
-        self.navController!.activatePullDownNavigationBar()
+//        self.navController = self.navigationController as? PullDownNavigationController
+//        self.navController!.activatePullDownNavigationBar()
+//
+//        var gridBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+//        gridBtn.frame = CGRect(x: 0, y: 0, width: 70, height: 60)
+//        gridBtn.tintColor = UIColor.blackColor()
+//        gridBtn.setImage(UIImage(named: "scan@3x.png"), forState: UIControlState.Normal)
+//        gridBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 0, 10, 20);
+//        var leftButton = UIBarButtonItem.init(customView: gridBtn)
+//        self.navigationItem.leftBarButtonItem = leftButton
+//        
+//        var mapBtn = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+//        mapBtn.frame = CGRect(x: 0, y: 0, width: 70, height: 60)
+//        mapBtn.tintColor = UIColor.blackColor()
+//        mapBtn.setImage(UIImage(named: "map2.png"), forState: UIControlState.Normal)
+//        mapBtn.contentEdgeInsets = UIEdgeInsetsMake(0, 20, 10, 0);
+//        var rightButton = UIBarButtonItem.init(customView: mapBtn)
+//        self.navigationItem.rightBarButtonItem = rightButton
         
-        var rightBarButton = UIBarButtonItem(image: UIImage(named: "scan@3x.png"), style: .Plain, target: self, action: "menuPressed")
-        self.navigationItem.rightBarButtonItem = rightBarButton
+        self.title = "DISCOVER"
+        self.edgesForExtendedLayout = .None
         
         let layout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
@@ -49,19 +64,17 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         layout.minimumColumnSpacing = 7
         layout.minimumInteritemSpacing = 7
         
-        self.collectionView = UICollectionView(frame: CGRectMake(0, self.navController!.navigationBar.frame.origin.y + self.navController!.navigationBar.frame.height,
-            self.view.frame.width, self.view.frame.height), collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: self.view.bounds, collectionViewLayout: layout)
+//        self.collectionView = UICollectionView(frame: CGRect(x: 0, y: 20, width: self.view.frame.width, height: self.view.frame.height), collectionViewLayout: layout)
+        self.collectionView!.autoresizingMask = .FlexibleHeight
         self.collectionView!.dataSource = self
         self.collectionView!.delegate = self
         self.collectionView!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
         self.collectionView!.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "Header")
         self.collectionView!.backgroundColor = UIColor.whiteColor()
-        self.collectionView!.layer.borderWidth = 1.0
-        self.collectionView!.layer.borderColor =  UIColor.blackColor().CGColor
+        
         self.view.addSubview(collectionView!)
         self.view.sendSubviewToBack(collectionView!)
-        
-        
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -69,7 +82,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 3
+        return 2
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
@@ -79,9 +92,10 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as CollectionViewCell
         cell.textLabel.text = String(indexPath.row)
+        cell.layer.cornerRadius = 7.0
         cell.layer.borderWidth = 1.0
-        cell.layer.borderColor =  UIColor.blackColor().CGColor
-        
+        cell.layer.borderColor =  UIColor.whiteColor().CGColor
+        cell.backgroundColor =  UIColor.lightGrayColor()
         return cell
     }
     
@@ -98,8 +112,8 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         return reusableView
     }
     
-    func menuPressed() -> Void {
-        self.navController!.pullDownAndUpNavigationBar()
+    func pullDownNavigationBar() -> Void {
+        self.navController!.pullDownNavigationBar()
     }
     
     override func didReceiveMemoryWarning() {
