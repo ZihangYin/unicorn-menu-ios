@@ -17,20 +17,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
         // Override point for customization after application launch.
-//        self.filterWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
-//        self.filterWindow!.rootViewController =  FilterViewController()
-//        self.filterWindow?.makeKeyAndVisible()
-        
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-
         self.window!.backgroundColor = UIColor.whiteColor();
-        var navigationController = PullDownNavigationController.init(navigationBarClass: NavView.self, toolbarClass: nil)
+        var navigationController = UINavigationController.init(navigationBarClass: NavigationBarView.self, toolbarClass: nil)
         navigationController.pushViewController(DiscoverViewController(), animated: false)
         self.window!.rootViewController = navigationController
-//        self.window!.rootViewController = UINavigationController.init(rootViewController: DiscoverViewController())
         self.window!.makeKeyAndVisible()
-        
-//        UINavigationBar.appearance().barTintColor = UIColor.blackColor()
+
+        UINavigationBar.appearance().translucent = false
+        UINavigationBar.appearance().barStyle = .Black
         return true
     }
 

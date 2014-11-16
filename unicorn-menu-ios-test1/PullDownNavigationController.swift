@@ -12,7 +12,6 @@ class PullDownNavigationController: UINavigationController {
     
     var appDelegate: AppDelegate?
     var window: UIWindow?
-    var navBar: UINavigationBar?
     
     var firstX = Float()
     var firstY = Float()
@@ -28,12 +27,16 @@ class PullDownNavigationController: UINavigationController {
         self.window!.layer.shadowColor = UIColor.blackColor().CGColor
         self.window!.layer.shadowOpacity = 0.8
 
-        self.navigationBarHidden = true
+ //       self.navigationBarHidden = true
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     func activatePullDownNavigationBar() -> Void {
         var panGesture = UIPanGestureRecognizer(target: self, action: "onPan:")
-        self.navBar!.addGestureRecognizer(panGesture)
+        self.navigationBar.addGestureRecognizer(panGesture)
     }
     
     func pullDownNavigationBar() -> Void {
@@ -71,7 +74,7 @@ class PullDownNavigationController: UINavigationController {
         case .Ended, .Cancelled:
             var finalOrigin = CGPointZero
             if (velocity.y <= 0) {
-                finalOrigin.y = -CGRectGetHeight(UIScreen.mainScreen().bounds) + (self.navBar!.frame.height)
+                finalOrigin.y = -CGRectGetHeight(UIScreen.mainScreen().bounds) + (self.navigationBar.frame.height)
             }
             var frame = self.window!.frame
             frame.origin = finalOrigin
