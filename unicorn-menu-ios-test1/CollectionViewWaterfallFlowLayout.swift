@@ -53,6 +53,11 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
             invalidateIfNotEqual(NSValue(UIEdgeInsets: oldValue), newValue: NSValue(UIEdgeInsets: sectionInset))
         }
     }
+    var itemWidth: Float {
+        get {
+            return _itemWidth
+        }
+    }
     
     private weak var delegate: CollectionViewDelegateWaterfallFlowLayout?  {
         get {
@@ -62,6 +67,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
     // How many items to be union into a single rectangle
     private let unionSize = 25;
     private var columnHeights = [Float]()
+    private var _itemWidth: Float = 0.0
     private var sectionItemAttributes = [[UICollectionViewLayoutAttributes]]()
     private var allItemAttributes = [UICollectionViewLayoutAttributes]()
     private var headersAttribute = [Int: UICollectionViewLayoutAttributes]()
@@ -114,7 +120,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
             }
             
             let width = Float(self.collectionView!.frame.size.width - sectionInset.left - sectionInset.right)
-            let itemWidth = floorf((width - Float(self.columnCount - 1) * Float(self.minimumColumnSpacing)) / Float(self.columnCount))
+            _itemWidth = floorf((width - Float(self.columnCount - 1) * Float(self.minimumColumnSpacing)) / Float(self.columnCount))
             
             /*
             * 2. Section header
@@ -159,16 +165,16 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
                 let indexPath = NSIndexPath(forItem: index, inSection: section)
                 let columnIndex = shortestColumnIndex()
                 
-                let xOffset = Float(sectionInset.left) + Float(itemWidth + self.minimumColumnSpacing) * Float(columnIndex)
+                let xOffset = Float(sectionInset.left) + Float(_itemWidth + self.minimumColumnSpacing) * Float(columnIndex)
                 let yOffset = self.columnHeights[columnIndex]
                 let itemSize = self.delegate?.collectionView(self.collectionView!, layout: self, sizeForItemAtIndexPath: indexPath)
                 var itemHeight: Float = 0.0
                 if itemSize?.height > 0 && itemSize?.width > 0 {
-                    itemHeight = Float(itemSize!.height) * itemWidth / Float(itemSize!.width)
+                    itemHeight = Float(itemSize!.height) * _itemWidth / Float(itemSize!.width)
                 }
                 
                 attributes = UICollectionViewLayoutAttributes(forCellWithIndexPath: indexPath)
-                attributes.frame = CGRect(x: CGFloat(xOffset), y: CGFloat(yOffset), width: CGFloat(itemWidth), height: CGFloat(itemHeight))
+                attributes.frame = CGRect(x: CGFloat(xOffset), y: CGFloat(yOffset), width: CGFloat(_itemWidth), height: CGFloat(itemHeight))
                 itemAttributes.append(attributes)
                 self.allItemAttributes.append(attributes)
                 self.columnHeights[columnIndex] = Float(CGRectGetMaxY(attributes.frame)) + minimumInteritemSpacing

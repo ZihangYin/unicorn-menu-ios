@@ -8,53 +8,42 @@
 
 import UIKit
 
-class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
+class DiscoverViewController: UICollectionViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
     
-    lazy var cellSizes: [CGSize] = {
-        var _cellSizes = [CGSize]()
-        for _ in 0 ... 100 {
-            let random = Int(arc4random_uniform((UInt32(100))))
-            _cellSizes.append(CGSize(width: 140, height: 100 + random))
+    lazy var images: [UIImage] = {
+        var _images = [UIImage]()
+        for index in 1 ... 28 {
+            let imageName = String(format: "%d.jpg", index)
+            _images.append(UIImage(named: imageName)!)
         }
         
-        return _cellSizes
+        return _images
     }()
-    
-    var navController: UINavigationController?
-    var collectionView: UICollectionView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.edgesForExtendedLayout = .None
-        self.navController = self.navigationController
         
-        let layout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        layout.columnCount = 2
-        layout.headerHeight = 30
-        layout.minimumColumnSpacing = 7
-        layout.minimumInteritemSpacing = 7
-        
-        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: layout)
-        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
-
-        self.collectionView!.dataSource = self
-        self.collectionView!.delegate = self
-        self.collectionView!.registerClass(CollectionViewCell.self, forCellWithReuseIdentifier: "Cell")
-        self.collectionView!.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "Header")
-        self.collectionView!.backgroundColor = UIColor.whiteColor()
-        
-        self.view.addSubview(collectionView!)
-        self.view.sendSubviewToBack(collectionView!)
-        
-        var viewsDictionary = ["collectionView": self.collectionView!, "topLayoutGuide": self.topLayoutGuide]        
-        let collectionView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let view_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-7-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
-        self.view.addConstraints(collectionView_constraint_H)
-        self.view.addConstraints(view_constraint_V)
-
+        self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.collectionView.registerClass(DiscoverViewCell.self, forCellWithReuseIdentifier: "DiscoverCell")
+        self.collectionView.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
+        self.collectionView.backgroundColor = UIColor.whiteColor()
+    
+        autoLayoutSubviews()
+//        let discoverNavigationBar = self.navigationController!.navigationBar as? DiscoverNavigationBarView
+//        discoverNavigationBar!.filterButton.addTarget(self, action: "filterPressedAction", forControlEvents: UIControlEvents.TouchUpInside)
+//        discoverNavigationBar!.filterButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "filterPressedAction"))
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -62,59 +51,74 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
         self.updateLayoutForOrientation(toInterfaceOrientation);
     }
     
-    func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
-        let layout = self.collectionView!.collectionViewLayout as? CollectionViewWaterfallFlowLayout
-        layout!.columnCount = UIInterfaceOrientationIsPortrait(orientation) ? 2 : 3;
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return self.images.count
     }
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 15
-    }
-    
-    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
-        return 2
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return cellSizes[indexPath.item]
+        let image = self.images[indexPath.row]
+        let itemWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).itemWidth)
+        let imageHeight = image.size.height * CGFloat(itemWidth) / image.size.width
+        return CGSizeMake(itemWidth, imageHeight)
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("Cell", forIndexPath: indexPath) as CollectionViewCell
-        cell.textLabel.text = String(indexPath.row)
-        cell.layer.cornerRadius = 7.0
-        cell.layer.borderWidth = 1.0
-        cell.layer.borderColor =  UIColor.whiteColor().CGColor
-        cell.backgroundColor =  UIColor.lightGrayColor()
-        return cell
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var discoverCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
+        discoverCell.imageView.image = self.images[indexPath.row]
+        return discoverCell
     }
     
-    func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         
-        var reusableView : UICollectionReusableView! = nil
+        var discoverSectionHeader : UICollectionReusableView! = nil
         if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
-            reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "Header", forIndexPath: indexPath) as UICollectionReusableView
-            reusableView.layer.borderWidth = 1.0
-            reusableView.layer.borderColor =  UIColor.blackColor().CGColor
-
+            discoverSectionHeader = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverHeader", forIndexPath: indexPath) as UICollectionReusableView
+            discoverSectionHeader.layer.borderWidth = 1.0
+            discoverSectionHeader.layer.borderColor =  UIColor.blackColor().CGColor
         }
         
-        return reusableView
+        return discoverSectionHeader
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
+        discoverDetailViewController.images = self.images
+        self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
+    }
+    
+    func generateDiscoverDetailViewLayout() -> UICollectionViewFlowLayout {
+        let discoverDetailLayout = UICollectionViewFlowLayout()
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
+
+        discoverDetailLayout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - statusBarHeight - navigationBarHeight!)
+        discoverDetailLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        discoverDetailLayout.minimumLineSpacing = 0
+        discoverDetailLayout.minimumInteritemSpacing = 0
+        discoverDetailLayout.scrollDirection = .Horizontal
+        return discoverDetailLayout
     }
 
-
+    private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
+        let discoverLayout = self.collectionView.collectionViewLayout as? CollectionViewWaterfallFlowLayout
+        discoverLayout!.columnCount = UIInterfaceOrientationIsPortrait(orientation) ? 2 : 3;
+    }
+    
+    private func autoLayoutSubviews() {
+        var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView]
+        let collectionView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let collectionview_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.view.addConstraints(collectionView_constraint_H)
+        self.view.addConstraints(collectionview_constraint_V)
+    }
 }

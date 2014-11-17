@@ -15,8 +15,7 @@ class CollectionReusableView: UICollectionReusableView {
     let rightBarIcon: UIButton!
     
     required init(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-        
+        fatalError("init(coder:) has not been implemented")        
     }
     
     override init(frame: CGRect) {
@@ -27,7 +26,7 @@ class CollectionReusableView: UICollectionReusableView {
         searchIcon = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         searchIcon.frame = CGRectMake(10, 5, 20, 20);
         searchIcon.tintColor = UIColor.blackColor()
-        searchIcon.setImage(UIImage(named: "Search-icon.png"), forState: UIControlState.Normal)
+        searchIcon.setImage(UIImage(named: "search.png"), forState: UIControlState.Normal)
         self.addSubview(searchIcon)
         
         searchText = UITextField(frame: CGRectMake(45, 5, 200, 20))
