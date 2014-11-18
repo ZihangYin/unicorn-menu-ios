@@ -59,6 +59,8 @@
 		3ADB8F4D1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */; };
 		3AE7ED191A181EA500ADF7DE /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AE7ED181A181EA500ADF7DE /* down.png */; };
 		3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767EE1A19EB5200075F5B /* DiscoverDetailViewCell.swift */; };
+		3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */; };
+		3AF767F31A1B1E6E00075F5B /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767F21A1B1E6E00075F5B /* Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -129,6 +131,8 @@
 		3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewWaterfallFlowLayout.swift; sourceTree = "<group>"; };
 		3AE7ED181A181EA500ADF7DE /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		3AF767EE1A19EB5200075F5B /* DiscoverDetailViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverDetailViewCell.swift; sourceTree = "<group>"; };
+		3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationTransition.swift; sourceTree = "<group>"; };
+		3AF767F21A1B1E6E00075F5B /* Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,12 +176,14 @@
 			children = (
 				3A76EA4A1A0CB8E5006DFD9A /* Assets */,
 				3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */,
+				3AF767F21A1B1E6E00075F5B /* Extension.swift */,
 				3ADB8F371A0EF4000002F130 /* DiscoverViewCell.swift */,
 				3A76EA2A1A0CB3D2006DFD9A /* DiscoverViewController.swift */,
 				3AF767EE1A19EB5200075F5B /* DiscoverDetailViewCell.swift */,
 				3AB452951A19E524006E4264 /* DiscoverDetailViewController.swift */,
 				3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */,
 				3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */,
+				3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */,
 				3A4DE1541A145FFC0030C116 /* FilterViewController.swift */,
 				3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */,
 				3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */,
@@ -438,8 +444,10 @@
 				3ADB8F3C1A0F62590002F130 /* CollectionReusableView.swift in Sources */,
 				3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */,
 				3AB452961A19E524006E4264 /* DiscoverDetailViewController.swift in Sources */,
+				3AF767F31A1B1E6E00075F5B /* Extension.swift in Sources */,
 				3ADB8F381A0EF4000002F130 /* DiscoverViewCell.swift in Sources */,
 				3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */,
+				3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

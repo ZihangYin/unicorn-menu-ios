@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DiscoverDetailTableViewCell : UITableViewCell{
+class DiscoverDetailTableViewCell : UITableViewCell {
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -18,24 +18,35 @@ class DiscoverDetailTableViewCell : UITableViewCell{
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.textLabel.font = UIFont(name: "ProximaNova-Light", size: 18)
+        self.imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.layoutMargins = UIEdgeInsetsZero
+        self.selectionStyle = .None;
+        
+//        autoLayoutSubviews()
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         imageView.frame = CGRectZero
         if (imageView.image != nil) {
-            let screenWidth = UIScreen.mainScreen().bounds.size.width
-            let imageHeight = imageView.image!.size.height * screenWidth / imageView.image!.size.width
-            imageView.frame = CGRect(x: 0, y: 0, width: screenWidth, height: imageHeight)
+            let imageHeight = imageView.image!.size.height*UIScreen.mainScreen().bounds.size.width/imageView.image!.size.width
+            imageView.frame = CGRectMake(0, 0, UIScreen.mainScreen().bounds.size.width, imageHeight)
         }
     }
+    
+//    private func autoLayoutSubviews() {
+//        var viewsDictionary = ["imageView": self.imageView, "screenWidth": UIScreen.mainScreen().bounds.size.width]
+//        let imageView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[imageView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        let imageView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[imageView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        
+//        self.addConstraints(imageView_constraint_H)
+//        self.addConstraints(imageView_constraint_V)
+//    }
 }
 
 class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     
     var image: UIImage?
-    var tappedAction : (() -> Void)?
     var pulledAction : ((offset : CGPoint) -> Void)?
     let tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
     
@@ -48,9 +59,9 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegat
         
         self.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.tableView.registerClass(DiscoverDetailTableViewCell.self, forCellReuseIdentifier: "DiscoverDetailTableCell")
+        
         self.tableView.delegate = self
         self.tableView.dataSource = self
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
         
         self.contentView.addSubview(tableView)
         self.autoLayoutSubviews()
@@ -58,19 +69,10 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegat
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         self.tableView.reloadData()
     }
     
-    private func autoLayoutSubviews() {
-        var viewsDictionary = ["tableView": self.tableView]
-        let tableView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[tableView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let tableView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[tableView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-
-        self.addConstraints(tableView_constraint_H)
-        self.addConstraints(tableView_constraint_V)
-    }
-    
+    // pragma mark - UITableViewDataSource
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 3
     }
@@ -88,28 +90,34 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegat
         } else {
             discoverDetailTableCell.textLabel.text = "Description"
         }
-        
-        discoverDetailTableCell.setNeedsLayout()
         return discoverDetailTableCell
     }
     
-    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat{
+    // pragma mark - UITableViewDelegate
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         var cellHeight = CGFloat(44.0)
         if indexPath.row == 0 {
             let screenWidth = UIScreen.mainScreen().bounds.size.width
-            let imageHeight = self.image!.size.height *  screenWidth / self.image!.size.width
-            cellHeight = imageHeight
+            cellHeight = self.image!.size.height *  screenWidth / self.image!.size.width
         }
         return cellHeight
     }
     
-    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!){
-        tappedAction?()
+    func tableView(tableView: UITableView!, didSelectRowAtIndexPath indexPath: NSIndexPath!) {
     }
     
-    func scrollViewWillBeginDecelerating(scrollView : UIScrollView){
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         if scrollView.contentOffset.y < UIApplication.sharedApplication().statusBarFrame.size.height {
             pulledAction?(offset: scrollView.contentOffset)
         }
+    }
+    
+    private func autoLayoutSubviews() {
+        var viewsDictionary = ["tableView": self.tableView]
+        let tableView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[tableView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let tableView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[tableView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        
+        self.addConstraints(tableView_constraint_H)
+        self.addConstraints(tableView_constraint_V)
     }
 }

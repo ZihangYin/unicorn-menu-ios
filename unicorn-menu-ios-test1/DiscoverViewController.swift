@@ -8,7 +8,25 @@
 
 import UIKit
 
-class DiscoverViewController: UICollectionViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
+@objc protocol DiscoverViewControllerProtocol : DiscoverNavigationTransitionProtocol{
+    func viewWillAppearWithIndex(index : NSInteger)
+}
+
+class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
+    
+    var discoverColumnWidth: Float?
+    var statusAndNavigationBarHeight: CGFloat?
+    
+    func navigationController(navigationController: UINavigationController!, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController!, toViewController toVC: UIViewController!) -> UIViewControllerAnimatedTransitioning!{
+        let discoverNavigationTransition = DiscoverNavigationTransition()
+        discoverNavigationTransition.presenting = operation == .Pop
+        discoverNavigationTransition.statusAndNavigationBarHeight = statusAndNavigationBarHeight!
+        discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
+        return  discoverNavigationTransition
+    }
+}
+
+class DiscoverViewController: UICollectionViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverViewControllerProtocol {
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
@@ -20,18 +38,25 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         return _images
     }()
     
+    let navigationDelegate = DiscoverNavigationControllerDelegate()
+    var columnWidth: CGFloat?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.edgesForExtendedLayout = .None
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.registerClass(DiscoverViewCell.self, forCellWithReuseIdentifier: "DiscoverCell")
-        self.collectionView.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
+//        self.collectionView.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
         self.collectionView.backgroundColor = UIColor.whiteColor()
-    
+        
+        self.navigationController!.delegate = navigationDelegate
         autoLayoutSubviews()
+        
+        self.collectionView.reloadData()
 //        let discoverNavigationBar = self.navigationController!.navigationBar as? DiscoverNavigationBarView
 //        discoverNavigationBar!.filterButton.addTarget(self, action: "filterPressedAction", forControlEvents: UIControlEvents.TouchUpInside)
 //        discoverNavigationBar!.filterButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "filterPressedAction"))
@@ -42,12 +67,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
-    }
-    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
+        self.columnWidth = CGFloat((self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth)
+        self.navigationDelegate.discoverColumnWidth = (self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth
+        self.navigationDelegate.statusAndNavigationBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height + (self.navigationController?.navigationBar.frame.size.height)!
         self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
     }
     
@@ -56,6 +80,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.updateLayoutForOrientation(toInterfaceOrientation);
     }
     
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return .LightContent
+    }
+    
+    // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }
@@ -64,34 +93,57 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         return 1
     }
     
-    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let image = self.images[indexPath.row]
-        let itemWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).itemWidth)
-        let imageHeight = image.size.height * CGFloat(itemWidth) / image.size.width
-        return CGSizeMake(itemWidth, imageHeight)
-    }
-    
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
         discoverCell.imageView.image = self.images[indexPath.row]
+        discoverCell.setNeedsLayout()
         return discoverCell
     }
     
-    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-        
-        var discoverSectionHeader : UICollectionReusableView! = nil
-        if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
-            discoverSectionHeader = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverHeader", forIndexPath: indexPath) as UICollectionReusableView
-            discoverSectionHeader.layer.borderWidth = 1.0
-            discoverSectionHeader.layer.borderColor =  UIColor.blackColor().CGColor
+//    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
+//        
+//        var discoverSectionHeader : UICollectionReusableView! = nil
+//        if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
+//            discoverSectionHeader = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverHeader", forIndexPath: indexPath) as UICollectionReusableView
+//            discoverSectionHeader.layer.borderWidth = 1.0
+//            discoverSectionHeader.layer.borderColor =  UIColor.blackColor().CGColor
+//        }
+//        return discoverSectionHeader
+//    }
+    
+    // pragma mark - DiscoverNavigationTransitionProtocol
+    func transitionCollectionView() -> UICollectionView!{
+        return self.collectionView
+    }
+    
+    func viewWillAppearWithIndex(index : NSInteger) {
+        var position : UICollectionViewScrollPosition = .CenteredHorizontally & .CenteredVertically
+        let image: UIImage! = self.images[index]
+        let imageHeight = image.size.height *  self.columnWidth! / image.size.width
+        if imageHeight > 400 {//whatever you like, it's the max value for height of image
+            position = .Top
         }
-        
-        return discoverSectionHeader
+        let currentIndexPath = NSIndexPath(forRow: index, inSection: 0)
+        collectionView.setCurrentIndexPath(currentIndexPath)
+        if index < 2{
+            collectionView.setContentOffset(CGPointZero, animated: false)
+        }else{
+            collectionView.scrollToItemAtIndexPath(currentIndexPath, atScrollPosition: position, animated: false)
+        }
+    }
+    
+    // pragma mark - CollectionViewDelegateWaterfallFlowLayout
+    func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        let image = self.images[indexPath.row]
+        let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
+        let imageHeight = image.size.height * columnWidth / image.size.width
+        return CGSizeMake(columnWidth, imageHeight)
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
         let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
         discoverDetailViewController.images = self.images
+        self.collectionView.setCurrentIndexPath(indexPath)
         self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
     }
     

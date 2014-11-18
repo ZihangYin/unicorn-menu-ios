@@ -19,12 +19,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.whiteColor();
         
-        var discoverNavigationController = UINavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
+        var discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
         
         let discoverLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         discoverLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         discoverLayout.columnCount = 2
-        discoverLayout.headerHeight = 30
+//        discoverLayout.headerHeight = 30
         discoverLayout.minimumColumnSpacing = 7
         discoverLayout.minimumInteritemSpacing = 7
         discoverNavigationController.pushViewController(DiscoverViewController(collectionViewLayout: discoverLayout), animated: false)

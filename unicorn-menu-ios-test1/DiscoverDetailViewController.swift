@@ -8,9 +8,11 @@
 
 import UIKit
 
-let reuseIdentifier = "Cell"
+@objc protocol DiscoverDetailViewControllerProtocol: DiscoverNavigationTransitionProtocol {
+    func detailViewCellScrollViewContentOffset() -> CGPoint
+}
 
-class DiscoverDetailViewController: UICollectionViewController {
+class DiscoverDetailViewController: UICollectionViewController, UICollectionViewDataSource, DiscoverDetailViewControllerProtocol {
     
     var images = [UIImage]()
     var pullingOffset = CGPointZero
@@ -20,12 +22,15 @@ class DiscoverDetailViewController: UICollectionViewController {
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.pagingEnabled = true
+        self.collectionView.setCurrentIndexPath(indexPath)
         self.collectionView.registerClass(DiscoverDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DiscoverDetailCollectionViewCell")
         self.collectionView.performBatchUpdates({self.collectionView.reloadData()}, completion: {finished in
             if finished {
                 self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             }});
         self.navigationItem.setHidesBackButton(true, animated: false)
+        self.collectionView.dataSource = self
+        autoLayoutSubviews()
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -36,10 +41,25 @@ class DiscoverDetailViewController: UICollectionViewController {
         super.viewDidLoad()
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated);
+        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
+    }
+    
+    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
+        self.updateLayoutForOrientation(toInterfaceOrientation);
+    }
+    
+    // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverDetailCollectionViewCell", forIndexPath: indexPath) as DiscoverDetailCollectionViewCell
         discoverDetailCell.image = self.images[indexPath.row]
-        discoverDetailCell.tappedAction = {}
         discoverDetailCell.pulledAction = {offset in
             self.pullingOffset = offset
             self.navigationController!.popViewControllerAnimated(true)
@@ -48,21 +68,26 @@ class DiscoverDetailViewController: UICollectionViewController {
         return discoverDetailCell
     }
     
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int{
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count;
     }
-//    
-//    func transitionCollectionView() -> UICollectionView!{
-//        return collectionView
-//    }
-//    
-//    func detailViewCellScrollViewContentOffset() -> CGPoint{
-//        return self.pullOffset
-//    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    // pragma mark - DiscoverDetailViewControllerProtocol
+    func transitionCollectionView() -> UICollectionView! {
+        return self.collectionView
+    }
+    
+    func detailViewCellScrollViewContentOffset() -> CGPoint {
+        return self.pullingOffset
+    }
+    
+    private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
+        let discoverDetailLayout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout
+        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
+        let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
+        
+        discoverDetailLayout!.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - statusBarHeight - navigationBarHeight!)
+        self.collectionView.collectionViewLayout.invalidateLayout()
     }
     
     private func autoLayoutSubviews() {
