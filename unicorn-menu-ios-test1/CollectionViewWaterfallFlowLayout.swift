@@ -244,7 +244,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
     }
     
     override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-        invalidateLayoutWithContext(invalidationContextForBoundsChange(newBounds))
+//        invalidateLayoutWithContext(invalidationContextForBoundsChange(newBounds))
         let oldBounds = self.collectionView!.bounds
         if CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds) {
             return true

@@ -30,11 +30,14 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 1 ... 28 {
-            let imageName = String(format: "%d.jpg", index)
+        for index in 0 ... 9 {
+            let imageName = String(format: "FICDDemoImage00%d.jpg", index)
             _images.append(UIImage(named: imageName)!)
         }
-        
+        for index in 10 ... 99 {
+            let imageName = String(format: "FICDDemoImage0%d.jpg", index)
+            _images.append(UIImage(named: imageName)!)
+        }
         return _images
     }()
     
@@ -95,7 +98,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
-        discoverCell.imageView.image = self.images[indexPath.row]
+        dispatch_async(dispatch_get_main_queue(), {
+            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
+                discoverCell.imageView.image = self.images[indexPath.row]
+            }
+        })
         discoverCell.setNeedsLayout()
         return discoverCell
     }
@@ -125,7 +132,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         }
         let currentIndexPath = NSIndexPath(forRow: index, inSection: 0)
         collectionView.setCurrentIndexPath(currentIndexPath)
-        if index < 2{
+        if index < 2 {
             collectionView.setContentOffset(CGPointZero, animated: false)
         }else{
             collectionView.scrollToItemAtIndexPath(currentIndexPath, atScrollPosition: position, animated: false)
@@ -135,9 +142,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     // pragma mark - CollectionViewDelegateWaterfallFlowLayout
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let image = self.images[indexPath.row]
-        let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        let imageHeight = image.size.height * columnWidth / image.size.width
-        return CGSizeMake(columnWidth, imageHeight)
+        return self.images[indexPath.row].size
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
