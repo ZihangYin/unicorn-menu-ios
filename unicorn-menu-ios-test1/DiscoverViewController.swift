@@ -147,8 +147,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
     }
     
-    func generateDiscoverDetailViewLayout() -> UICollectionViewFlowLayout {
-        let discoverDetailLayout = UICollectionViewFlowLayout()
+    func generateDiscoverDetailViewLayout() -> CollectionViewHorizontalFlowLayout {
+        let discoverDetailLayout = CollectionViewHorizontalFlowLayout()
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
 
