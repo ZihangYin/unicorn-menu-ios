@@ -65,7 +65,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
         }
     }
     // How many items to be union into a single rectangle
-    private let unionSize = 25;
+    private let unionSize = 10;
     private var columnHeights = [Float]()
     private var _columnWidth: Float = 0.0
     private var sectionItemAttributes = [[UICollectionViewLayoutAttributes]]()
@@ -245,10 +245,10 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
     
     override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
 //        invalidateLayoutWithContext(invalidationContextForBoundsChange(newBounds))
-        let oldBounds = self.collectionView!.bounds
-        if CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds) {
-            return true
-        }
+//        let oldBounds = self.collectionView!.bounds
+//        if CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds) {
+//            return true
+//        }
         
         return false
     }

@@ -17,7 +17,6 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
     var presenting = false
     var animationDuration = 0.35
     var animationScale: CGFloat = 1.0
-    var statusAndNavigationBarHeight: CGFloat = 64.0
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval{
         return animationDuration
@@ -29,6 +28,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
         let containerView = transitionContext.containerView()
         
         if presenting {
+            let fromView = fromViewController.view
             let toView = toViewController.view
             containerView.addSubview(toView)
             toView.hidden = true
@@ -39,21 +39,20 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             discoverView.layoutIfNeeded()
             let indexPath = discoverDetailView.currentIndexPath()
             let discoverDetailCellView = discoverView.cellForItemAtIndexPath(indexPath)
-            let leftUpperPoint = discoverDetailCellView!.convertPoint(CGPointZero, toView: nil)
+            var leftUpperPoint = discoverDetailCellView!.convertPoint(CGPointZero, toView: containerView)
             
             let snapShot = (discoverDetailCellView as DiscoverTansitionViewCellProtocol).snapShotForDiscoverTransition()
+            leftUpperPoint.x += snapShot.frame.origin.x
+            leftUpperPoint.y += snapShot.frame.origin.y
+            
             snapShot.transform = CGAffineTransformMakeScale(self.animationScale, self.animationScale)
-            let pullOffsetY = (fromViewController as DiscoverDetailViewControllerProtocol).detailViewCellScrollViewContentOffset().y
-            let offsetY : CGFloat = fromViewController.navigationController!.navigationBarHidden ? 0.0 : statusAndNavigationBarHeight
             snapShot.frame.origin.x = 0
-            snapShot.frame.origin.y = -pullOffsetY + offsetY
+            snapShot.frame.origin.y = -(fromViewController as DiscoverDetailViewControllerProtocol).detailViewCellScrollViewContentOffset().y + fromView.frame.origin.y
             containerView.addSubview(snapShot)
             
             toView.hidden = false
             toView.alpha = 0
             toView.transform = snapShot.transform
-//            toView.removeConstraints(toView.constraints())
-//            toView.frame = CGRectMake(-(leftUpperPoint.x * self.animationScale), -((leftUpperPoint.y - offsetY) * self.animationScale + pullOffsetY + offsetY), toView.bounds.size.width, toView.bounds.size.height)
             let whiteViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
             whiteViewContainer.backgroundColor = UIColor.whiteColor()
             containerView.addSubview(snapShot)
@@ -63,7 +62,6 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
                 snapShot.transform = CGAffineTransformIdentity
                 snapShot.frame = CGRectMake(leftUpperPoint.x, leftUpperPoint.y, snapShot.frame.size.width, snapShot.frame.size.height)
                 toView.transform = CGAffineTransformIdentity
-//                toView.frame = CGRectMake(0, 0, toView.bounds.size.width, toView.bounds.size.height);
                 toView.alpha = 1
                 }, completion:{finished in
                     if finished {
@@ -85,26 +83,20 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             let indexPath = discoverView.currentIndexPath()
             let discoverCellView = discoverView.cellForItemAtIndexPath(indexPath)
             
-            let leftUpperPoint = discoverCellView!.convertPoint(CGPointZero, toView: nil)
+            let leftUpperPoint = discoverCellView!.convertPoint(CGPointZero, toView: containerView)
             discoverDetailView.hidden = true
             discoverDetailView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             
-            let offsetY : CGFloat = fromViewController.navigationController!.navigationBarHidden ? 0.0 : statusAndNavigationBarHeight
-            let offsetStatuBar : CGFloat = fromViewController.navigationController!.navigationBarHidden ? 0.0 : 20.0;
             let snapShot = (discoverCellView as DiscoverTansitionViewCellProtocol).snapShotForDiscoverTransition()
+            snapShot.frame.origin.x += leftUpperPoint.x
+            snapShot.frame.origin.y += leftUpperPoint.y
             containerView.addSubview(snapShot)
-            snapShot.frame.origin.x = leftUpperPoint.x
-            snapShot.frame.origin.y = leftUpperPoint.y
+
             UIView.animateWithDuration(self.animationDuration, delay: 0, options: .CurveEaseInOut, animations: {
                 snapShot.transform = CGAffineTransformMakeScale(self.animationScale, self.animationScale)
-                snapShot.frame = CGRectMake(0, offsetY, snapShot.frame.size.width, snapShot.frame.size.height)
+                snapShot.frame = CGRectMake(0, toView.frame.origin.y, snapShot.frame.size.width, snapShot.frame.size.height)
                 fromView.alpha = 0
                 fromView.transform = snapShot.transform
-//                fromView.removeConstraints(fromView.constraints())
-//                fromView.frame = CGRectMake(-(leftUpperPoint.x) * self.animationScale,
-//                    -(leftUpperPoint.y-offsetStatuBar) * self.animationScale + offsetStatuBar,
-//                    fromView.bounds.size.width,
-//                    fromView.bounds.size.height)
                 },completion:{finished in
                     if finished {
                         snapShot.removeFromSuperview()

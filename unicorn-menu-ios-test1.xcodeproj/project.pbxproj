@@ -107,6 +107,8 @@
 		3A0D7A751A1C6F9B00E7DC38 /* FICDDemoImage097.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0D7A111A1C6F9B00E7DC38 /* FICDDemoImage097.jpg */; };
 		3A0D7A761A1C6F9B00E7DC38 /* FICDDemoImage098.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0D7A121A1C6F9B00E7DC38 /* FICDDemoImage098.jpg */; };
 		3A0D7A771A1C6F9B00E7DC38 /* FICDDemoImage099.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0D7A131A1C6F9B00E7DC38 /* FICDDemoImage099.jpg */; };
+		3A0E8B981A1F1907000149AA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B971A1F1907000149AA /* logo.png */; };
+		3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */; };
 		3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */; };
 		3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
@@ -247,6 +249,8 @@
 		3A0D7A111A1C6F9B00E7DC38 /* FICDDemoImage097.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FICDDemoImage097.jpg; sourceTree = "<group>"; };
 		3A0D7A121A1C6F9B00E7DC38 /* FICDDemoImage098.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FICDDemoImage098.jpg; sourceTree = "<group>"; };
 		3A0D7A131A1C6F9B00E7DC38 /* FICDDemoImage099.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FICDDemoImage099.jpg; sourceTree = "<group>"; };
+		3A0E8B971A1F1907000149AA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
+		3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationBarView.swift; sourceTree = "<group>"; };
 		3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegateWaterfallFlowLayout.swift; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
@@ -393,6 +397,7 @@
 		3AB4525A1A19D210006E4264 /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
+				3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */,
 				3ADB8F441A0F74E30002F130 /* ProximaNova-Light.otf */,
 			);
 			name = Fonts;
@@ -401,6 +406,7 @@
 		3AB4525B1A19D241006E4264 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A0E8B971A1F1907000149AA /* logo.png */,
 				3AE7ED181A181EA500ADF7DE /* down.png */,
 				3ADB8F481A0FE6400002F130 /* search.png */,
 				3ADB8F411A0F6EF00002F130 /* map.png */,
@@ -598,6 +604,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */,
 				3A0D7A541A1C6F9B00E7DC38 /* FICDDemoImage064.jpg in Resources */,
 				3A0D7A2E1A1C6F9B00E7DC38 /* FICDDemoImage026.jpg in Resources */,
 				3A0D7A581A1C6F9B00E7DC38 /* FICDDemoImage068.jpg in Resources */,
@@ -682,6 +689,7 @@
 				3A0D7A681A1C6F9B00E7DC38 /* FICDDemoImage084.jpg in Resources */,
 				3A0D7A691A1C6F9B00E7DC38 /* FICDDemoImage085.jpg in Resources */,
 				3A0D7A441A1C6F9B00E7DC38 /* FICDDemoImage048.jpg in Resources */,
+				3A0E8B981A1F1907000149AA /* logo.png in Resources */,
 				3AB0F3591A15F5FE00EC5CDB /* up.png in Resources */,
 				3A76EA541A0CB909006DFD9A /* app_icon_120.png in Resources */,
 				3A0D7A491A1C6F9B00E7DC38 /* FICDDemoImage053.jpg in Resources */,
