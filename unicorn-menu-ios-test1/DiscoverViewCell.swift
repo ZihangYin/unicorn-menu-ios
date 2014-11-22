@@ -64,8 +64,8 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     
     private func autoLayoutSubviews() {
         var viewsDictionary = ["logoView": self.logoView, "restaurantName": self.restaurantName, "imageView": self.imageView, "cuisineName": self.cuisineName]
-        let logoView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[logoView(25)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let logoView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[logoView(25)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let logoView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[logoView(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let logoView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[logoView(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         self.logoView.addConstraints(logoView_constraint_H)
         self.logoView.addConstraints(logoView_constraint_V)
         

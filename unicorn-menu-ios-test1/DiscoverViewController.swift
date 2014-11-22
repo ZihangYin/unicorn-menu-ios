@@ -103,10 +103,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
         let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME"
+        discoverCell.restaurantName.text = "RESTAURANT NAME \(indexPath.row)"
         discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 40
         
-        discoverCell.cuisineName.text = "cuisine name cuisine name cuisine name cuisine name"
+        discoverCell.cuisineName.text = "cuisine name \(indexPath.row)"
         discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 10
         
         discoverCell.logoView.image = UIImage(named: "logo.png")
@@ -146,7 +146,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         collectionView.setCurrentIndexPath(currentIndexPath)
         if index < 2 {
             collectionView.setContentOffset(CGPointZero, animated: false)
-        }else{
+        } else {
             collectionView.scrollToItemAtIndexPath(currentIndexPath, atScrollPosition: position, animated: false)
         }
     }
@@ -160,10 +160,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         // Find the size that the string occupies when displayed with the given font.
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .ByWordWrapping
-        let restaurantText: NSString = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME"
+        let restaurantText: NSString = "RESTAURANT NAME \(indexPath.row)"
         let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 40, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let cuisinetext = "cuisine name cuisine name cuisine name cuisine name" as NSString
+        let cuisinetext = "cuisine name \(indexPath.row)" as NSString
         let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 10, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
         let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 20)
