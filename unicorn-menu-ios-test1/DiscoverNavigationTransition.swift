@@ -15,7 +15,7 @@ import UIKit
 class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     var presenting = false
-    var animationDuration = 0.35
+    var animationDuration = 0.50
     var animationScale: CGFloat = 1.0
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval{

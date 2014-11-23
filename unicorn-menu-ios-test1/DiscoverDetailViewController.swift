@@ -29,9 +29,9 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
             if finished {
                 self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             }});
-        self.navigationItem.setHidesBackButton(true, animated: false)
         self.collectionView.dataSource = self
-        autoLayoutSubviews()
+        
+
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -40,6 +40,13 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     
     override func viewDidLoad(){
         super.viewDidLoad()
+        
+        var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        leftButton.setImage(UIImage(named: "left.png"), forState: UIControlState.Normal)
+        leftButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftButton)
+        autoLayoutSubviews()
     }
     
     override func didReceiveMemoryWarning() {
@@ -65,7 +72,8 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverDetailCollectionViewCell", forIndexPath: indexPath) as DiscoverDetailCollectionViewCell
-        discoverDetailCell.image = self.images[indexPath.row]
+        discoverDetailCell.image = self.images[indexPath.item]
+        discoverDetailCell.name = "cuisine name \(indexPath.item)"
         discoverDetailCell.pulledAction = {offset in
             self.pullingOffset = offset
             self.navigationController!.popViewControllerAnimated(true)
@@ -97,6 +105,10 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         discoverDetailLayout!.page = self.page
         
         self.collectionView.collectionViewLayout.invalidateLayout()
+    }
+    
+    func backButtonPressed() {
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     private func autoLayoutSubviews() {

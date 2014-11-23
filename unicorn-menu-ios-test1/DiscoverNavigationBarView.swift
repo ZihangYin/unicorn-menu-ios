@@ -11,9 +11,7 @@ import UIKit
 class DiscoverNavigationBarView: UINavigationBar {
     
     var title: UILabel!
-    var leftButton: UIButton!
     var filterButton: UIButton!
-    var rightButton: UIButton!
     private var gradientLayer = CAGradientLayer()
     
     required init(coder aDecoder: NSCoder) {
@@ -44,35 +42,14 @@ class DiscoverNavigationBarView: UINavigationBar {
         self.title.text = "DISCOVER"
         self.addSubview(title)
         
-        self.leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        self.leftButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
-        self.addSubview(leftButton)
-        
         self.filterButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         self.filterButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.filterButton.setImage(UIImage(named: "down.png"), forState: UIControlState.Normal);
-        self.filterButton.hidden = false
         self.addSubview(filterButton);
-        
-        self.rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        self.rightButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
-        self.addSubview(rightButton)
-        
     }
     
     private func autoLayoutSubviews() {
-        var viewsDictionary = ["leftButton": self.leftButton!, "filterButton": self.filterButton, "title": self.title, "rightButton": self.rightButton]
-        let leftButton_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[leftButton(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let leftButton_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[leftButton(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let leftButton_pos_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[leftButton]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let leftButton_pos_constraint_V = NSLayoutConstraint(item: self.leftButton, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
-        
-        let rightButton_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[rightButton(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let rightButton_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[rightButton(45)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let rightButton_pos_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[rightButton]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let rightButton_pos_constraint_V = NSLayoutConstraint(item: self.rightButton, attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1, constant: 0)
+        var viewsDictionary = ["filterButton": self.filterButton, "title": self.title]
         
         let filterButton_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[filterButton(12)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let filterButton_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[filterButton(12)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
@@ -82,14 +59,6 @@ class DiscoverNavigationBarView: UINavigationBar {
         let text_pos_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[title]-7-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let text_pos_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-[title]-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         
-        self.leftButton.addConstraints(leftButton_constraint_H)
-        self.leftButton.addConstraints(leftButton_constraint_V)
-        self.addConstraints(leftButton_pos_constraint_H)
-        self.addConstraint(leftButton_pos_constraint_V)
-        self.rightButton.addConstraints(rightButton_constraint_H)
-        self.rightButton.addConstraints(rightButton_constraint_V)
-        self.addConstraints(rightButton_pos_constraint_H)
-        self.addConstraint(rightButton_pos_constraint_V)
         self.filterButton.addConstraints(filterButton_constraint_H)
         self.filterButton.addConstraints(filterButton_constraint_V)
         self.addConstraint(filterButton_pos_constraint_H)

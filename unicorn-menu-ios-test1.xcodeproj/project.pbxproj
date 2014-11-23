@@ -109,6 +109,23 @@
 		3A0D7A771A1C6F9B00E7DC38 /* FICDDemoImage099.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0D7A131A1C6F9B00E7DC38 /* FICDDemoImage099.jpg */; };
 		3A0E8B981A1F1907000149AA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B971A1F1907000149AA /* logo.png */; };
 		3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */; };
+		3A0FB0DF1A2168BE000C5C84 /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0DE1A2168BE000C5C84 /* left.png */; };
+		3A18AF371A208B750094256D /* image000.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF291A208B750094256D /* image000.jpg */; };
+		3A18AF381A208B750094256D /* image001.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2A1A208B750094256D /* image001.jpg */; };
+		3A18AF391A208B750094256D /* image002.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2B1A208B750094256D /* image002.jpg */; };
+		3A18AF3A1A208B750094256D /* image003.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2C1A208B750094256D /* image003.jpg */; };
+		3A18AF3B1A208B750094256D /* image004.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2D1A208B750094256D /* image004.jpg */; };
+		3A18AF3C1A208B750094256D /* image005.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2E1A208B750094256D /* image005.jpg */; };
+		3A18AF3D1A208B750094256D /* image006.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF2F1A208B750094256D /* image006.jpg */; };
+		3A18AF3E1A208B750094256D /* image007.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF301A208B750094256D /* image007.jpg */; };
+		3A18AF3F1A208B750094256D /* image008.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF311A208B750094256D /* image008.jpg */; };
+		3A18AF401A208B750094256D /* image009.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF321A208B750094256D /* image009.jpg */; };
+		3A18AF411A208B750094256D /* image010.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF331A208B750094256D /* image010.jpg */; };
+		3A18AF421A208B750094256D /* image011.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF341A208B750094256D /* image011.jpg */; };
+		3A18AF431A208B750094256D /* image012.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF351A208B750094256D /* image012.jpg */; };
+		3A18AF441A208B750094256D /* image013.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A18AF361A208B750094256D /* image013.jpg */; };
+		3A18AF461A208C2C0094256D /* MenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18AF451A208C2C0094256D /* MenuViewController.swift */; };
+		3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18AF471A2090500094256D /* MenuViewCell.swift */; };
 		3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */; };
 		3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
@@ -251,6 +268,23 @@
 		3A0D7A131A1C6F9B00E7DC38 /* FICDDemoImage099.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = FICDDemoImage099.jpg; sourceTree = "<group>"; };
 		3A0E8B971A1F1907000149AA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
+		3A0FB0DE1A2168BE000C5C84 /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
+		3A18AF291A208B750094256D /* image000.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image000.jpg; sourceTree = "<group>"; };
+		3A18AF2A1A208B750094256D /* image001.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image001.jpg; sourceTree = "<group>"; };
+		3A18AF2B1A208B750094256D /* image002.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image002.jpg; sourceTree = "<group>"; };
+		3A18AF2C1A208B750094256D /* image003.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image003.jpg; sourceTree = "<group>"; };
+		3A18AF2D1A208B750094256D /* image004.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image004.jpg; sourceTree = "<group>"; };
+		3A18AF2E1A208B750094256D /* image005.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image005.jpg; sourceTree = "<group>"; };
+		3A18AF2F1A208B750094256D /* image006.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image006.jpg; sourceTree = "<group>"; };
+		3A18AF301A208B750094256D /* image007.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image007.jpg; sourceTree = "<group>"; };
+		3A18AF311A208B750094256D /* image008.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image008.jpg; sourceTree = "<group>"; };
+		3A18AF321A208B750094256D /* image009.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image009.jpg; sourceTree = "<group>"; };
+		3A18AF331A208B750094256D /* image010.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image010.jpg; sourceTree = "<group>"; };
+		3A18AF341A208B750094256D /* image011.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image011.jpg; sourceTree = "<group>"; };
+		3A18AF351A208B750094256D /* image012.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image012.jpg; sourceTree = "<group>"; };
+		3A18AF361A208B750094256D /* image013.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = image013.jpg; sourceTree = "<group>"; };
+		3A18AF451A208C2C0094256D /* MenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewController.swift; sourceTree = "<group>"; };
+		3A18AF471A2090500094256D /* MenuViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewCell.swift; sourceTree = "<group>"; };
 		3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationBarView.swift; sourceTree = "<group>"; };
 		3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegateWaterfallFlowLayout.swift; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
@@ -334,6 +368,8 @@
 				3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */,
 				3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */,
 				3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */,
+				3A18AF471A2090500094256D /* MenuViewCell.swift */,
+				3A18AF451A208C2C0094256D /* MenuViewController.swift */,
 				3A4DE1541A145FFC0030C116 /* FilterViewController.swift */,
 				3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */,
 				3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */,
@@ -406,6 +442,7 @@
 		3AB4525B1A19D241006E4264 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A0FB0DE1A2168BE000C5C84 /* left.png */,
 				3A0E8B971A1F1907000149AA /* logo.png */,
 				3AE7ED181A181EA500ADF7DE /* down.png */,
 				3ADB8F481A0FE6400002F130 /* search.png */,
@@ -419,6 +456,20 @@
 		3AB4525C1A19D24D006E4264 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3A18AF291A208B750094256D /* image000.jpg */,
+				3A18AF2A1A208B750094256D /* image001.jpg */,
+				3A18AF2B1A208B750094256D /* image002.jpg */,
+				3A18AF2C1A208B750094256D /* image003.jpg */,
+				3A18AF2D1A208B750094256D /* image004.jpg */,
+				3A18AF2E1A208B750094256D /* image005.jpg */,
+				3A18AF2F1A208B750094256D /* image006.jpg */,
+				3A18AF301A208B750094256D /* image007.jpg */,
+				3A18AF311A208B750094256D /* image008.jpg */,
+				3A18AF321A208B750094256D /* image009.jpg */,
+				3A18AF331A208B750094256D /* image010.jpg */,
+				3A18AF341A208B750094256D /* image011.jpg */,
+				3A18AF351A208B750094256D /* image012.jpg */,
+				3A18AF361A208B750094256D /* image013.jpg */,
 				3A0D79B01A1C6F9B00E7DC38 /* FICDDemoImage000.jpg */,
 				3A0D79B11A1C6F9B00E7DC38 /* FICDDemoImage001.jpg */,
 				3A0D79B21A1C6F9B00E7DC38 /* FICDDemoImage002.jpg */,
@@ -605,6 +656,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */,
+				3A18AF3B1A208B750094256D /* image004.jpg in Resources */,
 				3A0D7A541A1C6F9B00E7DC38 /* FICDDemoImage064.jpg in Resources */,
 				3A0D7A2E1A1C6F9B00E7DC38 /* FICDDemoImage026.jpg in Resources */,
 				3A0D7A581A1C6F9B00E7DC38 /* FICDDemoImage068.jpg in Resources */,
@@ -621,6 +673,7 @@
 				3ADB8F451A0F75670002F130 /* ProximaNova-Light.otf in Resources */,
 				3A0D7A451A1C6F9B00E7DC38 /* FICDDemoImage049.jpg in Resources */,
 				3A0D7A1A1A1C6F9B00E7DC38 /* FICDDemoImage006.jpg in Resources */,
+				3A18AF441A208B750094256D /* image013.jpg in Resources */,
 				3A0D7A5C1A1C6F9B00E7DC38 /* FICDDemoImage072.jpg in Resources */,
 				3A0D7A191A1C6F9B00E7DC38 /* FICDDemoImage005.jpg in Resources */,
 				3A0D7A6F1A1C6F9B00E7DC38 /* FICDDemoImage091.jpg in Resources */,
@@ -636,6 +689,7 @@
 				3A0D7A4F1A1C6F9B00E7DC38 /* FICDDemoImage059.jpg in Resources */,
 				3A0D7A661A1C6F9B00E7DC38 /* FICDDemoImage082.jpg in Resources */,
 				3A0D7A401A1C6F9B00E7DC38 /* FICDDemoImage044.jpg in Resources */,
+				3A18AF371A208B750094256D /* image000.jpg in Resources */,
 				3A0D7A461A1C6F9B00E7DC38 /* FICDDemoImage050.jpg in Resources */,
 				3A0D7A431A1C6F9B00E7DC38 /* FICDDemoImage047.jpg in Resources */,
 				3A0D7A711A1C6F9B00E7DC38 /* FICDDemoImage093.jpg in Resources */,
@@ -657,11 +711,15 @@
 				3A0D7A761A1C6F9B00E7DC38 /* FICDDemoImage098.jpg in Resources */,
 				3A0D7A561A1C6F9B00E7DC38 /* FICDDemoImage066.jpg in Resources */,
 				3A0D7A651A1C6F9B00E7DC38 /* FICDDemoImage081.jpg in Resources */,
+				3A0FB0DF1A2168BE000C5C84 /* left.png in Resources */,
 				3A0D7A331A1C6F9B00E7DC38 /* FICDDemoImage031.jpg in Resources */,
+				3A18AF3A1A208B750094256D /* image003.jpg in Resources */,
+				3A18AF411A208B750094256D /* image010.jpg in Resources */,
 				3A0D7A201A1C6F9B00E7DC38 /* FICDDemoImage012.jpg in Resources */,
 				3A0D7A361A1C6F9B00E7DC38 /* FICDDemoImage034.jpg in Resources */,
 				3A0D7A181A1C6F9B00E7DC38 /* FICDDemoImage004.jpg in Resources */,
 				3A0D7A551A1C6F9B00E7DC38 /* FICDDemoImage065.jpg in Resources */,
+				3A18AF381A208B750094256D /* image001.jpg in Resources */,
 				3A0D7A251A1C6F9B00E7DC38 /* FICDDemoImage017.jpg in Resources */,
 				3A0D7A5F1A1C6F9B00E7DC38 /* FICDDemoImage075.jpg in Resources */,
 				3A0D7A471A1C6F9B00E7DC38 /* FICDDemoImage051.jpg in Resources */,
@@ -673,6 +731,8 @@
 				3A0D7A311A1C6F9B00E7DC38 /* FICDDemoImage029.jpg in Resources */,
 				3A0D7A1E1A1C6F9B00E7DC38 /* FICDDemoImage010.jpg in Resources */,
 				3A0D7A6E1A1C6F9B00E7DC38 /* FICDDemoImage090.jpg in Resources */,
+				3A18AF391A208B750094256D /* image002.jpg in Resources */,
+				3A18AF3F1A208B750094256D /* image008.jpg in Resources */,
 				3A0D7A371A1C6F9B00E7DC38 /* FICDDemoImage035.jpg in Resources */,
 				3A0D7A5A1A1C6F9B00E7DC38 /* FICDDemoImage070.jpg in Resources */,
 				3A0D7A271A1C6F9B00E7DC38 /* FICDDemoImage019.jpg in Resources */,
@@ -681,6 +741,7 @@
 				3A0D7A1F1A1C6F9B00E7DC38 /* FICDDemoImage011.jpg in Resources */,
 				3A0D7A721A1C6F9B00E7DC38 /* FICDDemoImage094.jpg in Resources */,
 				3A0D7A171A1C6F9B00E7DC38 /* FICDDemoImage003.jpg in Resources */,
+				3A18AF401A208B750094256D /* image009.jpg in Resources */,
 				3A0D7A5E1A1C6F9B00E7DC38 /* FICDDemoImage074.jpg in Resources */,
 				3A0D7A391A1C6F9B00E7DC38 /* FICDDemoImage037.jpg in Resources */,
 				3A0D7A4E1A1C6F9B00E7DC38 /* FICDDemoImage058.jpg in Resources */,
@@ -688,15 +749,18 @@
 				3A0D7A351A1C6F9B00E7DC38 /* FICDDemoImage033.jpg in Resources */,
 				3A0D7A681A1C6F9B00E7DC38 /* FICDDemoImage084.jpg in Resources */,
 				3A0D7A691A1C6F9B00E7DC38 /* FICDDemoImage085.jpg in Resources */,
+				3A18AF3E1A208B750094256D /* image007.jpg in Resources */,
 				3A0D7A441A1C6F9B00E7DC38 /* FICDDemoImage048.jpg in Resources */,
 				3A0E8B981A1F1907000149AA /* logo.png in Resources */,
 				3AB0F3591A15F5FE00EC5CDB /* up.png in Resources */,
 				3A76EA541A0CB909006DFD9A /* app_icon_120.png in Resources */,
 				3A0D7A491A1C6F9B00E7DC38 /* FICDDemoImage053.jpg in Resources */,
+				3A18AF421A208B750094256D /* image011.jpg in Resources */,
 				3A76EA551A0CB909006DFD9A /* app_icon_180.png in Resources */,
 				3A0D7A701A1C6F9B00E7DC38 /* FICDDemoImage092.jpg in Resources */,
 				3A0D7A771A1C6F9B00E7DC38 /* FICDDemoImage099.jpg in Resources */,
 				3A0D7A731A1C6F9B00E7DC38 /* FICDDemoImage095.jpg in Resources */,
+				3A18AF431A208B750094256D /* image012.jpg in Resources */,
 				3A0D7A741A1C6F9B00E7DC38 /* FICDDemoImage096.jpg in Resources */,
 				3A0D7A421A1C6F9B00E7DC38 /* FICDDemoImage046.jpg in Resources */,
 				3A0D7A291A1C6F9B00E7DC38 /* FICDDemoImage021.jpg in Resources */,
@@ -706,6 +770,7 @@
 				3A0D7A321A1C6F9B00E7DC38 /* FICDDemoImage030.jpg in Resources */,
 				3A0D7A641A1C6F9B00E7DC38 /* FICDDemoImage080.jpg in Resources */,
 				3A0D7A6C1A1C6F9B00E7DC38 /* FICDDemoImage088.jpg in Resources */,
+				3A18AF3C1A208B750094256D /* image005.jpg in Resources */,
 				3A0D7A751A1C6F9B00E7DC38 /* FICDDemoImage097.jpg in Resources */,
 				3A0D7A3D1A1C6F9B00E7DC38 /* FICDDemoImage041.jpg in Resources */,
 				3A0D7A5B1A1C6F9B00E7DC38 /* FICDDemoImage071.jpg in Resources */,
@@ -713,6 +778,7 @@
 				3A76EA531A0CB909006DFD9A /* app_icon_87.png in Resources */,
 				3A76EA301A0CB3D2006DFD9A /* Images.xcassets in Resources */,
 				3A0D7A511A1C6F9B00E7DC38 /* FICDDemoImage061.jpg in Resources */,
+				3A18AF3D1A208B750094256D /* image006.jpg in Resources */,
 				3A0D7A6B1A1C6F9B00E7DC38 /* FICDDemoImage087.jpg in Resources */,
 				3A0D7A281A1C6F9B00E7DC38 /* FICDDemoImage020.jpg in Resources */,
 				3A76EA511A0CB909006DFD9A /* app_icon_58.png in Resources */,
@@ -736,6 +802,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */,
+				3A18AF461A208C2C0094256D /* MenuViewController.swift in Sources */,
 				3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */,
 				3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */,
 				3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */,
@@ -747,6 +814,7 @@
 				3AB452961A19E524006E4264 /* DiscoverDetailViewController.swift in Sources */,
 				3AF767F31A1B1E6E00075F5B /* Extension.swift in Sources */,
 				3ADB8F381A0EF4000002F130 /* DiscoverViewCell.swift in Sources */,
+				3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */,
 				3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */,
 				3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */,
 			);

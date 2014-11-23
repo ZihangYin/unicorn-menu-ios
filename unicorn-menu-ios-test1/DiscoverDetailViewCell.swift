@@ -47,6 +47,7 @@ class DiscoverDetailTableViewCell : UITableViewCell {
 class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegate, UITableViewDataSource {
     
     var image: UIImage?
+    var name: String?
     var pulledAction : ((offset : CGPoint) -> Void)?
     let tableView = UITableView(frame: CGRectZero, style: UITableViewStyle.Plain)
     
@@ -86,7 +87,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegat
         if indexPath.row == 0 {
             discoverDetailTableCell.imageView.image = image!
         } else if indexPath.row == 1 {
-            discoverDetailTableCell.textLabel.text = "Name"
+            discoverDetailTableCell.textLabel.text = "Name: \(name!)"
         } else {
             discoverDetailTableCell.textLabel.text = "Description"
         }

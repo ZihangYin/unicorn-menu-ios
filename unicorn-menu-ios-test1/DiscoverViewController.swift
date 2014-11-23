@@ -30,12 +30,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 0 ... 9 {
-            let imageName = String(format: "FICDDemoImage00%d.jpg", index)
-            _images.append(UIImage(named: imageName)!)
-        }
-        for index in 10 ... 99 {
-            let imageName = String(format: "FICDDemoImage0%d.jpg", index)
+        for index in 0 ... 99 {
+            let imageName = String(format: "FICDDemoImage%03ld.jpg", index)
             _images.append(UIImage(named: imageName)!)
         }
         return _images
@@ -57,13 +53,25 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.collectionView.backgroundColor = UIColor.whiteColor()
         self.collectionView.directionalLockEnabled = true
         
-        self.navigationController!.delegate = navigationDelegate
         autoLayoutSubviews()
-        
         self.collectionView.reloadData()
         
-        let longPress = UILongPressGestureRecognizer.init(target: self, action: "handleLongPress:")
-        self.collectionView.addGestureRecognizer(longPress)
+        self.navigationController!.delegate = navigationDelegate
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
+        
+        var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
+        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftButton)
+        
+        var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
+        rightButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightButton)
+        
+//        let longPress = UILongPressGestureRecognizer.init(target: self, action: "handleLongPress:")
+//        self.collectionView.addGestureRecognizer(longPress)
 //        let discoverNavigationBar = self.navigationController!.navigationBar as? DiscoverNavigationBarView
 //        discoverNavigationBar!.filterButton.addTarget(self, action: "filterPressedAction", forControlEvents: UIControlEvents.TouchUpInside)
 //        discoverNavigationBar!.filterButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "filterPressedAction"))
@@ -101,21 +109,31 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        var discoverCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
+        var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
         let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        discoverCell.restaurantName.text = "RESTAURANT NAME \(indexPath.row)"
+        
+        discoverCell.restaurantName.text = "RESTAURANT NAME \(indexPath.item)"
         discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 40
-        
-        discoverCell.cuisineName.text = "cuisine name \(indexPath.row)"
-        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 10
-        
+
+        discoverCell.cuisineName.text = "cuisine name \(indexPath.item)"
+        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 20
+
         discoverCell.logoView.image = UIImage(named: "logo.png")
+//        discoverCell.cuisineImage.image = self.images[indexPath.item]
+
         dispatch_async(dispatch_get_main_queue(), {
             if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
-                discoverCell.imageView.image = self.images[indexPath.row]
-            }
+                discoverCell.cuisineImage.image = self.images[indexPath.item]
+           }
         })
+
         discoverCell.setNeedsLayout()
+        let tapImage = UITapGestureRecognizer.init(target: self, action: "handleTapImage:")
+        discoverCell.cuisineImage.addGestureRecognizer(tapImage)
+
+        let tapRestaurant = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+        discoverCell.restaurantName.addGestureRecognizer(tapRestaurant)
+
         return discoverCell
     }
     
@@ -160,21 +178,22 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         // Find the size that the string occupies when displayed with the given font.
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .ByWordWrapping
-        let restaurantText: NSString = "RESTAURANT NAME \(indexPath.row)"
+        let restaurantText: NSString = "RESTAURANT NAME \(indexPath.item)"
         let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 40, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let cuisinetext = "cuisine name \(indexPath.row)" as NSString
-        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 10, CGFloat.max), options: .UsesLineFragmentOrigin,
+        let cuisinetext = "cuisine name \(indexPath.item)" as NSString
+        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 20)
+
+        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 15)
         return itemSize
     }
     
     override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-        let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
-        discoverDetailViewController.images = self.images
-        self.collectionView.setCurrentIndexPath(indexPath)
-        self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
+//        let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
+//        discoverDetailViewController.images = self.images
+//        self.collectionView.setCurrentIndexPath(indexPath)
+//        self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
     }
     
     func generateDiscoverDetailViewLayout() -> CollectionViewHorizontalFlowLayout {
@@ -190,6 +209,36 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         return discoverDetailLayout
     }
     
+    func handleTapImage(tap: UITapGestureRecognizer) {
+        if (tap.state != .Ended) {
+            return
+        }
+        let point = tap.locationInView(self.collectionView)
+        if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
+            let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
+            discoverDetailViewController.images = self.images
+            self.collectionView.setCurrentIndexPath(indexPath)
+            self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
+        }
+    }
+    
+    func handleTapRestaurant(tap: UITapGestureRecognizer) {
+        if (tap.state != .Ended) {
+            return
+        }
+        let point = tap.locationInView(self.collectionView)
+        if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
+            
+            let layout = UICollectionViewFlowLayout()
+            layout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 160)
+            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            layout.minimumLineSpacing = 0
+            layout.minimumInteritemSpacing = 0
+            let menuViewController = MenuViewController(collectionViewLayout: layout)
+            self.navigationController!.pushViewController(menuViewController, animated: false)
+        }
+    }
+    
     func handleLongPress(longPress: UILongPressGestureRecognizer) {
         if (longPress.state != .Ended) {
             return
@@ -198,11 +247,9 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell
             self.images[indexPath.row] = self.images[0]
-            discoverCell!.imageView.image = self.images[0]
+            discoverCell!.cuisineImage.image = self.images[0]
             self.collectionView.reloadItemsAtIndexPaths([indexPath])
             
-        } else {
-            println("couldn't find index path");
         }
     }
 
