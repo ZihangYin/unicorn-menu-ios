@@ -73,12 +73,25 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     }()
     
     let navigationDelegate = DiscoverNavigationControllerDelegate()
+    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
     var columnWidth: CGFloat?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController!.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
+       
+        (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
+        var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        leftButton.setImage(UIImage(named: "list.png"), forState: UIControlState.Normal)
+        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+        leftButton.addTarget(self, action: "leftButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        let leftBarButton = UIBarButtonItem.init(customView: leftButton)
+        let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+        leftNegativeSpacer.width = -10
+        self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton]
+        (self.navigationController!.navigationBar as DiscoverNavigationBarView).scanButton.addTarget(self, action: "scanPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        
         self.title = "DISCOVER"
         self.edgesForExtendedLayout = .None
         
@@ -86,35 +99,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.registerClass(DiscoverViewCell.self, forCellWithReuseIdentifier: "DiscoverCell")
-//        self.collectionView.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
         self.collectionView.backgroundColor = UIColor.darkGrayColor()
         self.collectionView.directionalLockEnabled = true
         
         autoLayoutSubviews()
         self.collectionView.reloadData()
-        
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
-        
-        var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
-        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-        leftButton.addTarget(self, action: "leftButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        let leftBarButton = UIBarButtonItem.init(customView: leftButton)
-        let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
-        leftNegativeSpacer.width = -10
-        self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton];
-//        
-//        var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-//        rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
-//        rightButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightButton)
-//        
-//        let longPress = UILongPressGestureRecognizer.init(target: self, action: "handleLongPress:")
-//        self.collectionView.addGestureRecognizer(longPress)
-//        let discoverNavigationBar = self.navigationController!.navigationBar as? DiscoverNavigationBarView
-//        discoverNavigationBar!.filterButton.addTarget(self, action: "filterPressedAction", forControlEvents: UIControlEvents.TouchUpInside)
-//        discoverNavigationBar!.filterButton.addGestureRecognizer(UIPanGestureRecognizer(target: self, action: "filterPressedAction"))
     }
     
     override func didReceiveMemoryWarning() {
@@ -127,15 +116,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
         self.navigationController?.navigationBar.shadowImage = UIImage()
-        let interactiveTransition = MenuNavigationTransitionInteractiveTransition()
-        interactiveTransition.attachToViewController(self)
         
-        self.navigationDelegate.interactiveTransition = interactiveTransition
-        
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "DISCOVER"
-//        (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = false
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.addTarget(self, action: "filterPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
+        edgePanRecognizer.edges = .Left;
+        self.view.addGestureRecognizer(edgePanRecognizer)
+        self.navigationDelegate.interactiveTransition = percentDrivenInteractiveTransition
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -150,10 +135,6 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
         self.updateLayoutForOrientation(toInterfaceOrientation);
         self.collectionView.reloadData()
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
     
     // pragma mark - UICollectionViewDataSource
@@ -196,17 +177,6 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         return discoverCell
     }
     
-//    override func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
-//        
-//        var discoverSectionHeader : UICollectionReusableView! = nil
-//        if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
-//            discoverSectionHeader = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverHeader", forIndexPath: indexPath) as UICollectionReusableView
-//            discoverSectionHeader.layer.borderWidth = 1.0
-//            discoverSectionHeader.layer.borderColor =  UIColor.blackColor().CGColor
-//        }
-//        return discoverSectionHeader
-//    }
-    
     // pragma mark - DiscoverNavigationTransitionProtocol
     func transitionCollectionView() -> UICollectionView! {
         return self.collectionView
@@ -246,13 +216,6 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 
         let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 40)
         return itemSize
-    }
-    
-    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-//        let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
-//        discoverDetailViewController.images = self.images
-//        self.collectionView.setCurrentIndexPath(indexPath)
-//        self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
     }
     
     func generateDiscoverDetailViewLayout() -> CollectionViewHorizontalFlowLayout {
@@ -312,12 +275,32 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         }
     }
     
+    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
+        let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
+        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
+        progress = min(1.0, max(0.0, progress))
+        switch (recognizer.state) {
+        case .Began:
+            self.navigationController!.pushViewController(FilterViewController(), animated: true)
+        case .Changed:
+            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
+        default:
+            if recognizer.velocityInView(self.view).x >= 0 {
+                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
+                self.view.removeGestureRecognizer(recognizer)
+            } else {
+                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
+            }
+            break;
+        }
+    }
+    
     func leftButtonPressed() -> Void {
         self.navigationDelegate.interactiveTransition  = nil
         self.navigationController!.pushViewController(FilterViewController(), animated: true)
     }
     
-    func filterPressed() -> Void {
+    func scanPressed() -> Void {
         (self.navigationController! as DiscoverNavigationController).pullDownAndUpNavigationBar()
     }
 

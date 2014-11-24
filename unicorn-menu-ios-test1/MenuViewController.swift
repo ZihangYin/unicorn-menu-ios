@@ -41,7 +41,7 @@ class MenuViewController: UICollectionViewController, UICollectionViewDataSource
         let leftBarButton = UIBarButtonItem.init(customView: leftButton)
         let negativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
         negativeSpacer.width = -10
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton];
+        self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton]
         
         autoLayoutSubviews()
         self.collectionView.reloadData()
@@ -57,10 +57,6 @@ class MenuViewController: UICollectionViewController, UICollectionViewDataSource
         super.viewWillAppear(animated)
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "RESTAURANT NAME"
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = true
-    }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return .LightContent
     }
     
     // pragma mark - UICollectionViewDataSource

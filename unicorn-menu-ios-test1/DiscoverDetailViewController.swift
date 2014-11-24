@@ -47,7 +47,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         let leftBarButton = UIBarButtonItem.init(customView: leftButton)
         let negativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
         negativeSpacer.width = -10
-        self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton];
+        self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton]
         autoLayoutSubviews()
     }
     

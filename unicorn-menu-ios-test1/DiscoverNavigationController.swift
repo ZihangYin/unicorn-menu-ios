@@ -40,7 +40,8 @@ class DiscoverNavigationController : UINavigationController {
         var frame: CGRect = self.window!.frame
         
         if (frame.origin.y == CGPointZero.y) {
-            finalOrigin.y = CGRectGetHeight(UIScreen.mainScreen().bounds) - (self.navigationBar.frame.height + self.navigationBar.frame.origin.y)
+            UIScreen.mainScreen().bounds
+            finalOrigin.y = CGRectGetHeight(UIScreen.mainScreen().bounds) - self.visibleViewController.view.convertPoint(CGPointZero, toView: nil).y
         } else {
             finalOrigin.y = CGPointZero.y
         }
@@ -73,7 +74,7 @@ class DiscoverNavigationController : UINavigationController {
         case .Ended, .Cancelled:
             var finalOrigin = CGPointZero
             if (velocity.y >= 0) {
-                finalOrigin.y = CGRectGetHeight(UIScreen.mainScreen().bounds) - (self.navigationBar.frame.height + self.navigationBar.frame.origin.y)
+                finalOrigin.y = CGRectGetHeight(UIScreen.mainScreen().bounds) - self.visibleViewController.view.convertPoint(CGPointZero, toView: nil).y
             }
             
             var frame = self.window!.frame

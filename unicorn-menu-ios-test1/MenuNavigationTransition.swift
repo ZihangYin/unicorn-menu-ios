@@ -11,7 +11,7 @@ import Foundation
 
 class MenuNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
    
-    var duration = 1.0
+    var duration = 0.35
     var rotateAngle = M_PI_4
     var relativeDelayLeftView = 0.09
     var relativeDelayRightView = 0.12
@@ -90,35 +90,3 @@ class MenuNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning 
     }
 }
 
-class MenuNavigationTransitionInteractiveTransition: UIPercentDrivenInteractiveTransition {
-    
-    var percentageAdjustFactor = 2.5
-    private weak var parentViewController: UIViewController?
-    
-    func attachToViewController(viewController: UIViewController) {
-        self.parentViewController = viewController;
-        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
-        edgePanRecognizer.edges = .Left;
-        self.parentViewController!.view.addGestureRecognizer(edgePanRecognizer)
-    }
-    
-    
-    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
-        var progress: CGFloat = recognizer.translationInView(self.parentViewController!.view).x / self.parentViewController!.view.bounds.size.width / CGFloat(self.percentageAdjustFactor)
-        progress = min(1.0, max(0.0, progress))
-        switch (recognizer.state) {
-        case .Began:
-            self.parentViewController!.navigationController!.pushViewController(FilterViewController(), animated: true)
-        case .Changed:
-            self.updateInteractiveTransition(progress);
-        default:
-            if recognizer.velocityInView(self.parentViewController!.view).x >= 0 {
-                self.finishInteractiveTransition()
-                self.parentViewController!.view.removeGestureRecognizer(recognizer)
-            } else {
-                self.cancelInteractiveTransition()
-            }
-            break;
-        }
-    }
-}

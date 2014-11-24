@@ -132,6 +132,10 @@
 		3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A18AF471A2090500094256D /* MenuViewCell.swift */; };
 		3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */; };
 		3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */; };
+		3A21E3D71A230AE20092BE39 /* list.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A21E3D61A230AE20092BE39 /* list.png */; };
+		3A21E3D91A230F180092BE39 /* QRCodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3D81A230F180092BE39 /* QRCodeReaderView.swift */; };
+		3A21E3DB1A230FCF0092BE39 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3DA1A230FCF0092BE39 /* QRCodeReaderViewController.swift */; };
+		3A21E3DD1A2320250092BE39 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
 		3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */; };
 		3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */; };
@@ -295,6 +299,10 @@
 		3A18AF471A2090500094256D /* MenuViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuViewCell.swift; sourceTree = "<group>"; };
 		3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationBarView.swift; sourceTree = "<group>"; };
 		3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewDelegateWaterfallFlowLayout.swift; sourceTree = "<group>"; };
+		3A21E3D61A230AE20092BE39 /* list.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = list.png; sourceTree = "<group>"; };
+		3A21E3D81A230F180092BE39 /* QRCodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderView.swift; sourceTree = "<group>"; };
+		3A21E3DA1A230FCF0092BE39 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
+		3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationController.swift; sourceTree = "<group>"; };
 		3A76EA231A0CB3D2006DFD9A /* unicorn-menu-ios-test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unicorn-menu-ios-test1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,6 +393,9 @@
 				3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */,
 				3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */,
 				3ADB8F3B1A0F62590002F130 /* CollectionReusableView.swift */,
+				3A21E3D81A230F180092BE39 /* QRCodeReaderView.swift */,
+				3A21E3DA1A230FCF0092BE39 /* QRCodeReaderViewController.swift */,
+				3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */,
 				3A76EA2F1A0CB3D2006DFD9A /* Images.xcassets */,
 				3A76EA261A0CB3D2006DFD9A /* Supporting Files */,
 			);
@@ -454,6 +465,7 @@
 			isa = PBXGroup;
 			children = (
 				3A0FB0E61A228896000C5C84 /* right_big.png */,
+				3A21E3D61A230AE20092BE39 /* list.png */,
 				3A0FB0DE1A2168BE000C5C84 /* left.png */,
 				3A0E8B971A1F1907000149AA /* logo.png */,
 				3AE7ED181A181EA500ADF7DE /* down.png */,
@@ -786,6 +798,7 @@
 				3A0D7A6C1A1C6F9B00E7DC38 /* FICDDemoImage088.jpg in Resources */,
 				3A18AF3C1A208B750094256D /* image005.jpg in Resources */,
 				3A0D7A751A1C6F9B00E7DC38 /* FICDDemoImage097.jpg in Resources */,
+				3A21E3D71A230AE20092BE39 /* list.png in Resources */,
 				3A0D7A3D1A1C6F9B00E7DC38 /* FICDDemoImage041.jpg in Resources */,
 				3A0D7A5B1A1C6F9B00E7DC38 /* FICDDemoImage071.jpg in Resources */,
 				3A0D7A141A1C6F9B00E7DC38 /* FICDDemoImage000.jpg in Resources */,
@@ -827,12 +840,15 @@
 				3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */,
 				3ACB63A31A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift in Sources */,
 				3AB452961A19E524006E4264 /* DiscoverDetailViewController.swift in Sources */,
+				3A21E3DB1A230FCF0092BE39 /* QRCodeReaderViewController.swift in Sources */,
+				3A21E3D91A230F180092BE39 /* QRCodeReaderView.swift in Sources */,
 				3AF767F31A1B1E6E00075F5B /* Extension.swift in Sources */,
 				3ADB8F381A0EF4000002F130 /* DiscoverViewCell.swift in Sources */,
 				3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */,
 				3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */,
 				3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */,
 				3A0FB0E11A21B6E8000C5C84 /* MenuNavigationTransition.swift in Sources */,
+				3A21E3DD1A2320250092BE39 /* QRCodeScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

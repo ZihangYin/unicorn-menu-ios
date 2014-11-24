@@ -25,15 +25,7 @@ class FilterViewController: UIViewController {
         self.filterView!.btnFour.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         autoLayoutSubviews()
         
-        var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
-        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-        leftButton.addTarget(self, action: "leftButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        let leftBarButton = UIBarButtonItem.init(customView: leftButton)
-        let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
-        leftNegativeSpacer.width = -10
-        self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton];
-
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: UIButton.buttonWithType(UIButtonType.Custom) as UIButton)
     }
     
     override func didReceiveMemoryWarning() {
