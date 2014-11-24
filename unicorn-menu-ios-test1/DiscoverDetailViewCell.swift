@@ -17,8 +17,11 @@ class DiscoverDetailTableViewCell : UITableViewCell {
     override init(style: UITableViewCellStyle, reuseIdentifier: String!) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        self.backgroundColor = UIColor.darkGrayColor()
+        
         self.textLabel.font = UIFont(name: "ProximaNova-Light", size: 18)
         self.imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        
         self.layoutMargins = UIEdgeInsetsZero
         self.selectionStyle = .None;
         
@@ -59,6 +62,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, UITableViewDelegat
         super.init(frame: frame)
         
         self.tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.tableView.backgroundColor = UIColor.darkGrayColor()
         self.tableView.registerClass(DiscoverDetailTableViewCell.self, forCellReuseIdentifier: "DiscoverDetailTableCell")
         
         self.tableView.delegate = self

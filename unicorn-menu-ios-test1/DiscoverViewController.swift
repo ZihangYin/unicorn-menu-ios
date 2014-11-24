@@ -16,13 +16,48 @@ import UIKit
 class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
     
     var discoverColumnWidth: Float?
+    var interactiveTransition: UIViewControllerInteractiveTransitioning?
     
     func navigationController(navigationController: UINavigationController!, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController!, toViewController toVC: UIViewController!) -> UIViewControllerAnimatedTransitioning!{
-        let discoverNavigationTransition = DiscoverNavigationTransition()
-        discoverNavigationTransition.presenting = operation == .Pop
-        discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
-        
-        return  discoverNavigationTransition
+        switch operation {
+        case .Pop:
+            if (fromVC.isKindOfClass(DiscoverDetailViewController)) {
+                let discoverNavigationTransition = DiscoverNavigationTransition()
+                discoverNavigationTransition.presenting = true
+                discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
+                self.interactiveTransition = nil
+                return discoverNavigationTransition
+            } else if (fromVC.isKindOfClass(FilterViewController)) {
+                let menuNavigationTransition = MenuNavigationTransition()
+                menuNavigationTransition.presenting = true
+                self.interactiveTransition = nil
+                return menuNavigationTransition
+            } else {
+                assertionFailure("non supported navigation transition animation")
+            }
+        case .Push:
+            if (toVC.isKindOfClass(DiscoverDetailViewController)) {
+                let discoverNavigationTransition = DiscoverNavigationTransition()
+                discoverNavigationTransition.presenting = false
+                discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
+                self.interactiveTransition = nil
+                return discoverNavigationTransition
+            } else if (toVC.isKindOfClass(FilterViewController)) {
+                let menuNavigationTransition = MenuNavigationTransition()
+                menuNavigationTransition.presenting = false
+                return menuNavigationTransition
+            } else {
+                assertionFailure("non supported navigation transition animation")
+            }
+        default:
+            assertionFailure("non supported navigation transition animation")
+            break
+        }
+    }
+    
+    func navigationController(navigationController: UINavigationController,
+        interactionControllerForAnimationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
+           return self.interactiveTransition;
     }
 }
 
@@ -43,6 +78,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController!.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
+        self.title = "DISCOVER"
         self.edgesForExtendedLayout = .None
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -50,26 +87,29 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.collectionView.delegate = self
         self.collectionView.registerClass(DiscoverViewCell.self, forCellWithReuseIdentifier: "DiscoverCell")
 //        self.collectionView.registerClass(CollectionReusableView.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
-        self.collectionView.backgroundColor = UIColor.whiteColor()
+        self.collectionView.backgroundColor = UIColor.darkGrayColor()
         self.collectionView.directionalLockEnabled = true
         
         autoLayoutSubviews()
         self.collectionView.reloadData()
         
-        self.navigationController!.delegate = navigationDelegate
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
         
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
         leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftButton)
-        
-        var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
-        rightButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightButton)
-        
+        leftButton.addTarget(self, action: "leftButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        let leftBarButton = UIBarButtonItem.init(customView: leftButton)
+        let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+        leftNegativeSpacer.width = -10
+        self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton];
+//        
+//        var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+//        rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
+//        rightButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+//        self.navigationItem.rightBarButtonItem = UIBarButtonItem.init(customView: rightButton)
+//        
 //        let longPress = UILongPressGestureRecognizer.init(target: self, action: "handleLongPress:")
 //        self.collectionView.addGestureRecognizer(longPress)
 //        let discoverNavigationBar = self.navigationController!.navigationBar as? DiscoverNavigationBarView
@@ -82,9 +122,26 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         // Dispose of any resources that can be recreated.
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
+        self.navigationController?.navigationBar.shadowImage = UIImage()
+        let interactiveTransition = MenuNavigationTransitionInteractiveTransition()
+        interactiveTransition.attachToViewController(self)
+        
+        self.navigationDelegate.interactiveTransition = interactiveTransition
+        
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "DISCOVER"
+//        (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = false
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.addTarget(self, action: "filterPressed", forControlEvents: UIControlEvents.TouchUpInside)
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated);
         self.columnWidth = CGFloat((self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth)
+        self.navigationController!.delegate = navigationDelegate
         self.navigationDelegate.discoverColumnWidth = (self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth
         self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
     }
@@ -115,8 +172,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         discoverCell.restaurantName.text = "RESTAURANT NAME \(indexPath.item)"
         discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 40
 
-        discoverCell.cuisineName.text = "cuisine name \(indexPath.item)"
-        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 20
+        discoverCell.cuisineName.text = "CUISINE NAME \(indexPath.item)"
+        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 40
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
 //        discoverCell.cuisineImage.image = self.images[indexPath.item]
@@ -131,8 +188,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let tapImage = UITapGestureRecognizer.init(target: self, action: "handleTapImage:")
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
 
-        let tapRestaurant = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
-        discoverCell.restaurantName.addGestureRecognizer(tapRestaurant)
+        let tapRestaurantLogo = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+        discoverCell.logoView.addGestureRecognizer(tapRestaurantLogo)
+        let tapRestaurantName = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+        discoverCell.restaurantName.addGestureRecognizer(tapRestaurantName)
 
         return discoverCell
     }
@@ -181,11 +240,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let restaurantText: NSString = "RESTAURANT NAME \(indexPath.item)"
         let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 40, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let cuisinetext = "cuisine name \(indexPath.item)" as NSString
+        let cuisinetext = "CUISINE NAME \(indexPath.item)" as NSString
         let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
 
-        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 15)
+        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 40)
         return itemSize
     }
     
@@ -252,6 +311,15 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             
         }
     }
+    
+    func leftButtonPressed() -> Void {
+        self.navigationDelegate.interactiveTransition  = nil
+        self.navigationController!.pushViewController(FilterViewController(), animated: true)
+    }
+    
+    func filterPressed() -> Void {
+        (self.navigationController! as DiscoverNavigationController).pullDownAndUpNavigationBar()
+    }
 
     private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
         let discoverLayout = self.collectionView.collectionViewLayout as? CollectionViewWaterfallFlowLayout
@@ -261,7 +329,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     private func autoLayoutSubviews() {
         var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView]
         let collectionView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let collectionview_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-5-[collectionView]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+        let collectionview_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         
         self.view.addConstraints(collectionView_constraint_H)
         self.view.addConstraints(collectionview_constraint_V)

@@ -15,7 +15,7 @@ import UIKit
 class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     var presenting = false
-    var animationDuration = 0.50
+    var animationDuration = 1.0
     var animationScale: CGFloat = 1.0
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval{
@@ -53,10 +53,10 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             toView.hidden = false
             toView.alpha = 0
             toView.transform = snapShot.transform
-            let whiteViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
-            whiteViewContainer.backgroundColor = UIColor.whiteColor()
+            let backgroundViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
+            backgroundViewContainer.backgroundColor = UIColor.darkGrayColor()
             containerView.addSubview(snapShot)
-            containerView.insertSubview(whiteViewContainer, belowSubview: toView)
+            containerView.insertSubview(backgroundViewContainer, belowSubview: toView)
             
             UIView.animateWithDuration(self.animationDuration, delay: 0, options: .CurveEaseInOut, animations: {
                 snapShot.transform = CGAffineTransformIdentity
@@ -66,7 +66,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
                 }, completion:{finished in
                     if finished {
                         snapShot.removeFromSuperview()
-                        whiteViewContainer.removeFromSuperview()
+                        backgroundViewContainer.removeFromSuperview()
                         transitionContext.completeTransition(true)
                     }
             })
@@ -90,7 +90,10 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             let snapShot = (discoverCellView as DiscoverTansitionViewCellProtocol).snapShotForDiscoverTransition()
             snapShot.frame.origin.x += leftUpperPoint.x
             snapShot.frame.origin.y += leftUpperPoint.y
+            let backgroundViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
+            backgroundViewContainer.backgroundColor = UIColor.darkGrayColor()
             containerView.addSubview(snapShot)
+            containerView.insertSubview(backgroundViewContainer, belowSubview: fromView)
 
             UIView.animateWithDuration(self.animationDuration, delay: 0, options: .CurveEaseInOut, animations: {
                 snapShot.transform = CGAffineTransformMakeScale(self.animationScale, self.animationScale)
@@ -102,6 +105,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
                         snapShot.removeFromSuperview()
                         discoverDetailView.hidden = false
                         fromView.transform = CGAffineTransformIdentity
+                        backgroundViewContainer.removeFromSuperview()
                         transitionContext.completeTransition(true)
 
                     }

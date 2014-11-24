@@ -30,8 +30,6 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
                 self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             }});
         self.collectionView.dataSource = self
-        
-
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -41,17 +39,27 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     override func viewDidLoad(){
         super.viewDidLoad()
         
+        self.title = "RESTAURANT"
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "left.png"), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem.init(customView: leftButton)
+        let leftBarButton = UIBarButtonItem.init(customView: leftButton)
+        let negativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+        negativeSpacer.width = -10
+        self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton];
         autoLayoutSubviews()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "RESTAURANT NAME"
+//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = true
     }
     
     override func viewDidAppear(animated: Bool) {

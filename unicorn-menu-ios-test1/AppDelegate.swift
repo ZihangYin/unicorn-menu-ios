@@ -12,15 +12,19 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+//    var filterWindow: UIWindow?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     
+//        self.filterWindow = UIWindow(frame: UIScreen.mainScreen().bounds)
+//        self.filterWindow!.rootViewController =  FilterViewController()
+//        self.filterWindow?.makeKeyAndVisible()
+        
         // Override point for customization after application launch.
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window!.backgroundColor = UIColor.whiteColor();
+        self.window!.backgroundColor = UIColor.darkGrayColor();
         
-        var discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
-        
+        var discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)        
         let discoverLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         discoverLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         discoverLayout.columnCount = 2
@@ -31,7 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         UINavigationBar.appearance().translucent = false
         UINavigationBar.appearance().barStyle = .Black
-
+        
         self.window!.rootViewController = discoverNavigationController
         self.window!.makeKeyAndVisible()
         
