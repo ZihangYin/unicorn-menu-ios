@@ -48,7 +48,7 @@ class DiscoverNavigationController : UINavigationController {
         
         finalOrigin.x = 0
         frame.origin = finalOrigin
-        UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut, animations: {
+        UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: {
             self.window!.transform = CGAffineTransformIdentity
             self.window!.frame = frame
             }, completion: nil)
@@ -79,11 +79,10 @@ class DiscoverNavigationController : UINavigationController {
             
             var frame = self.window!.frame
             frame.origin = finalOrigin
-            UIView.animateWithDuration(0.3, delay: 0.0, options: .CurveEaseOut, animations: {
+            UIView.animateWithDuration(0.7, delay: 0.0, usingSpringWithDamping: 0.75, initialSpringVelocity: 0.0, options: .CurveEaseOut, animations: {
                 self.window!.transform = CGAffineTransformIdentity
                 self.window!.frame = frame
                 }, completion: nil)
-            
         default:
             break
         }

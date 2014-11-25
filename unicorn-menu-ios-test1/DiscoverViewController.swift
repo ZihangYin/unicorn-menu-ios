@@ -28,10 +28,15 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 self.interactiveTransition = nil
                 return discoverNavigationTransition
             } else if (fromVC.isKindOfClass(FilterViewController)) {
-                let menuNavigationTransition = MenuNavigationTransition()
-                menuNavigationTransition.presenting = true
+                let filterNavigationTransition = FilterNavigationTransition()
+                filterNavigationTransition.presenting = true
                 self.interactiveTransition = nil
-                return menuNavigationTransition
+                return filterNavigationTransition
+            } else if (fromVC.isKindOfClass(MenuViewController)){
+                let menuTransition = MenuTransition()
+                menuTransition.presenting = true
+                self.interactiveTransition = nil
+                return menuTransition
             } else {
                 assertionFailure("non supported navigation transition animation")
             }
@@ -43,9 +48,14 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 self.interactiveTransition = nil
                 return discoverNavigationTransition
             } else if (toVC.isKindOfClass(FilterViewController)) {
-                let menuNavigationTransition = MenuNavigationTransition()
-                menuNavigationTransition.presenting = false
-                return menuNavigationTransition
+                let filterNavigationTransition = FilterNavigationTransition()
+                filterNavigationTransition.presenting = false
+                return filterNavigationTransition
+            } else if (toVC.isKindOfClass(MenuViewController)){
+                let menuTransition = MenuTransition()
+                menuTransition.presenting = false
+                self.interactiveTransition = nil
+                return menuTransition
             } else {
                 assertionFailure("non supported navigation transition animation")
             }
@@ -214,7 +224,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
 
-        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 40)
+        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 45)
         return itemSize
     }
     
@@ -257,7 +267,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0
             let menuViewController = MenuViewController(collectionViewLayout: layout)
-            self.navigationController!.pushViewController(menuViewController, animated: false)
+            self.navigationController!.pushViewController(menuViewController, animated: true)
         }
     }
     

@@ -30,7 +30,8 @@ class QRCodeReaderView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        layer.addSublayer(overlay)
+        self.backgroundColor = UIColor.redColor()
+        layer.addSublayer(overlay)     
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -44,8 +45,7 @@ class QRCodeReaderView: UIView {
         if innerRect.width != minSize {
             innerRect.origin.x   += (innerRect.width - minSize) / 2
             innerRect.size.width = minSize
-        }
-        else if innerRect.height != minSize {
+        } else if innerRect.height != minSize {
             innerRect.origin.y    += (innerRect.height - minSize) / 2
             innerRect.size.height = minSize
         }
@@ -55,6 +55,4 @@ class QRCodeReaderView: UIView {
         overlay.path  = UIBezierPath(roundedRect: offsetRect
             , cornerRadius: 5).CGPath
     }
-    
-    
 }

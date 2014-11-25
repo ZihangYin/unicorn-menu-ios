@@ -96,8 +96,14 @@ class MenuViewController: UICollectionViewController, UICollectionViewDataSource
         }
     }
     
+    override func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < UIApplication.sharedApplication().statusBarFrame.size.height {
+            self.navigationController!.popViewControllerAnimated(true)
+        }
+    }
+    
     func backButtonPressed() {
-        self.navigationController!.popViewControllerAnimated(false)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     func handleLongPressImage(longPress: UILongPressGestureRecognizer) {

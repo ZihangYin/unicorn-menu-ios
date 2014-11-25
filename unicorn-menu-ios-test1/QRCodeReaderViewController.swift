@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 import AVFoundation
 
 
@@ -129,25 +130,17 @@ class QRCodeReaderViewController: UIViewController, AVCaptureMetadataOutputObjec
         
         cancelButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         cancelButton.setTitle(cancelButtonTitle, forState: .Normal)
-        cancelButton.setTitleColor(UIColor.grayColor(), forState: .Highlighted)
+        cancelButton.titleLabel!.font = UIFont(name: "ProximaNova-Bold", size: 18)
+        cancelButton.setTitleColor(UIColor.whiteColor(), forState: .Highlighted)
         cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: .TouchUpInside)
         view.addSubview(cancelButton)
     }
     
     private func setupAutoLayoutConstraints() {
         let views = ["cameraView": cameraView, "cancelButton": cancelButton]
-        
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[cameraView][cancelButton(40)]|", options: .allZeros, metrics: nil, views: views))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cameraView]|", options: .allZeros, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-60-[cameraView]-20-[cancelButton(40)]-80-|", options: .allZeros, metrics: nil, views: views))
+        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cameraView]-|", options: .allZeros, metrics: nil, views: views))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[cancelButton]-|", options: .allZeros, metrics: nil, views: views))
-//
-//        let views = ["topLayoutGuide": self.topLayoutGuide, "cameraView": self.cameraView, "cancelButton": self.cancelButton]
-//        
-//        self.cancelButton.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cancelButton(40)]", options: .allZeros, metrics: nil, views: views))
-//        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-50-[cameraView]", options: .allZeros, metrics: nil, views: views))
-//        self.view.addConstraint(NSLayoutConstraint(item: self.cancelButton, attribute: .CenterY, relatedBy: .Equal, toItem: self.cameraView, attribute: .CenterY, multiplier: 1, constant: 20))
-//        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[cameraView]|", options: .allZeros, metrics: nil, views: views))
-//        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cancelButton]-20-|", options: .allZeros, metrics: nil, views: views))
     }
     
     private func startScanning() {

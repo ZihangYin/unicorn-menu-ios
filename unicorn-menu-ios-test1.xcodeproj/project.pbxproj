@@ -110,7 +110,7 @@
 		3A0E8B981A1F1907000149AA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B971A1F1907000149AA /* logo.png */; };
 		3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */; };
 		3A0FB0DF1A2168BE000C5C84 /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0DE1A2168BE000C5C84 /* left.png */; };
-		3A0FB0E11A21B6E8000C5C84 /* MenuNavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E01A21B6E8000C5C84 /* MenuNavigationTransition.swift */; };
+		3A0FB0E11A21B6E8000C5C84 /* FilterNavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */; };
 		3A0FB0E51A22886F000C5C84 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E41A22884D000C5C84 /* ProximaNova-Regular.otf */; };
 		3A0FB0E71A228896000C5C84 /* right_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E61A228896000C5C84 /* right_big.png */; };
 		3A0FB0E91A22B251000C5C84 /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E81A22B251000C5C84 /* FilterView.swift */; };
@@ -149,6 +149,7 @@
 		3A76EA551A0CB909006DFD9A /* app_icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EA501A0CB909006DFD9A /* app_icon_180.png */; };
 		3AB0F3591A15F5FE00EC5CDB /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = 3AB0F3581A15F5FE00EC5CDB /* up.png */; };
 		3AB452961A19E524006E4264 /* DiscoverDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AB452951A19E524006E4264 /* DiscoverDetailViewController.swift */; };
+		3ABB63C31A2484550092027A /* MenuTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ABB63C21A2484550092027A /* MenuTransition.swift */; };
 		3ACB63A31A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */; };
 		3ADB8F381A0EF4000002F130 /* DiscoverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F371A0EF4000002F130 /* DiscoverViewCell.swift */; };
 		3ADB8F3C1A0F62590002F130 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F3B1A0F62590002F130 /* CollectionReusableView.swift */; };
@@ -277,7 +278,7 @@
 		3A0E8B971A1F1907000149AA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		3A0FB0DE1A2168BE000C5C84 /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
-		3A0FB0E01A21B6E8000C5C84 /* MenuNavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuNavigationTransition.swift; sourceTree = "<group>"; };
+		3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationTransition.swift; sourceTree = "<group>"; };
 		3A0FB0E41A22884D000C5C84 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		3A0FB0E61A228896000C5C84 /* right_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_big.png; sourceTree = "<group>"; };
 		3A0FB0E81A22B251000C5C84 /* FilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
@@ -321,6 +322,7 @@
 		3A76EA501A0CB909006DFD9A /* app_icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_180.png; sourceTree = "<group>"; };
 		3AB0F3581A15F5FE00EC5CDB /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		3AB452951A19E524006E4264 /* DiscoverDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverDetailViewController.swift; sourceTree = "<group>"; };
+		3ABB63C21A2484550092027A /* MenuTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MenuTransition.swift; sourceTree = "<group>"; };
 		3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewHorizontalFlowLayout.swift; sourceTree = "<group>"; };
 		3ADB8F371A0EF4000002F130 /* DiscoverViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewCell.swift; sourceTree = "<group>"; };
 		3ADB8F3B1A0F62590002F130 /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
@@ -384,7 +386,8 @@
 				3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */,
 				3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */,
 				3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */,
-				3A0FB0E01A21B6E8000C5C84 /* MenuNavigationTransition.swift */,
+				3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */,
+				3ABB63C21A2484550092027A /* MenuTransition.swift */,
 				3A18AF471A2090500094256D /* MenuViewCell.swift */,
 				3A18AF451A208C2C0094256D /* MenuViewController.swift */,
 				3A0FB0E81A22B251000C5C84 /* FilterView.swift */,
@@ -831,6 +834,7 @@
 				3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */,
 				3A18AF461A208C2C0094256D /* MenuViewController.swift in Sources */,
 				3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */,
+				3ABB63C31A2484550092027A /* MenuTransition.swift in Sources */,
 				3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */,
 				3A0FB0E91A22B251000C5C84 /* FilterView.swift in Sources */,
 				3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */,
@@ -847,7 +851,7 @@
 				3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */,
 				3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */,
 				3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */,
-				3A0FB0E11A21B6E8000C5C84 /* MenuNavigationTransition.swift in Sources */,
+				3A0FB0E11A21B6E8000C5C84 /* FilterNavigationTransition.swift in Sources */,
 				3A21E3DD1A2320250092BE39 /* QRCodeScannerViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

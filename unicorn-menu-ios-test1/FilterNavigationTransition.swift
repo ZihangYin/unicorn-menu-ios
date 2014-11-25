@@ -9,7 +9,7 @@
 import UIKit
 import Foundation
 
-class MenuNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
+class FilterNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
    
     var duration = 0.35
     var rotateAngle = M_PI_4
@@ -55,11 +55,7 @@ class MenuNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning 
                     toViewController.view.layer.transform = CATransform3DIdentity;
                     })
                 }, completion:{(Bool) in
-                    if transitionContext.transitionWasCancelled() {
-                        transitionContext.completeTransition(false)
-                    } else {
-                        transitionContext.completeTransition(true)
-                    }
+                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
         } else {
             toViewController.view.layer.transform = leftViewTransfrom;
@@ -79,14 +75,9 @@ class MenuNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning 
                     toViewController.view.alpha = 1
                 })
                 }, completion:{(Bool) in
-                    if transitionContext.transitionWasCancelled() {
-                        transitionContext.completeTransition(false)
-                    } else {
-                        transitionContext.completeTransition(true)
-                    }
+                    transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })   
         }
-        
     }
 }
 
