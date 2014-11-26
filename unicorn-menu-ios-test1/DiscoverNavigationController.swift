@@ -98,14 +98,12 @@ class DiscoverNavigationController : UINavigationController {
                 let toViewController = self.viewControllers[childrenCount - 2] as DiscoverViewControllerProtocol
                 let toView = toViewController.transitionCollectionView()
                 let popView  = popViewController.collectionView
-                let indexPath = popView.currentIndexPath()
-                toViewController.viewWillAppearWithIndex(indexPath.row)
-                toView.setCurrentIndexPath(popView.currentIndexPath())
+                let indexPath = popView.fromIndexPath()
+                toViewController.viewWillAppearWithIndex(indexPath.item)
+                toView.setToIndexPath(indexPath)
             }
         }
         return super.popViewControllerAnimated(animated)!
     }
-    
-    
 }
 

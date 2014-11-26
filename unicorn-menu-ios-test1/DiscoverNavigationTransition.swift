@@ -37,7 +37,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             let discoverDetailView = (fromViewController as DiscoverNavigationTransitionProtocol).transitionCollectionView()
             
             discoverView.layoutIfNeeded()
-            let indexPath = discoverDetailView.currentIndexPath()
+            let indexPath = discoverDetailView.fromIndexPath()
             let discoverDetailCellView = discoverView.cellForItemAtIndexPath(indexPath)
             var leftUpperPoint = discoverDetailCellView!.convertPoint(CGPointZero, toView: containerView)
             
@@ -80,7 +80,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             containerView.addSubview(fromView)
             containerView.addSubview(toView)
             
-            let indexPath = discoverView.currentIndexPath()
+            let indexPath = discoverView.toIndexPath()
             let discoverCellView = discoverView.cellForItemAtIndexPath(indexPath)
             
             let leftUpperPoint = discoverCellView!.convertPoint(CGPointZero, toView: containerView)

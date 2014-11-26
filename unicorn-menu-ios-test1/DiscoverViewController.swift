@@ -167,14 +167,14 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 40
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
-//        discoverCell.cuisineImage.image = self.images[indexPath.item]
+        discoverCell.cuisineImage.image = self.images[indexPath.item]
 
-        dispatch_async(dispatch_get_main_queue(), {
-            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
-                discoverCell.cuisineImage.image = self.images[indexPath.item]
-           }
-        })
-
+//        dispatch_async(dispatch_get_main_queue(), {
+//            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
+//                discoverCell.cuisineImage.image = self.images[indexPath.item]
+//           }
+//        })
+        
         discoverCell.setNeedsLayout()
         let tapImage = UITapGestureRecognizer.init(target: self, action: "handleTapImage:")
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
@@ -200,7 +200,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             position = .Top
         }
         let currentIndexPath = NSIndexPath(forRow: index, inSection: 0)
-        collectionView.setCurrentIndexPath(currentIndexPath)
+        collectionView.setToIndexPath(currentIndexPath)
         if index < 2 {
             collectionView.setContentOffset(CGPointZero, animated: false)
         } else {
@@ -249,7 +249,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
             discoverDetailViewController.images = self.images
-            self.collectionView.setCurrentIndexPath(indexPath)
+            self.collectionView.setToIndexPath(indexPath)
             self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
         }
     }

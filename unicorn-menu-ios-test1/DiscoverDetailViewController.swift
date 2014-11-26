@@ -23,7 +23,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.pagingEnabled = true
-        self.collectionView.setCurrentIndexPath(indexPath)
+        self.collectionView.setToIndexPath(indexPath)
         self.collectionView.registerClass(DiscoverDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DiscoverDetailCollectionViewCell")
         self.collectionView.performBatchUpdates({self.collectionView.reloadData()}, completion: {finished in
             if finished {
