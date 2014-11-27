@@ -88,6 +88,12 @@ class MenuViewController: UICollectionViewController, UICollectionViewDataSource
         return menuCell;
     }
     
+    override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
+        let restaurantDetailViewController = CuisineDetailViewController(image: UIImage(named: "dish00.jpg")!, cuisineName: "\(self.name[indexPath.item]) \(indexPath.item)", cuisineDescription: "DESCRIPTION")
+        restaurantDetailViewController.title = self.name[indexPath.item]
+        self.navigationController!.pushViewController(restaurantDetailViewController, animated: false)
+    }
+    
     // pragma mark - UIScrollViewdelegate methods
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         for visibleCell in self.collectionView.visibleCells() as [MenuViewCell] {

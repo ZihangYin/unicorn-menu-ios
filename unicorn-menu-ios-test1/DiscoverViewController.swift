@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-@objc protocol DiscoverViewControllerProtocol : DiscoverNavigationTransitionProtocol{
+@objc protocol DiscoverViewControllerProtocol : DiscoverNavigationTransitionProtocol {
     func viewWillAppearWithIndex(index : NSInteger)
 }
 
@@ -262,7 +262,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             
             let layout = UICollectionViewFlowLayout()
-            layout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 160)
+            layout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 120)
             layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
             layout.minimumLineSpacing = 0
             layout.minimumInteritemSpacing = 0

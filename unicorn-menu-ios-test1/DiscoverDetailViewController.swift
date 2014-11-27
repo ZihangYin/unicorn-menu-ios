@@ -22,6 +22,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         super.init(collectionViewLayout:layout)
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView.backgroundColor = UIColor.darkGrayColor()
         self.collectionView.pagingEnabled = true
         self.collectionView.setToIndexPath(indexPath)
         self.collectionView.registerClass(DiscoverDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DiscoverDetailCollectionViewCell")

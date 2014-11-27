@@ -31,7 +31,7 @@ class MenuViewCell: UICollectionViewCell {
         self.contentView.clipsToBounds = true;
 
         // Add image subviewse
-        self.imageView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, 200)
+        self.imageView.frame = CGRectMake(self.bounds.origin.x, self.bounds.origin.y, self.bounds.size.width, 180)
         self.imageView.userInteractionEnabled = true
         self.imageView.contentMode = .ScaleAspectFill
         self.imageView.clipsToBounds = false

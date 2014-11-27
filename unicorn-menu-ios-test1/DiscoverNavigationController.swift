@@ -94,7 +94,7 @@ class DiscoverNavigationController : UINavigationController {
             
             let childrenCount = self.viewControllers.count
             //viewWillAppearWithPageIndex
-            if let popViewController = self.viewControllers[childrenCount - 1] as? UICollectionViewController {
+            if let popViewController = self.viewControllers[childrenCount - 1] as? DiscoverDetailViewController {
                 let toViewController = self.viewControllers[childrenCount - 2] as DiscoverViewControllerProtocol
                 let toView = toViewController.transitionCollectionView()
                 let popView  = popViewController.collectionView
