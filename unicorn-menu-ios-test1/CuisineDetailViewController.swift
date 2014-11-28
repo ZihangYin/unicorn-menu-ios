@@ -8,25 +8,36 @@
 
 import UIKit
 
-let reuseIdentifier = "RestaurantDetailCell"
-
-class CuisineDetailViewController: UIViewController {
-
-    var index: Int!
-    var cuisineDetailView: CuisineDetailView!
+class CuisineDetailViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    required init(image: UIImage, cuisineName: String, cuisineDescription: String) {
-        super.init()
-        cuisineDetailView = CuisineDetailView(frame: self.view.frame, backgroundImage: image, blurredImage: nil, viewDistanceFromBottom: 50, foregroundView: self.customView(cuisineName, cuisineDescription: cuisineDescription))
-        self.view.addSubview(cuisineDetailView)
+    lazy var images: [UIImage] = {
+        var _images = [UIImage]()
+        for index in 0 ... 6 {
+            let imageName = String(format: "dish%02ld.jpg", index)
+            _images.append(UIImage(named: imageName)!)
+        }
+        return _images
+        }()
+    
+    override init(collectionViewLayout layout: UICollectionViewLayout!) {
+        super.init(collectionViewLayout:layout)
+        
+        self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView.backgroundColor = UIColor.darkGrayColor()
+        self.collectionView.pagingEnabled = true
+        self.collectionView.registerClass(RestaurantDetailViewCell.self, forCellWithReuseIdentifier: "RestaurantDetailCell")
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
     }
+ 
+//    required init(image: UIImage, cuisineName: String, cuisineDescription: String) {
+//        super.init()
+//        cuisineDetailView = CuisineDetailView(frame: self.view.frame, backgroundImage: image, blurredImage: nil, viewDistanceFromBottom: 50, foregroundView: self.customView(cuisineName, cuisineDescription: cuisineDescription))
+//        self.view.addSubview(cuisineDetailView)
+//    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-    
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     override func viewDidLoad() {
@@ -43,22 +54,48 @@ class CuisineDetailViewController: UIViewController {
         self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton]
     }
     
-    override func viewWillLayoutSubviews() {
-        self.cuisineDetailView.setTopLayoutGuideLength(self.topLayoutGuide.length)
-    }
+//    override func viewWillLayoutSubviews() {
+//        self.cuisineDetailView.setTopLayoutGuideLength(self.topLayoutGuide.length)
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
+    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        var cuisineDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("RestaurantDetailCell", forIndexPath: indexPath) as RestaurantDetailViewCell
+        
+        cuisineDetailCell.cuisineDetailView._backgroundImage = images[indexPath.item]
+        cuisineDetailCell.cuisineDetailView._foregroundView = self.customView("Cuisine Name \(indexPath.item)", cuisineDescription: "Cuisine Description \(indexPath.item)")
+        cuisineDetailCell.backgroundColor = UIColor.blueColor()
+        cuisineDetailCell.setNeedsLayout()
+        return cuisineDetailCell
+    }
+    
+    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return images.count
+    }
+    
+    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+        return 1
+    }
+
+    override func scrollViewDidScroll(scrollView: UIScrollView) {
+        var index = 0
+        for visibleCell in self.collectionView.visibleCells() as [RestaurantDetailViewCell] {
+            let ratio = (self.collectionView.contentOffset.x - visibleCell.frame.origin.x) / scrollView.frame.size.width;
+            visibleCell.cuisineDetailView.scrollHorizontalRatio(ratio)
+        }
+    }
+    
     func backButtonPressed() {
-        self.navigationController!.popViewControllerAnimated(false)
+        self.navigationController!.popViewControllerAnimated(true)
     }
     
     private func customView(cuisineName: String, cuisineDescription: String) -> UIView {
         
-        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height - 60))
+        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.width, self.view.frame.height))
         
 //        var cuisineNameLabel = UILabel(frame: CGRectMake(5, 5, self.view.frame.width - 10, 120))
         var cuisineNameLabel = UILabel()
@@ -98,7 +135,7 @@ class CuisineDetailViewController: UIViewController {
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cuisineName]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[cuisineDescriptionBox]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cuisineDescription]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraint(NSLayoutConstraint(item: cuisineDescriptionBox, attribute: .Top, relatedBy: .Equal, toItem: cuisineDescriptionLabel, attribute: .Top, multiplier: 1, constant: 0))
+        view.addConstraint(NSLayoutConstraint(item: cuisineDescriptionLabel, attribute: .Top, relatedBy: .Equal, toItem: cuisineDescriptionBox, attribute: .Top, multiplier: 1, constant: 20))
         view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-10-[cuisineName]-10-[cuisineDescriptionBox(>=150)]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         
         return view

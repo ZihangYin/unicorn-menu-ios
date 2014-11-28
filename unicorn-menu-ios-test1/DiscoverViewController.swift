@@ -37,6 +37,10 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 menuTransition.presenting = true
                 self.interactiveTransition = nil
                 return menuTransition
+            } else if (fromVC.isKindOfClass(CuisineDetailViewController)) {
+                let cuisineDetailTransition = FilterNavigationTransition()
+                cuisineDetailTransition.presenting = false
+                return cuisineDetailTransition
             } else {
                 assertionFailure("non supported navigation transition animation")
             }
@@ -56,6 +60,12 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 menuTransition.presenting = false
                 self.interactiveTransition = nil
                 return menuTransition
+            } else if (toVC.isKindOfClass(CuisineDetailViewController)) {
+                let cuisineDetailTransition = FilterNavigationTransition()
+                cuisineDetailTransition.presenting = true
+                self.interactiveTransition = nil
+                
+                return cuisineDetailTransition
             } else {
                 assertionFailure("non supported navigation transition animation")
             }
@@ -123,10 +133,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), forBarMetrics: UIBarMetrics.Default)
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        
+     
         var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
         edgePanRecognizer.edges = .Left;
         self.view.addGestureRecognizer(edgePanRecognizer)
@@ -260,13 +267,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         }
         let point = tap.locationInView(self.collectionView)
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
-            
-            let layout = UICollectionViewFlowLayout()
-            layout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 120)
-            layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-            layout.minimumLineSpacing = 0
-            layout.minimumInteritemSpacing = 0
-            let menuViewController = MenuViewController(collectionViewLayout: layout)
+            let menuViewController = MenuViewController()
             self.navigationController!.pushViewController(menuViewController, animated: true)
         }
     }

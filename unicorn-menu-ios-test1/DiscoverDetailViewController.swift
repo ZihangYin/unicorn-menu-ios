@@ -18,7 +18,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     var pullingOffset = CGPointZero
     var page: CGFloat = 0.0
     
-    init(collectionViewLayout layout: UICollectionViewLayout!, currentIndexPath indexPath: NSIndexPath){
+    init(collectionViewLayout layout: UICollectionViewLayout!, currentIndexPath indexPath: NSIndexPath) {
         super.init(collectionViewLayout:layout)
         
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)

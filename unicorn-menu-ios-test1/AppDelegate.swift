@@ -25,9 +25,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window!.backgroundColor = UIColor.darkGrayColor();
         
         var discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
-        discoverNavigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
-        UINavigationBar.appearance().translucent = false
-        UINavigationBar.appearance().barStyle = .Black
+//        discoverNavigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
+//        UINavigationBar.appearance().translucent = true
+//        UINavigationBar.appearance().barStyle = .Black
         
         let discoverLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
         discoverLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)

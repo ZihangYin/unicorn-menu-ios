@@ -12,7 +12,7 @@ var BLUR_RADIUS: CGFloat = 14
 var BLUR_TINT_COLOR = UIColor(white: 0, alpha: 0.3)
 var BLUR_DELTA_FACTOR: CGFloat = 1.4
 var MAX_BACKGROUND_MOVEMENT_VERTICAL: CGFloat = 30
-var MAX_BACKGROUND_MOVEMENT_HORIZONTAL: CGFloat = 0
+var MAX_BACKGROUND_MOVEMENT_HORIZONTAL: CGFloat = 20
 
 var TOP_FADING_HEIGHT_HALF: CGFloat = 10
 
@@ -23,15 +23,31 @@ var TOP_FADING_HEIGHT_HALF: CGFloat = 10
 
 class CuisineDetailView: UIView, UIScrollViewDelegate {
     
-    var _backgroundImage:UIImage!
+    var _backgroundImage: UIImage! {
+        didSet {
+            self.setBackgroundImage(_backgroundImage)
+        }
+    }
+    
+    var _foregroundView: UIView! {
+        didSet {
+            self.constructForegroundView()
+            self.constructBottomShadow()
+        }
+    }
+    
+    var _viewDistanceFromBottom: CGFloat = 60 {
+        didSet {
+            self.setViewDistanceFromBottom()
+        }
+    }
+    
     var _blurredBackgroundImage: UIImage!
-    var _viewDistanceFromBottom: CGFloat!
-    var _foregroundView: UIView!
     var _topLayoutGuideLength: UIView!
     var _foregroundScrollView: UIScrollView!
     var delegate: BlurScrollViewDelegate?
-    override var frame: CGRect{
-        set{
+    override var frame: CGRect {
+        set {
             self.setFrame(newValue)
         }
         get {
@@ -70,13 +86,20 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
         self.autoresizingMask = UIViewAutoresizing.FlexibleHeight | UIViewAutoresizing.FlexibleWidth
         
         self.constructBackgroundView()
+        self.constructBackgroundImageView()
         self.constructForegroundView()
         self.constructBottomShadow()
         self.constructTopShadow()
 
     }
     
-    func scrollHorizontalRatio(ratio:CGFloat){
+    func setBackgroundImage(image: UIImage) {
+        _blurredBackgroundImage = _backgroundImage.applyBlurWithRadius(BLUR_RADIUS, tintColor: BLUR_TINT_COLOR, saturationDeltaFactor: BLUR_DELTA_FACTOR, maskImage: nil)
+        self.constructBackgroundView()
+        self.constructBackgroundImageView()
+    }
+    
+    func scrollHorizontalRatio(ratio: CGFloat){
         _backgroundScrollView.setContentOffset(CGPointMake(MAX_BACKGROUND_MOVEMENT_HORIZONTAL + ratio * MAX_BACKGROUND_MOVEMENT_HORIZONTAL, _backgroundScrollView.contentOffset.y), animated: false)
     }
     
@@ -146,22 +169,23 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
     }
     
     func constructBackgroundView() {
-        println(self.frame)
         _backgroundScrollView = UIScrollView(frame: self.frame)
         _backgroundScrollView.userInteractionEnabled = false
-        
         _backgroundScrollView.contentSize = CGSizeMake(self.frame.size.width + 2 * MAX_BACKGROUND_MOVEMENT_HORIZONTAL, self.frame.size.height + MAX_BACKGROUND_MOVEMENT_VERTICAL)
         // DIFF
-        _backgroundScrollView?.setContentOffset(CGPointMake(MAX_BACKGROUND_MOVEMENT_HORIZONTAL, 0), animated: false)
+        _backgroundScrollView.setContentOffset(CGPointMake(MAX_BACKGROUND_MOVEMENT_HORIZONTAL, 0), animated: false)
+        
+        _backgroundScrollView.backgroundColor = UIColor.greenColor()
         self.addSubview(_backgroundScrollView)
         
         _constraintView = UIView(frame: CGRectMake(0, 0, self.frame.size.width + 2 * MAX_BACKGROUND_MOVEMENT_HORIZONTAL, self.frame.size.height + MAX_BACKGROUND_MOVEMENT_VERTICAL))
         _backgroundScrollView.addSubview(_constraintView)
         
-        constructBackgroundImageView()
     }
     
     func constructBackgroundImageView() {
+        _constraintView.backgroundColor = UIColor.redColor()
+        
         _backgroundImageView = UIImageView(image: _backgroundImage)
         _backgroundImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         _backgroundImageView.contentMode = UIViewContentMode.ScaleAspectFill
@@ -188,6 +212,7 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
         _foregroundScrollView.showsVerticalScrollIndicator = false
         _foregroundScrollView.showsHorizontalScrollIndicator = false
         _foregroundContainerView.addSubview(_foregroundScrollView)
+        
 //        
 //        let tapRecognizer = UITapGestureRecognizer.init(target: self, action: "foregroundTapped:")
 //        _foregroundScrollView.addGestureRecognizer(tapRecognizer)
@@ -222,13 +247,12 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
     
     func constructBottomShadow(){
         _bottomShadowLayer?.removeFromSuperlayer()
-        _bottomShadowLayer = self.createTopMaskWithSize(CGSizeMake(self.frame.size.width, _viewDistanceFromBottom), startFadeAt: 0, endAt: _viewDistanceFromBottom, topColor: UIColor(white: 0, alpha: 0), botColor: UIColor(white: 0, alpha: 0.8))
+        _bottomShadowLayer = self.createTopMaskWithSize(CGSizeMake(self.frame.size.width, _viewDistanceFromBottom), startFadeAt: 0, endAt: _viewDistanceFromBottom, topColor: UIColor(white: 0, alpha: 0.0), botColor: UIColor(white: 0, alpha: 0.8))
         _bottomShadowLayer.frame = CGRectOffset((_bottomShadowLayer.bounds), 0, self.frame.size.height - _viewDistanceFromBottom)
         self.layer.insertSublayer(_bottomShadowLayer, below: _foregroundContainerView.layer)
     }
     
-    func setViewDistanceFromBottom(viewDistanceFromBottom: CGFloat){
-        _viewDistanceFromBottom = viewDistanceFromBottom
+    func setViewDistanceFromBottom(){
         _foregroundView.frame = CGRectOffset(_foregroundView.bounds, (_foregroundScrollView.frame.size.width - _foregroundView.bounds.size.width)/2, _foregroundScrollView.frame.size.height - _foregroundScrollView.contentInset.top - _viewDistanceFromBottom)
         _foregroundScrollView.contentSize = CGSizeMake(self.frame.size.width, _foregroundView.frame.origin.y + _foregroundView.frame.size.height)
         
@@ -262,20 +286,11 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
         
         delegate?.blurScrollView!(self, didChangedToFrame: bound)
     }
-    
-    func foregroundTapped(tapRecognizer:UITapGestureRecognizer){
-        if (tapRecognizer.state != .Ended) {
-            return
-        }
-        let tappedPoint = tapRecognizer.locationInView(_foregroundScrollView)
-        if tappedPoint.y < _foregroundScrollView.frame.size.height {
-            var ratio:CGFloat = _foregroundScrollView.contentOffset.y == -_foregroundScrollView.contentInset.top ? 1 : 0
-            _foregroundScrollView.setContentOffset(CGPointMake(0, ratio * _foregroundView.frame.origin.y - _foregroundScrollView.contentInset.top), animated: true)
-        }
-    }
 
     func scrollViewDidScroll(scrollView: UIScrollView!) {
-        var ratio = (scrollView.contentOffset.y + _foregroundScrollView.contentInset.top)/(_foregroundScrollView.frame.size.height - _foregroundScrollView.contentInset.top - _viewDistanceFromBottom)
+        let height = min(_foregroundScrollView.frame.size.height, _foregroundView.frame.size.height)
+        
+        var ratio = (scrollView.contentOffset.y + _foregroundScrollView.contentInset.top)/(height - _foregroundScrollView.contentInset.top - _viewDistanceFromBottom)
         ratio = ratio < 0 ? 0 : ratio
         ratio = ratio > 1 ? 1 : ratio
         

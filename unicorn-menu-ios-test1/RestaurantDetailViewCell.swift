@@ -75,6 +75,7 @@ class RestaurantDetailForegroundView: UIView {
 class RestaurantDetailViewCell: UICollectionViewCell {
 
     var cuisineDetailView: CuisineDetailView!
+    var pulledAction : ((offset : CGPoint) -> Void)?
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -83,10 +84,9 @@ class RestaurantDetailViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.backgroundColor = UIColor.darkGrayColor()
-        cuisineDetailView = CuisineDetailView(frame: self.frame)
-        cuisineDetailView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.backgroundColor = UIColor.whiteColor()
+        cuisineDetailView = CuisineDetailView(frame: self.contentView.frame)
         self.addSubview(cuisineDetailView)
     }
+    
 }
