@@ -18,7 +18,15 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     var restaurantImages = [UIImage(named: "restaurant0.jpg")!, UIImage(named: "restaurant1.jpg")!]
     var slide = 0
     var restaurantImageView: UIImageView!
+    var restaurantView: UIView!
+    var restaurantLogo: UIImageView!
+    var hourLabel: UILabel!
+    var phoneLabel: UILabel!
+    var restaurantAddressView: UIView!
+    var addressLabel: UILabel!
     var collectionView: UICollectionView!
+    var backgroundScrollView: UIScrollView!
+    var constraintView: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +38,61 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         self.title = "RESTAURANT"
         
+        self.backgroundScrollView = UIScrollView()
+        self.backgroundScrollView.alwaysBounceVertical = true
+        self.backgroundScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.backgroundScrollView.delegate = self
+        self.backgroundScrollView.tag = 1
+        self.view.addSubview(backgroundScrollView)
+        
+        self.constraintView = UIView()
+        self.constraintView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.backgroundScrollView.addSubview(self.constraintView)
+        
         self.restaurantImageView = UIImageView()
         self.restaurantImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.restaurantImageView.contentMode = .ScaleAspectFill
-        self.view.addSubview(self.restaurantImageView)
+        self.restaurantImageView.clipsToBounds = true
+        self.constraintView.addSubview(self.restaurantImageView)
+        
+        self.restaurantView = UIView()
+        self.restaurantView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.restaurantView.backgroundColor = UIColor(white: 0.0, alpha: 0.25)
+        self.constraintView.addSubview(self.restaurantView)
+
+        self.restaurantAddressView = UIView()
+        self.restaurantAddressView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.restaurantAddressView.backgroundColor = UIColor(white: 0.0, alpha: 0.25)
+        self.constraintView.addSubview(self.restaurantAddressView)
+        
+        self.restaurantLogo = UIImageView(image: UIImage(named: "logo.png"))
+        self.restaurantLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.restaurantLogo.clipsToBounds = true
+        self.restaurantView.addSubview(self.restaurantLogo)
+        
+        self.hourLabel = UILabel()
+        self.hourLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.hourLabel.text = "Hours: 9am - 9pm"
+        self.hourLabel.font = UIFont(name: "ProximaNova-Regular", size: 16)
+        self.hourLabel.textAlignment = .Center
+        self.hourLabel.textColor = UIColor.whiteColor()
+        self.restaurantView.addSubview(self.hourLabel)
+        
+        self.phoneLabel = UILabel()
+        self.phoneLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.phoneLabel.text = "Tel: 9196274749"
+        self.phoneLabel.font = UIFont(name: "ProximaNova-Regular", size: 16)
+        self.phoneLabel.textAlignment = .Center
+        self.phoneLabel.textColor = UIColor.whiteColor()
+        self.restaurantView.addSubview(self.phoneLabel)
+        
+        self.addressLabel = UILabel()
+        self.addressLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.addressLabel.text = "4535 12th Ave. NE, Seattle, WA 98101"
+        self.addressLabel.font = UIFont(name: "ProximaNova-Regular", size: 16)
+        self.addressLabel.textAlignment = .Center
+        self.addressLabel.textColor = UIColor.whiteColor()
+        self.restaurantAddressView.addSubview(self.addressLabel)
         
         let layout = UICollectionViewFlowLayout()
         layout.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, 120)
@@ -48,7 +107,7 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.collectionView.backgroundColor = UIColor.darkGrayColor()
         self.collectionView.showsVerticalScrollIndicator = false;
         self.collectionView.directionalLockEnabled = true
-        self.view.addSubview(self.collectionView)
+        self.constraintView.addSubview(self.collectionView)
         
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "left.png"), forState: UIControlState.Normal)
@@ -78,6 +137,10 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         super.viewWillAppear(animated)
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "RESTAURANT NAME"
 //        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = true
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
     }
     
     // pragma mark - UICollectionViewDataSource
@@ -135,12 +198,14 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
             visibleCell.imageOffset = CGPointMake(0.0, yOffset);
         }
     }
-//    
-//    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
-//        if scrollView.contentOffset.y < UIApplication.sharedApplication().statusBarFrame.size.height {
-//            self.navigationController!.popViewControllerAnimated(true)
-//        }
-//    }
+    
+    func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
+        if (scrollView.tag == 1) {
+            if scrollView.contentOffset.y < UIApplication.sharedApplication().statusBarFrame.size.height {
+                self.navigationController!.popViewControllerAnimated(true)
+            }
+        }
+    }
     
     func backButtonPressed() {
         self.navigationController!.popViewControllerAnimated(true)
@@ -150,7 +215,6 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         let point = longPress.locationInView(self.collectionView)
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             let menuCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? MenuViewCell
-            
                 switch (longPress.state) {
                 case .Began, .Changed:
                     menuCell?.imageView.layer.backgroundColor = UIColor.blackColor().CGColor
@@ -177,10 +241,37 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
 
     private func autoLayoutSubviews() {
-        var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView, "restaurantImageView": self.restaurantImageView]
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.view.addConstraint(NSLayoutConstraint(item: self.restaurantImageView, attribute: .Height, relatedBy: .Equal, toItem: self.view, attribute: .Height, multiplier: 0.4, constant: 0))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantImageView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[restaurantImageView]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[backgroundScrollView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["backgroundScrollView": self.backgroundScrollView]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[backgroundScrollView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["topLayoutGuide": self.topLayoutGuide, "backgroundScrollView": self.backgroundScrollView]))
+        
+        self.backgroundScrollView.addConstraint(NSLayoutConstraint(item: self.constraintView, attribute: .Width, relatedBy: .Equal, toItem: self.backgroundScrollView, attribute: .Width, multiplier: 1, constant: 0))
+        self.backgroundScrollView.addConstraint(NSLayoutConstraint(item: self.constraintView, attribute: .Height, relatedBy: .Equal, toItem: self.backgroundScrollView, attribute: .Height, multiplier: 1, constant: 0))
+        
+        var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView, "restaurantImageView": self.restaurantImageView, "restaurantView": self.restaurantView, "restaurantAddressView": restaurantAddressView]
+        self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.constraintView.addConstraint(NSLayoutConstraint(item: self.restaurantImageView, attribute: .Height, relatedBy: .Equal, toItem: self.constraintView, attribute: .Height, multiplier: 0.36, constant: 0))
+        self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantImageView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[restaurantImageView]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.constraintView.addConstraint(NSLayoutConstraint(item: self.restaurantView, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantImageView, attribute: .Height, multiplier: 0.8, constant: 0))
+        self.constraintView.addConstraint(NSLayoutConstraint(item: self.restaurantView, attribute: .Top, relatedBy: .Equal, toItem: self.restaurantImageView, attribute: .Top, multiplier: 1, constant: 0))
+        self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantAddressView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.constraintView.addConstraint(NSLayoutConstraint(item: self.restaurantAddressView, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantImageView, attribute: .Height, multiplier: 0.2, constant: 0))
+        self.constraintView.addConstraint(NSLayoutConstraint(item: self.restaurantAddressView, attribute: .Bottom, relatedBy: .Equal, toItem: self.restaurantImageView, attribute: .Bottom, multiplier: 1, constant: 0))
+       
+        self.restaurantLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[restaurantLogoView(80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["restaurantLogoView": self.restaurantLogo]))
+        self.restaurantLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[restaurantLogoView(80)]", options: NSLayoutFormatOptions(0), metrics: nil, views: ["restaurantLogoView": self.restaurantLogo]))
+        
+        viewsDictionary = ["hourLabel": self.hourLabel, "phoneLabel": self.phoneLabel, "addressLabel": self.addressLabel, "restaurantLogoView": self.restaurantLogo, "restaurantView": self.restaurantView, "restaurantAddressView": restaurantAddressView]
+        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[restaurantLogoView]-20-[hourLabel]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[restaurantLogoView]-20-[phoneLabel]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.hourLabel, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantLogo, attribute: .Height, multiplier: 0.5, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.phoneLabel, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantLogo, attribute: .Height, multiplier: 0.5, constant: 0))
+        
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.hourLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.phoneLabel, attribute: .Top, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantLogo, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantAddressView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[addressLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.restaurantAddressView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[addressLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 }

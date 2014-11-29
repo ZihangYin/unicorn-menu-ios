@@ -36,7 +36,7 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
         }
     }
     
-    var _viewDistanceFromBottom: CGFloat = 60 {
+    var _viewDistanceFromBottom: CGFloat = 44 {
         didSet {
             self.setViewDistanceFromBottom()
         }
@@ -174,8 +174,6 @@ class CuisineDetailView: UIView, UIScrollViewDelegate {
         _backgroundScrollView.contentSize = CGSizeMake(self.frame.size.width + 2 * MAX_BACKGROUND_MOVEMENT_HORIZONTAL, self.frame.size.height + MAX_BACKGROUND_MOVEMENT_VERTICAL)
         // DIFF
         _backgroundScrollView.setContentOffset(CGPointMake(MAX_BACKGROUND_MOVEMENT_HORIZONTAL, 0), animated: false)
-        
-        _backgroundScrollView.backgroundColor = UIColor.greenColor()
         self.addSubview(_backgroundScrollView)
         
         _constraintView = UIView(frame: CGRectMake(0, 0, self.frame.size.width + 2 * MAX_BACKGROUND_MOVEMENT_HORIZONTAL, self.frame.size.height + MAX_BACKGROUND_MOVEMENT_VERTICAL))

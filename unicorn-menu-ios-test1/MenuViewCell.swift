@@ -42,7 +42,7 @@ class MenuViewCell: UICollectionViewCell {
         self.text.textColor = UIColor.whiteColor()
         self.text.shadowColor = UIColor.blackColor()
         self.text.shadowOffset = CGSizeMake(0, 1.0)
-
+ 
         contentView.addSubview(self.imageView)
         contentView.addSubview(self.text)
     }

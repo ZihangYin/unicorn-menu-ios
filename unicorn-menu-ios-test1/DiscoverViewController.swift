@@ -187,9 +187,9 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
 
         let tapRestaurantLogo = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
-        discoverCell.logoView.addGestureRecognizer(tapRestaurantLogo)
-        let tapRestaurantName = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
-        discoverCell.restaurantName.addGestureRecognizer(tapRestaurantName)
+        discoverCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
+//        let tapRestaurantName = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+//        discoverCell.restaurantName.addGestureRecognizer(tapRestaurantName)
 
         return discoverCell
     }
