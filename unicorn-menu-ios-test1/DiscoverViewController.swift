@@ -85,8 +85,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 0 ... 99 {
-            let imageName = String(format: "FICDDemoImage%03ld.jpg", index)
+        for index in 1 ... 39 {
+            let imageName = String(format: "dish%02ld.jpg", index)
             _images.append(UIImage(named: imageName)!)
         }
         return _images
@@ -100,7 +100,6 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-       
         (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "list.png"), forState: UIControlState.Normal)
@@ -175,6 +174,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
         discoverCell.cuisineImage.image = self.images[indexPath.item]
+        discoverCell.cuisineLikesLabel.text = String(1000 - indexPath.item)
 
 //        dispatch_async(dispatch_get_main_queue(), {
 //            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
@@ -231,7 +231,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
 
-        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 45)
+        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 60)
         return itemSize
     }
     

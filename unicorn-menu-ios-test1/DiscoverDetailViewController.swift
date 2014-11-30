@@ -31,6 +31,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
                 self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             }});
         self.collectionView.dataSource = self
+        self.collectionView.showsHorizontalScrollIndicator = false
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -81,12 +82,18 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverDetailCollectionViewCell", forIndexPath: indexPath) as DiscoverDetailCollectionViewCell
-        discoverDetailCell.image = self.images[indexPath.item]
-        discoverDetailCell.name = "cuisine name \(indexPath.item)"
+        discoverDetailCell.cuisineImage = self.images[indexPath.item]
+        discoverDetailCell.cuisineName = "CUISINE NAME \(indexPath.item)"
+        discoverDetailCell.restaurantName = "RESTAURANT NAME \(indexPath.item)"
+        discoverDetailCell.cuisineLikes =  String(1000 - indexPath.item)
         discoverDetailCell.pulledAction = {offset in
             self.pullingOffset = offset
             self.navigationController!.popViewControllerAnimated(true)
         }
+        discoverDetailCell.tappedAction = {() -> Void in
+            self.navigationController!.pushViewController(MenuViewController(), animated: true)
+        }
+        
         discoverDetailCell.setNeedsLayout()
         return discoverDetailCell
     }

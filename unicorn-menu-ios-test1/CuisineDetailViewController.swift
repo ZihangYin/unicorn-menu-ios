@@ -13,7 +13,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
         for index in 0 ... 6 {
-            let imageName = String(format: "dish%02ld.jpg", index)
+            let imageName = String(format: "cuisine%02ld.jpg", index)
             _images.append(UIImage(named: imageName)!)
         }
         return _images
@@ -163,11 +163,9 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         var cuisinePriceLabel = UILabel()
         cuisinePriceLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         cuisinePriceLabel.text = "$" + String(arc4random()%20 + 15)
-        cuisinePriceLabel.font = UIFont(name: "ProximaNova-Regualr", size: 22)
+        cuisinePriceLabel.font = UIFont(name: "ProximaNova-Light", size: 22)
         cuisinePriceLabel.textAlignment = .Left
         cuisinePriceLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
-        cuisinePriceLabel.numberOfLines = 20
-        cuisinePriceLabel.lineBreakMode = .ByWordWrapping
         cuisinePriceLabel.textColor = UIColor.whiteColor()
         
         var cuisineDescriptionBox = UIView()

@@ -201,7 +201,7 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {
         if (scrollView.tag == 1) {
-            if scrollView.contentOffset.y < UIApplication.sharedApplication().statusBarFrame.size.height {
+            if scrollView.contentOffset.y < -80 {
                 self.navigationController!.popViewControllerAnimated(true)
             }
         }
@@ -268,9 +268,9 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.hourLabel, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantLogo, attribute: .Height, multiplier: 0.5, constant: 0))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.phoneLabel, attribute: .Height, relatedBy: .Equal, toItem: self.restaurantLogo, attribute: .Height, multiplier: 0.5, constant: 0))
         
-        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.hourLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
-        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.phoneLabel, attribute: .Top, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
-        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantLogo, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.hourLabel, attribute: .Bottom, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 10))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.phoneLabel, attribute: .Top, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 10))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantLogo, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 10))
         self.restaurantAddressView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[addressLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.restaurantAddressView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[addressLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
