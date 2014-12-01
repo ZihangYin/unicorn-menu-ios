@@ -13,79 +13,11 @@ import UIKit
     func viewWillAppearWithIndex(index : NSInteger)
 }
 
-class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDelegate {
-    
-    var discoverColumnWidth: Float?
-    var interactiveTransition: UIViewControllerInteractiveTransitioning?
-    
-    func navigationController(navigationController: UINavigationController!, animationControllerForOperation operation: UINavigationControllerOperation, fromViewController fromVC: UIViewController!, toViewController toVC: UIViewController!) -> UIViewControllerAnimatedTransitioning!{
-        switch operation {
-        case .Pop:
-            if (fromVC.isKindOfClass(DiscoverDetailViewController)) {
-                let discoverNavigationTransition = DiscoverNavigationTransition()
-                discoverNavigationTransition.presenting = true
-                discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
-                self.interactiveTransition = nil
-                return discoverNavigationTransition
-            } else if (fromVC.isKindOfClass(FilterViewController)) {
-                let filterNavigationTransition = FilterNavigationTransition()
-                filterNavigationTransition.presenting = true
-                self.interactiveTransition = nil
-                return filterNavigationTransition
-            } else if (fromVC.isKindOfClass(MenuViewController)){
-                let menuTransition = MenuTransition()
-                menuTransition.presenting = true
-                self.interactiveTransition = nil
-                return menuTransition
-            } else if (fromVC.isKindOfClass(CuisineDetailViewController)) {
-                let cuisineDetailTransition = FilterNavigationTransition()
-                cuisineDetailTransition.presenting = false
-                return cuisineDetailTransition
-            } else {
-                assertionFailure("non supported navigation transition animation")
-            }
-        case .Push:
-            if (toVC.isKindOfClass(DiscoverDetailViewController)) {
-                let discoverNavigationTransition = DiscoverNavigationTransition()
-                discoverNavigationTransition.presenting = false
-                discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
-                self.interactiveTransition = nil
-                return discoverNavigationTransition
-            } else if (toVC.isKindOfClass(FilterViewController)) {
-                let filterNavigationTransition = FilterNavigationTransition()
-                filterNavigationTransition.presenting = false
-                return filterNavigationTransition
-            } else if (toVC.isKindOfClass(MenuViewController)){
-                let menuTransition = MenuTransition()
-                menuTransition.presenting = false
-                self.interactiveTransition = nil
-                return menuTransition
-            } else if (toVC.isKindOfClass(CuisineDetailViewController)) {
-                let cuisineDetailTransition = FilterNavigationTransition()
-                cuisineDetailTransition.presenting = true
-                self.interactiveTransition = nil
-                
-                return cuisineDetailTransition
-            } else {
-                assertionFailure("non supported navigation transition animation")
-            }
-        default:
-            assertionFailure("non supported navigation transition animation")
-            break
-        }
-    }
-    
-    func navigationController(navigationController: UINavigationController,
-        interactionControllerForAnimationController: UIViewControllerAnimatedTransitioning) -> UIViewControllerInteractiveTransitioning? {
-           return self.interactiveTransition;
-    }
-}
-
 class DiscoverViewController: UICollectionViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverViewControllerProtocol {
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 1 ... 39 {
+        for index in 1 ... 30 {
             let imageName = String(format: "dish%02ld.jpg", index)
             _images.append(UIImage(named: imageName)!)
         }

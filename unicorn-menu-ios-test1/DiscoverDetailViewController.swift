@@ -60,8 +60,8 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "RESTAURANT NAME"
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = true
+        
+        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -88,6 +88,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         discoverDetailCell.cuisineLikes =  String(1000 - indexPath.item)
         discoverDetailCell.pulledAction = {offset in
             self.pullingOffset = offset
+            (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = nil
             self.navigationController!.popViewControllerAnimated(true)
         }
         discoverDetailCell.tappedAction = {() -> Void in
@@ -124,6 +125,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     }
     
     func backButtonPressed() {
+        (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = nil
         self.navigationController!.popViewControllerAnimated(true)
     }
     

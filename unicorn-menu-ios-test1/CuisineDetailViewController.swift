@@ -31,12 +31,6 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
     }
- 
-//    required init(image: UIImage, cuisineName: String, cuisineDescription: String) {
-//        super.init()
-//        cuisineDetailView = CuisineDetailView(frame: self.view.frame, backgroundImage: image, blurredImage: nil, viewDistanceFromBottom: 50, foregroundView: self.customView(cuisineName, cuisineDescription: cuisineDescription))
-//        self.view.addSubview(cuisineDetailView)
-//    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -78,7 +72,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         var cuisineDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("CuisineDetailViewCell", forIndexPath: indexPath) as CuisineDetailViewCell
         
         cuisineDetailCell.cuisineDetailView._backgroundImage = images[indexPath.item]
-        cuisineDetailCell.cuisineDetailView._foregroundView = self.customView("Cuisine Name \(indexPath.item)", cuisineDescription: "Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans")
+        cuisineDetailCell.cuisineDetailView._foregroundView = self.customView("Cuisine Name \(indexPath.item)", cuisineDescription: "Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans", cuisineLikes: 100 - Int(indexPath.item))
         cuisineDetailCell.backgroundColor = UIColor.blueColor()
         cuisineDetailCell.setNeedsLayout()
         return cuisineDetailCell
@@ -106,7 +100,6 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     }
 
     func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
-        let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
         var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
         progress = min(1.0, max(0.0, progress))
         switch (recognizer.state) {
@@ -125,7 +118,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         }
     }
     
-    private func customView(cuisineName: String, cuisineDescription: String) -> UIView {
+    private func customView(cuisineName: String, cuisineDescription: String, cuisineLikes: Int) -> UIView {
         
         let view = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 300))
         
@@ -148,7 +141,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         
         var cuisineLikesLabel = UILabel()
         cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineLikesLabel.text = String(arc4random()%1000)
+        cuisineLikesLabel.text = String(cuisineLikes)
         cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 18)
         cuisineLikesLabel.textAlignment = .Center
         cuisineLikesLabel.textColor = UIColor.whiteColor()

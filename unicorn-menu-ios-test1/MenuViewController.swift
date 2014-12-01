@@ -25,8 +25,10 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     var restaurantAddressView: UIView!
     var addressLabel: UILabel!
     var collectionView: UICollectionView!
-    var backgroundScrollView: UIScrollView!
+//    var backgroundScrollView: UIScrollView!
     var constraintView: UIView!
+    
+    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,16 +40,9 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
         self.title = "RESTAURANT"
         
-        self.backgroundScrollView = UIScrollView()
-        self.backgroundScrollView.alwaysBounceVertical = true
-        self.backgroundScrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.backgroundScrollView.delegate = self
-        self.backgroundScrollView.tag = 1
-        self.view.addSubview(backgroundScrollView)
-        
         self.constraintView = UIView()
         self.constraintView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.backgroundScrollView.addSubview(self.constraintView)
+        self.view.addSubview(self.constraintView)
         
         self.restaurantImageView = UIImageView()
         self.restaurantImageView.setTranslatesAutoresizingMaskIntoConstraints(false)
@@ -135,8 +130,14 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).title.text = "RESTAURANT NAME"
-//        (self.navigationController!.navigationBar as DiscoverNavigationBarView).filterButton.hidden = true
+        
+        var panRecognizer = UIPanGestureRecognizer.init(target: self, action: "handlePanRecognizer:")
+        self.view.addGestureRecognizer(panRecognizer)
+        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
+        edgePanRecognizer.edges = .Left;
+        self.collectionView.addGestureRecognizer(edgePanRecognizer)
+        (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = percentDrivenInteractiveTransition
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -173,9 +174,6 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath){
-//        let restaurantDetailViewController = CuisineDetailViewController(image: UIImage(named: "dish00.jpg")!, cuisineName: "\(self.name[indexPath.item]) \(indexPath.item)", cuisineDescription: "DESCRIPTION")
-//        restaurantDetailViewController.title = self.name[indexPath.item]
-//        self.navigationController!.pushViewController(restaurantDetailViewController, animated: false)
         let cuisineDetailLayout = UICollectionViewFlowLayout()
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
@@ -208,6 +206,7 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
     
     func backButtonPressed() {
+        (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = nil
         self.navigationController!.popViewControllerAnimated(true)
     }
     
@@ -228,6 +227,44 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         }
     }
     
+    func handlePanRecognizer(recognizer: UIPanGestureRecognizer) {
+        var progress: CGFloat = recognizer.translationInView(self.view).y / self.view.bounds.size.height
+        switch (recognizer.state) {
+        case .Began:
+            self.navigationController!.popViewControllerAnimated(true)
+        case .Changed:
+            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
+        case .Ended, .Cancelled:
+            if (progress > 0.3) {
+                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
+                self.view.removeGestureRecognizer(recognizer)
+            } else {
+                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
+            }
+        default:
+            break;
+        }
+    }
+    
+    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {      
+        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
+        progress = min(1.0, max(0.0, progress))
+        switch (recognizer.state) {
+        case .Began:
+            self.navigationController!.popViewControllerAnimated(true)
+        case .Changed:
+            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
+        default:
+            if recognizer.velocityInView(self.view).x >= 0 {
+                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
+                self.view.removeGestureRecognizer(recognizer)
+            } else {
+                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
+            }
+            break;
+        }
+    }
+    
     func changeSlide() {
         if (slide > restaurantImages.count - 1) {
             slide = 0
@@ -241,11 +278,9 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
     }
 
     private func autoLayoutSubviews() {
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[backgroundScrollView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["backgroundScrollView": self.backgroundScrollView]))
-        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[backgroundScrollView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["topLayoutGuide": self.topLayoutGuide, "backgroundScrollView": self.backgroundScrollView]))
-        
-        self.backgroundScrollView.addConstraint(NSLayoutConstraint(item: self.constraintView, attribute: .Width, relatedBy: .Equal, toItem: self.backgroundScrollView, attribute: .Width, multiplier: 1, constant: 0))
-        self.backgroundScrollView.addConstraint(NSLayoutConstraint(item: self.constraintView, attribute: .Height, relatedBy: .Equal, toItem: self.backgroundScrollView, attribute: .Height, multiplier: 1, constant: 0))
+   
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[constraintView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["constraintView": self.constraintView]))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[constraintView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["topLayoutGuide": self.topLayoutGuide, "constraintView": self.constraintView]))
         
         var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView, "restaurantImageView": self.restaurantImageView, "restaurantView": self.restaurantView, "restaurantAddressView": restaurantAddressView]
         self.constraintView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))

@@ -10,7 +10,7 @@ import UIKit
 
 class MenuTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
-    var presentingDuration = 0.35
+    var presentingDuration = 0.45
     var nonPresentingDuration = 0.7
     var presenting = false
     
@@ -31,7 +31,7 @@ class MenuTransition: NSObject, UIViewControllerAnimatedTransitioning {
             containerView.addSubview(toViewController.view)
             containerView.addSubview(fromViewController.view)
             
-            UIView.animateWithDuration(self.presentingDuration, delay: 0.0, options: .CurveEaseIn, animations: {
+            UIView.animateWithDuration(self.presentingDuration, delay: 0.0, options: .CurveEaseInOut, animations: {
                 fromViewController.view.transform = CGAffineTransformMakeTranslation(0, toViewController.view.frame.size.height)
                 fromViewController.view.alpha = 0
                 toViewController.view.alpha = 1
