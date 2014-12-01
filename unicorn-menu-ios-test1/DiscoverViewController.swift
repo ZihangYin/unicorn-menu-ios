@@ -105,7 +105,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 40
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
-        discoverCell.cuisineImage.image = self.images[indexPath.item]
+        discoverCell.setCuisineImage(self.images[indexPath.item])
         discoverCell.cuisineLikesLabel.text = String(1000 - indexPath.item)
 
 //        dispatch_async(dispatch_get_main_queue(), {
@@ -120,8 +120,6 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 
         let tapRestaurantLogo = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
         discoverCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
-//        let tapRestaurantName = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
-//        discoverCell.restaurantName.addGestureRecognizer(tapRestaurantName)
 
         return discoverCell
     }

@@ -22,6 +22,16 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     var restaurantView = UIView()
     var cuisineLikesLogo = UIImageView(image: UIImage(named: "liked.png"))
     var cuisineLikesLabel = UILabel()
+    private var aspectConstraint : NSLayoutConstraint? {
+        didSet {
+            if oldValue != nil {
+                cuisineImage.removeConstraint(oldValue!)
+            }
+            if aspectConstraint != nil {
+                cuisineImage.addConstraint(aspectConstraint!)
+            }
+        }
+    }
     
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -79,7 +89,17 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         autoLayoutSubviews()
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        aspectConstraint = nil
+        
+    }
     
+    func setCuisineImage(image: UIImage) {
+        let aspect = image.size.width / image.size.height
+        aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
+        cuisineImage.image = image
+    }
     
     // pragma mark - DiscoverTansitionViewCellProtocol
     func snapShotForDiscoverTransition() -> UIView! {
@@ -109,7 +129,7 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 5))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLogo, attribute: .Right, relatedBy: .Equal, toItem: self.cuisineLikesLabel, attribute: .Left, multiplier: 1, constant: 0))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: self.cuisineLikesLogo, attribute: .CenterY, multiplier: 1, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-5-[cuisineName]-0-[cuisineLikesLogo]-0-[bottomBorderForCuisineName]-4.5-[restaurantView]-5-|",
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-5-[cuisineName]-0-[cuisineLikesLogo]-0-[bottomBorderForCuisineName]-4.5-[restaurantView]",
             options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 }
