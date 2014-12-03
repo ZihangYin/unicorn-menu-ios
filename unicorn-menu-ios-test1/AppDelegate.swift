@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
         self.window!.backgroundColor = UIColor.darkGrayColor();
         
-        var discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
+        let discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
 //        discoverNavigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
 //        UINavigationBar.appearance().translucent = true
 //        UINavigationBar.appearance().barStyle = .Black

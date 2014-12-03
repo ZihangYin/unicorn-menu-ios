@@ -23,7 +23,7 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 discoverNavigationTransition.animationScale = UIScreen.mainScreen().bounds.size.width / CGFloat(discoverColumnWidth!)
                 return discoverNavigationTransition
             } else if (fromVC.isKindOfClass(FilterViewController)) {
-                let filterNavigationTransition = FilterNavigationTransition()
+                let filterNavigationTransition = MenuTransition()
                 filterNavigationTransition.presenting = true
                 self.interactiveTransition = nil
                 return filterNavigationTransition
@@ -46,8 +46,9 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 self.interactiveTransition = nil
                 return discoverNavigationTransition
             } else if (toVC.isKindOfClass(FilterViewController)) {
-                let filterNavigationTransition = FilterNavigationTransition()
+                let filterNavigationTransition = MenuTransition()
                 filterNavigationTransition.presenting = false
+                self.interactiveTransition = nil
                 return filterNavigationTransition
             } else if (toVC.isKindOfClass(MenuViewController)){
                 let menuTransition = MenuTransition()

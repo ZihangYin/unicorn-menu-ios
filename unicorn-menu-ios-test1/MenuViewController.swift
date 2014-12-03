@@ -42,6 +42,7 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         
         self.constraintView = UIView()
         self.constraintView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.constraintView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         self.view.addSubview(self.constraintView)
         
         self.restaurantImageView = UIImageView()
@@ -99,7 +100,7 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.registerClass(MenuViewCell.self, forCellWithReuseIdentifier: "MenuCell")
-        self.collectionView.backgroundColor = UIColor.darkGrayColor()
+        self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         self.collectionView.showsVerticalScrollIndicator = false;
         self.collectionView.directionalLockEnabled = true
         self.constraintView.addSubview(self.collectionView)
@@ -107,10 +108,10 @@ class MenuViewController: UIViewController, UICollectionViewDataSource, UICollec
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "left.png"), forState: UIControlState.Normal)
         leftButton.addTarget(self, action: "backButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
-        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40)
+        leftButton.frame = CGRectMake(0.0, 0.0, 55, 55)
         let leftBarButton = UIBarButtonItem.init(customView: leftButton)
         let negativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
-        negativeSpacer.width = -10
+        negativeSpacer.width = -25
         self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton]
         
         autoLayoutSubviews()

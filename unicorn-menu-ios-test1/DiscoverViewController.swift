@@ -25,7 +25,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     }()
     
     let navigationDelegate = DiscoverNavigationControllerDelegate()
-    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
+//    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
     var columnWidth: CGFloat?
     
     
@@ -34,24 +34,26 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         
         (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        leftButton.setImage(UIImage(named: "list.png"), forState: UIControlState.Normal)
-        leftButton.frame = CGRectMake(0.0, 0.0, 40, 40);
+        leftButton.setImage(UIImage(named: "filter.png"), forState: UIControlState.Normal)
+        leftButton.frame = CGRectMake(0.0, 0.0, 64, 64);
         leftButton.addTarget(self, action: "leftButtonPressed", forControlEvents: UIControlEvents.TouchUpInside)
         let leftBarButton = UIBarButtonItem.init(customView: leftButton)
         let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
-        leftNegativeSpacer.width = -10
+        leftNegativeSpacer.width = -25
         self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton]
         (self.navigationController!.navigationBar as DiscoverNavigationBarView).scanButton.addTarget(self, action: "scanPressed", forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.title = "DISCOVER"
-        self.edgesForExtendedLayout = .None
+        let titleView = UIImageView(image: UIImage(named: "yumbook.png"))
+        self.navigationItem.titleView = titleView
         
+        self.edgesForExtendedLayout = .None
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.registerClass(DiscoverViewCell.self, forCellWithReuseIdentifier: "DiscoverCell")
-        self.collectionView.backgroundColor = UIColor.darkGrayColor()
+        self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         self.collectionView.directionalLockEnabled = true
+        self.collectionView.showsVerticalScrollIndicator = false
         
         autoLayoutSubviews()
         self.collectionView.reloadData()
@@ -65,10 +67,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
      
-        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
-        edgePanRecognizer.edges = .Left;
-        self.view.addGestureRecognizer(edgePanRecognizer)
-        self.navigationDelegate.interactiveTransition = percentDrivenInteractiveTransition
+//        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
+//        edgePanRecognizer.edges = .Left;
+//        self.view.addGestureRecognizer(edgePanRecognizer)
+//        self.navigationDelegate.interactiveTransition = percentDrivenInteractiveTransition
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -98,11 +100,23 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
         let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
         
-        discoverCell.restaurantName.text = "RESTAURANT NAME \(indexPath.item)"
-        discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 40
+        if (Int(indexPath.item)%3 == 0) {
+            discoverCell.restaurantName.text = "RESTAURANT";
+        } else if (Int(indexPath.item)%3 == 1) {
+            discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+        } else {
+            discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+        }
+        discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 62
 
-        discoverCell.cuisineName.text = "CUISINE NAME \(indexPath.item)"
-        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 40
+        if (Int(indexPath.item)%3 == 0) {
+            discoverCell.cuisineName.text = "CUISINE NAME\(indexPath.item)";
+        } else if (Int(indexPath.item)%3 == 1) {
+            discoverCell.cuisineName.text = "CUISINE NAME CUISINE NAME \(indexPath.item)"
+        } else {
+            discoverCell.cuisineName.text = "CUISINE NAME CUISINE NAME CUISINE NAME CUISINE NAME \(indexPath.item)"
+        }
+        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 20
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
         discoverCell.setCuisineImage(self.images[indexPath.item])
@@ -154,14 +168,30 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         // Find the size that the string occupies when displayed with the given font.
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .ByWordWrapping
-        let restaurantText: NSString = "RESTAURANT NAME \(indexPath.item)"
-        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 40, CGFloat.max), options: .UsesLineFragmentOrigin,
+        var restaurantText: NSString!
+        if (Int(indexPath.item)%3 == 0) {
+            restaurantText = "RESTAURANT \(indexPath.item)";
+        } else if (Int(indexPath.item)%3 == 1) {
+            restaurantText = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+        } else {
+            restaurantText = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+        }
+        
+        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 62, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let cuisinetext = "CUISINE NAME \(indexPath.item)" as NSString
+        var cuisinetext: NSString!
+        if (Int(indexPath.item)%3 == 0) {
+            cuisinetext = "CUISINE NAME\(indexPath.item)";
+        } else if (Int(indexPath.item)%3 == 1) {
+            cuisinetext = "CUISINE NAME CUISINE NAME \(indexPath.item)"
+        } else {
+            cuisinetext = "CUISINE NAME CUISINE NAME CUISINE NAME CUISINE NAME \(indexPath.item)"
+        }
+        
         let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
 
-        let itemSize = CGSizeMake(columnWidth, ceil(restaurantBoundingSize.height) + imageHeight + ceil(cuisineBoundingSize.height) + 60)
+        let itemSize = CGSizeMake(columnWidth, max(40, ceil(restaurantBoundingSize.height)) + imageHeight + ceil(cuisineBoundingSize.height) + 42)
         return itemSize
     }
     
@@ -216,29 +246,30 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         }
     }
     
-    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
-        let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
-        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
-        progress = min(1.0, max(0.0, progress))
-        switch (recognizer.state) {
-        case .Began:
-            self.navigationController!.pushViewController(FilterViewController(), animated: true)
-        case .Changed:
-            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
-        default:
-            if recognizer.velocityInView(self.view).x >= 0 {
-                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
-                self.view.removeGestureRecognizer(recognizer)
-            } else {
-                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
-            }
-            break;
-        }
-    }
+//    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
+//        let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
+//        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
+//        progress = min(1.0, max(0.0, progress))
+//        switch (recognizer.state) {
+//        case .Began:
+//            self.navigationController!.pushViewController(FilterViewController(), animated: true)
+//        case .Changed:
+//            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
+//        default:
+//            if recognizer.velocityInView(self.view).x >= 0 {
+//                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
+//                self.view.removeGestureRecognizer(recognizer)
+//            } else {
+//                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
+//            }
+//            break;
+//        }
+//    }
     
     func leftButtonPressed() -> Void {
-        self.navigationDelegate.interactiveTransition  = nil
+//        self.navigationDelegate.interactiveTransition  = nil
         self.navigationController!.pushViewController(FilterViewController(), animated: true)
+        
     }
     
     func scanPressed() -> Void {

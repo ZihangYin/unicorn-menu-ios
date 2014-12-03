@@ -18,9 +18,8 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     var cuisineImage = UIImageView()
     var restaurantName = UILabel()
     var cuisineName = UILabel()
-    var bottomBorderForCuisineName = UIView()
     var restaurantView = UIView()
-    var cuisineLikesLogo = UIImageView(image: UIImage(named: "liked.png"))
+    var cuisineLikesLogo = UIImageView(image: UIImage(named: "heart.png"))
     var cuisineLikesLabel = UILabel()
     private var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -40,10 +39,16 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor =  UIColor.grayColor()
+        self.backgroundColor =  UIColor.whiteColor()
         
         self.logoView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.logoView.clipsToBounds = true
+        
+        let logoLayer = self.logoView.layer
+        logoLayer.cornerRadius = 20
+        logoLayer.borderWidth = 1
+        logoLayer.borderColor = UIColor(red: 0.8, green: 0.8, blue: 0.8, alpha: 1).CGColor
+        logoLayer.masksToBounds = true
      
         self.cuisineImage.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineImage.userInteractionEnabled = true
@@ -52,28 +57,24 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         self.cuisineName.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineName.numberOfLines = 10
         self.cuisineName.font = UIFont(name: "ProximaNova-Light", size: 12)
-        self.cuisineName.textAlignment = .Center
+        self.cuisineName.textAlignment = .Left
         self.cuisineName.lineBreakMode = .ByWordWrapping
-        self.cuisineName.textColor = UIColor.whiteColor()
+        self.cuisineName.textColor = UIColor.darkGrayColor()
         
         self.cuisineLikesLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineLikesLogo.clipsToBounds = true
         
         self.cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 8)
-        self.cuisineLikesLabel.textAlignment = .Center
-        self.cuisineLikesLabel.textColor = UIColor.whiteColor()
-        
-        self.bottomBorderForCuisineName = UIView()
-        self.bottomBorderForCuisineName.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.bottomBorderForCuisineName.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)
+        self.cuisineLikesLabel.textAlignment = .Left
+        self.cuisineLikesLabel.textColor = UIColor.darkGrayColor()
 
         self.restaurantName.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.restaurantName.numberOfLines = 10
         self.restaurantName.font = UIFont(name: "ProximaNova-Bold", size: 12)
-        self.restaurantName.textAlignment = .Center
+        self.restaurantName.textAlignment = .Left
         self.restaurantName.lineBreakMode = .ByWordWrapping
-        self.restaurantName.textColor = UIColor.whiteColor()
+        self.restaurantName.textColor = UIColor.blackColor()
         
         self.restaurantView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.restaurantView.addSubview(logoView)
@@ -81,7 +82,6 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         
         contentView.addSubview(cuisineImage)
         contentView.addSubview(cuisineName)
-        contentView.addSubview(bottomBorderForCuisineName)
         contentView.addSubview(restaurantView)
         contentView.addSubview(cuisineLikesLogo)
         contentView.addSubview(cuisineLikesLabel)
@@ -109,27 +109,33 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     }
     
     private func autoLayoutSubviews() {
-        var viewsDictionary = ["logoView": self.logoView, "restaurantName": self.restaurantName, "cuisineImage": self.cuisineImage, "cuisineName": self.cuisineName, "bottomBorderForCuisineName": self.bottomBorderForCuisineName,
+        var viewsDictionary = ["logoView": self.logoView, "restaurantName": self.restaurantName, "cuisineImage": self.cuisineImage, "cuisineName": self.cuisineName,
             "restaurantView": self.restaurantView, "cuisineLikesLogo": self.cuisineLikesLogo, "cuisineLikesLabel": self.cuisineLikesLabel]
         
-        self.logoView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[logoView(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.logoView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[logoView(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.logoView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[logoView(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.logoView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[logoView(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cuisineLikesLogo(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cuisineLikesLogo(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.bottomBorderForCuisineName.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bottomBorderForCuisineName(0.5)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         
-        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[restaurantName]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterX, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterX, multiplier: 1, constant: 0))
-        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[logoView]-5-[restaurantName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+//        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[restaurantName]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+//        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterX, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterX, multiplier: 1, constant: 0))
+//        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[logoView]-5-[restaurantName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+
+        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[logoView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantName, attribute: .Left, relatedBy: .Equal, toItem: self.logoView, attribute: .Right, multiplier: 1, constant: 5))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantName, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantView, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: self.restaurantName, attribute: .Height, multiplier: 1, constant: 0))
+        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantView, attribute: .Height, relatedBy: .GreaterThanOrEqual, toItem: self.logoView, attribute: .Height, multiplier: 1, constant: 0))
+
+        
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[cuisineName]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[bottomBorderForCuisineName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[cuisineName]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisineImage]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         
-        self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 5))
-        self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLogo, attribute: .Right, relatedBy: .Equal, toItem: self.cuisineLikesLabel, attribute: .Left, multiplier: 1, constant: 0))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-7-[cuisineLikesLogo]-0-[cuisineLikesLabel]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: self.cuisineLikesLogo, attribute: .CenterY, multiplier: 1, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-5-[cuisineName]-0-[cuisineLikesLogo]-0-[bottomBorderForCuisineName]-4.5-[restaurantView]",
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-5-[restaurantView]-5-[cuisineImage]-5-[cuisineName]-0-[cuisineLikesLogo]",
             options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 }
@@ -138,7 +144,7 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
     
     var cuisineImage = UIImageView()
     var cuisineName = UILabel()
-    var cuisineLikesLogo = UIImageView(image: UIImage(named: "liked.png"))
+    var cuisineLikesLogo = UIImageView(image: UIImage(named: "heart.png"))
     var cuisineLikesLabel = UILabel()
     private var aspectConstraint : NSLayoutConstraint? {
         didSet {
@@ -158,7 +164,7 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor =  UIColor.grayColor()
+        self.backgroundColor =  UIColor.whiteColor()
         
         self.cuisineImage.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineImage.userInteractionEnabled = true
@@ -167,17 +173,17 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
         self.cuisineName.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineName.numberOfLines = 10
         self.cuisineName.font = UIFont(name: "ProximaNova-Light", size: 12)
-        self.cuisineName.textAlignment = .Center
+        self.cuisineName.textAlignment = .Left
         self.cuisineName.lineBreakMode = .ByWordWrapping
-        self.cuisineName.textColor = UIColor.whiteColor()
+        self.cuisineName.textColor = UIColor.blackColor()
         
         self.cuisineLikesLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineLikesLogo.clipsToBounds = true
         
         self.cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 8)
-        self.cuisineLikesLabel.textAlignment = .Center
-        self.cuisineLikesLabel.textColor = UIColor.whiteColor()
+        self.cuisineLikesLabel.textAlignment = .Left
+        self.cuisineLikesLabel.textColor = UIColor.blackColor()
         
         contentView.addSubview(cuisineImage)
         contentView.addSubview(cuisineName)
@@ -211,11 +217,10 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cuisineLikesLogo(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cuisineLikesLogo(20)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
        
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[cuisineName]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[cuisineName]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisineImage]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         
-        self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 5))
-        self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLogo, attribute: .Right, relatedBy: .Equal, toItem: self.cuisineLikesLabel, attribute: .Left, multiplier: 1, constant: 0))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-7-[cuisineLikesLogo]-0-[cuisineLikesLabel]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: self.cuisineLikesLogo, attribute: .CenterY, multiplier: 1, constant: 0))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-10-[cuisineName]-0-[cuisineLikesLogo]",
             options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))

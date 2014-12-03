@@ -15,7 +15,6 @@
 		3A0EA4F81A2817D40047E1AA /* cuisine05.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0EA4F31A2817D40047E1AA /* cuisine05.jpg */; };
 		3A0EA4F91A2817D40047E1AA /* cuisine06.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0EA4F41A2817D40047E1AA /* cuisine06.jpg */; };
 		3A0EA4FF1A2825C80047E1AA /* restaurant0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0EA4FE1A2825C80047E1AA /* restaurant0.jpg */; };
-		3A0FB0DF1A2168BE000C5C84 /* left.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0DE1A2168BE000C5C84 /* left.png */; };
 		3A0FB0E11A21B6E8000C5C84 /* FilterNavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */; };
 		3A0FB0E51A22886F000C5C84 /* ProximaNova-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E41A22884D000C5C84 /* ProximaNova-Regular.otf */; };
 		3A0FB0E71A228896000C5C84 /* right_big.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0FB0E61A228896000C5C84 /* right_big.png */; };
@@ -42,6 +41,14 @@
 		3A21E3D91A230F180092BE39 /* QRCodeReaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3D81A230F180092BE39 /* QRCodeReaderView.swift */; };
 		3A21E3DB1A230FCF0092BE39 /* QRCodeReaderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3DA1A230FCF0092BE39 /* QRCodeReaderViewController.swift */; };
 		3A21E3DD1A2320250092BE39 /* QRCodeScannerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */; };
+		3A2791A81A2D852A006DF4C7 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3A2791A71A2D852A006DF4C7 /* LaunchScreen.xib */; };
+		3A2791AA1A2DB564006DF4C7 /* heart@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2791A91A2DB564006DF4C7 /* heart@3x.png */; };
+		3A2791AC1A2DB9B3006DF4C7 /* scan@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2791AB1A2DB9B3006DF4C7 /* scan@3x.png */; };
+		3A2791AE1A2DBA4A006DF4C7 /* menu@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2791AD1A2DBA4A006DF4C7 /* menu@3x.png */; };
+		3A2ADADA1A2EE97900D4505D /* yumbook@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADAD91A2EE97900D4505D /* yumbook@3x.png */; };
+		3A2ADADC1A2EEB0600D4505D /* barcode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */; };
+		3A2ADADE1A2EEB1200D4505D /* filter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADD1A2EEB1200D4505D /* filter@3x.png */; };
+		3A2ADAE01A2EF12900D4505D /* left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADF1A2EF12900D4505D /* left@3x.png */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
 		3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */; };
 		3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */; };
@@ -107,7 +114,6 @@
 		3ACB63A31A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */; };
 		3ADB8F381A0EF4000002F130 /* DiscoverViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F371A0EF4000002F130 /* DiscoverViewCell.swift */; };
 		3ADB8F3C1A0F62590002F130 /* CollectionReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F3B1A0F62590002F130 /* CollectionReusableView.swift */; };
-		3ADB8F3E1A0F6EB90002F130 /* scan.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB8F3D1A0F6EB90002F130 /* scan.png */; };
 		3ADB8F421A0F6EF00002F130 /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB8F411A0F6EF00002F130 /* map.png */; };
 		3ADB8F451A0F75670002F130 /* ProximaNova-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3ADB8F441A0F74E30002F130 /* ProximaNova-Light.otf */; };
 		3ADB8F4D1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */; };
@@ -136,7 +142,6 @@
 		3A0EA4F31A2817D40047E1AA /* cuisine05.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cuisine05.jpg; sourceTree = "<group>"; };
 		3A0EA4F41A2817D40047E1AA /* cuisine06.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cuisine06.jpg; sourceTree = "<group>"; };
 		3A0EA4FE1A2825C80047E1AA /* restaurant0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = restaurant0.jpg; sourceTree = "<group>"; };
-		3A0FB0DE1A2168BE000C5C84 /* left.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = left.png; sourceTree = "<group>"; };
 		3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterNavigationTransition.swift; sourceTree = "<group>"; };
 		3A0FB0E41A22884D000C5C84 /* ProximaNova-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Regular.otf"; sourceTree = "<group>"; };
 		3A0FB0E61A228896000C5C84 /* right_big.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = right_big.png; sourceTree = "<group>"; };
@@ -163,6 +168,14 @@
 		3A21E3D81A230F180092BE39 /* QRCodeReaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderView.swift; sourceTree = "<group>"; };
 		3A21E3DA1A230FCF0092BE39 /* QRCodeReaderViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeReaderViewController.swift; sourceTree = "<group>"; };
 		3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QRCodeScannerViewController.swift; sourceTree = "<group>"; };
+		3A2791A71A2D852A006DF4C7 /* LaunchScreen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
+		3A2791A91A2DB564006DF4C7 /* heart@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "heart@3x.png"; sourceTree = "<group>"; };
+		3A2791AB1A2DB9B3006DF4C7 /* scan@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "scan@3x.png"; sourceTree = "<group>"; };
+		3A2791AD1A2DBA4A006DF4C7 /* menu@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "menu@3x.png"; sourceTree = "<group>"; };
+		3A2ADAD91A2EE97900D4505D /* yumbook@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "yumbook@3x.png"; sourceTree = "<group>"; };
+		3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barcode@3x.png"; sourceTree = "<group>"; };
+		3A2ADADD1A2EEB1200D4505D /* filter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter@3x.png"; sourceTree = "<group>"; };
+		3A2ADADF1A2EF12900D4505D /* left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@3x.png"; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationController.swift; sourceTree = "<group>"; };
 		3A76EA231A0CB3D2006DFD9A /* unicorn-menu-ios-test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unicorn-menu-ios-test1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -170,7 +183,6 @@
 		3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3A76EA2A1A0CB3D2006DFD9A /* DiscoverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscoverViewController.swift; sourceTree = "<group>"; };
 		3A76EA2F1A0CB3D2006DFD9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
-		3A76EA321A0CB3D2006DFD9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		3A76EA381A0CB3D2006DFD9A /* unicorn-menu-ios-test1Tests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "unicorn-menu-ios-test1Tests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3A76EA3D1A0CB3D2006DFD9A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3A76EA3E1A0CB3D2006DFD9A /* unicorn_menu_ios_test1Tests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = unicorn_menu_ios_test1Tests.swift; sourceTree = "<group>"; };
@@ -233,7 +245,6 @@
 		3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewHorizontalFlowLayout.swift; sourceTree = "<group>"; };
 		3ADB8F371A0EF4000002F130 /* DiscoverViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverViewCell.swift; sourceTree = "<group>"; };
 		3ADB8F3B1A0F62590002F130 /* CollectionReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionReusableView.swift; sourceTree = "<group>"; };
-		3ADB8F3D1A0F6EB90002F130 /* scan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scan.png; sourceTree = "<group>"; };
 		3ADB8F411A0F6EF00002F130 /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = map.png; sourceTree = "<group>"; };
 		3ADB8F441A0F74E30002F130 /* ProximaNova-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Light.otf"; sourceTree = "<group>"; };
 		3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewWaterfallFlowLayout.swift; sourceTree = "<group>"; };
@@ -311,6 +322,7 @@
 				3A21E3DC1A2320250092BE39 /* QRCodeScannerViewController.swift */,
 				3A76EA2F1A0CB3D2006DFD9A /* Images.xcassets */,
 				3A76EA261A0CB3D2006DFD9A /* Supporting Files */,
+				3A2791A71A2D852A006DF4C7 /* LaunchScreen.xib */,
 			);
 			path = "unicorn-menu-ios-test1";
 			sourceTree = "<group>";
@@ -346,7 +358,6 @@
 				3AB4525C1A19D24D006E4264 /* images */,
 				3AB4525B1A19D241006E4264 /* icons */,
 				3AB4525A1A19D210006E4264 /* Fonts */,
-				3A76EA311A0CB3D2006DFD9A /* LaunchScreen.xib */,
 				3A76EA4B1A0CB8EC006DFD9A /* app_icons */,
 			);
 			name = Assets;
@@ -377,16 +388,21 @@
 		3AB4525B1A19D241006E4264 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A2ADADF1A2EF12900D4505D /* left@3x.png */,
+				3A2ADADD1A2EEB1200D4505D /* filter@3x.png */,
+				3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */,
+				3A2ADAD91A2EE97900D4505D /* yumbook@3x.png */,
+				3A2791AD1A2DBA4A006DF4C7 /* menu@3x.png */,
+				3A2791AB1A2DB9B3006DF4C7 /* scan@3x.png */,
+				3A2791A91A2DB564006DF4C7 /* heart@3x.png */,
 				3AACA4361A2977A300C0A251 /* like.png */,
 				3AACA4371A2977A300C0A251 /* liked.png */,
 				3A0FB0E61A228896000C5C84 /* right_big.png */,
 				3A21E3D61A230AE20092BE39 /* list.png */,
-				3A0FB0DE1A2168BE000C5C84 /* left.png */,
 				3A0E8B971A1F1907000149AA /* logo.png */,
 				3AE7ED181A181EA500ADF7DE /* down.png */,
 				3ADB8F411A0F6EF00002F130 /* map.png */,
 				3AB0F3581A15F5FE00EC5CDB /* up.png */,
-				3ADB8F3D1A0F6EB90002F130 /* scan.png */,
 			);
 			name = icons;
 			sourceTree = "<group>";
@@ -569,16 +585,18 @@
 				3AACA4711A299E0400C0A251 /* dish17.jpg in Resources */,
 				3A0EA4F71A2817D40047E1AA /* cuisine04.jpg in Resources */,
 				3A18AF371A208B750094256D /* image000.jpg in Resources */,
+				3A2ADAE01A2EF12900D4505D /* left@3x.png in Resources */,
+				3A2791A81A2D852A006DF4C7 /* LaunchScreen.xib in Resources */,
 				3AACA4621A299E0400C0A251 /* dish02.jpg in Resources */,
 				3ADB8F421A0F6EF00002F130 /* map.png in Resources */,
-				3ADB8F3E1A0F6EB90002F130 /* scan.png in Resources */,
 				3A0FB0E71A228896000C5C84 /* right_big.png in Resources */,
 				3AACA4781A299E0400C0A251 /* dish24.jpg in Resources */,
 				3AACA4631A299E0400C0A251 /* dish03.jpg in Resources */,
 				3AACA4871A299E0400C0A251 /* dish34.jpg in Resources */,
 				3AACA4821A299E0400C0A251 /* dish35.jpg in Resources */,
 				3AACA47A1A299E0400C0A251 /* dish26.jpg in Resources */,
-				3A0FB0DF1A2168BE000C5C84 /* left.png in Resources */,
+				3A2791AA1A2DB564006DF4C7 /* heart@3x.png in Resources */,
+				3A2ADADA1A2EE97900D4505D /* yumbook@3x.png in Resources */,
 				3A0EA4F91A2817D40047E1AA /* cuisine06.jpg in Resources */,
 				3AACA46E1A299E0400C0A251 /* dish14.jpg in Resources */,
 				3AACA4731A299E0400C0A251 /* dish19.jpg in Resources */,
@@ -598,21 +616,25 @@
 				3A18AF401A208B750094256D /* image009.jpg in Resources */,
 				3AACA4611A299E0400C0A251 /* dish01.jpg in Resources */,
 				3A8DB3D81A257F2C0004E382 /* cuisine00.jpg in Resources */,
+				3A2791AE1A2DBA4A006DF4C7 /* menu@3x.png in Resources */,
 				3A18AF3E1A208B750094256D /* image007.jpg in Resources */,
 				3AACA47D1A299E0400C0A251 /* dish29.jpg in Resources */,
 				3A0E8B981A1F1907000149AA /* logo.png in Resources */,
 				3AB0F3591A15F5FE00EC5CDB /* up.png in Resources */,
 				3A76EA541A0CB909006DFD9A /* app_icon_120.png in Resources */,
 				3A18AF421A208B750094256D /* image011.jpg in Resources */,
+				3A2ADADC1A2EEB0600D4505D /* barcode@3x.png in Resources */,
 				3A76EA551A0CB909006DFD9A /* app_icon_180.png in Resources */,
 				3A18AF431A208B750094256D /* image012.jpg in Resources */,
 				3AACA4351A282B1E00C0A251 /* restaurant1.jpg in Resources */,
+				3A2ADADE1A2EEB1200D4505D /* filter@3x.png in Resources */,
 				3A0EA4FF1A2825C80047E1AA /* restaurant0.jpg in Resources */,
 				3A18AF3C1A208B750094256D /* image005.jpg in Resources */,
 				3A21E3D71A230AE20092BE39 /* list.png in Resources */,
 				3A76EA531A0CB909006DFD9A /* app_icon_87.png in Resources */,
 				3A76EA301A0CB3D2006DFD9A /* Images.xcassets in Resources */,
 				3A18AF3D1A208B750094256D /* image006.jpg in Resources */,
+				3A2791AC1A2DB9B3006DF4C7 /* scan@3x.png in Resources */,
 				3AACA4641A299E0400C0A251 /* dish04.jpg in Resources */,
 				3AACA47C1A299E0400C0A251 /* dish28.jpg in Resources */,
 				3AACA47E1A299E0400C0A251 /* dish30.jpg in Resources */,
@@ -685,17 +707,6 @@
 			targetProxy = 3A76EA391A0CB3D2006DFD9A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		3A76EA311A0CB3D2006DFD9A /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A76EA321A0CB3D2006DFD9A /* Base */,
-			);
-			name = LaunchScreen.xib;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		3A76EA401A0CB3D2006DFD9A /* Debug */ = {
@@ -779,12 +790,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "unicorn-menu-ios-test1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
 			};
 			name = Debug;
 		};
@@ -792,12 +807,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = "unicorn-menu-ios-test1/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				STRIP_INSTALLED_PRODUCT = YES;
+				STRIP_STYLE = all;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Release;
 		};
