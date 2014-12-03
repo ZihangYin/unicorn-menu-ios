@@ -60,6 +60,8 @@
 		3A76EA531A0CB909006DFD9A /* app_icon_87.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EA4E1A0CB909006DFD9A /* app_icon_87.png */; };
 		3A76EA541A0CB909006DFD9A /* app_icon_120.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EA4F1A0CB909006DFD9A /* app_icon_120.png */; };
 		3A76EA551A0CB909006DFD9A /* app_icon_180.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A76EA501A0CB909006DFD9A /* app_icon_180.png */; };
+		3A7FF2BC1A2F99A20070F033 /* RestaurantCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FF2BB1A2F99A20070F033 /* RestaurantCardView.swift */; };
+		3A7FF2BE1A2F9B2D0070F033 /* RestaurantViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A7FF2BD1A2F9B2D0070F033 /* RestaurantViewController.swift */; };
 		3A8DB3D51A257CE10004E382 /* CuisineDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A8DB3D41A257CE10004E382 /* CuisineDetailViewController.swift */; };
 		3A8DB3D81A257F2C0004E382 /* cuisine00.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A8DB3D61A257F2C0004E382 /* cuisine00.jpg */; };
 		3A8DB3D91A257F2C0004E382 /* cuisine01.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A8DB3D71A257F2C0004E382 /* cuisine01.jpg */; };
@@ -121,6 +123,7 @@
 		3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767EE1A19EB5200075F5B /* DiscoverDetailViewCell.swift */; };
 		3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */; };
 		3AF767F31A1B1E6E00075F5B /* UICollectionViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AF767F21A1B1E6E00075F5B /* UICollectionViewExtension.swift */; };
+		3AFDEB8E1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFDEB8D1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -191,6 +194,8 @@
 		3A76EA4E1A0CB909006DFD9A /* app_icon_87.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_87.png; sourceTree = "<group>"; };
 		3A76EA4F1A0CB909006DFD9A /* app_icon_120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_120.png; sourceTree = "<group>"; };
 		3A76EA501A0CB909006DFD9A /* app_icon_180.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = app_icon_180.png; sourceTree = "<group>"; };
+		3A7FF2BB1A2F99A20070F033 /* RestaurantCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantCardView.swift; sourceTree = "<group>"; };
+		3A7FF2BD1A2F9B2D0070F033 /* RestaurantViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestaurantViewController.swift; sourceTree = "<group>"; };
 		3A8DB3D41A257CE10004E382 /* CuisineDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CuisineDetailViewController.swift; sourceTree = "<group>"; };
 		3A8DB3D61A257F2C0004E382 /* cuisine00.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cuisine00.jpg; sourceTree = "<group>"; };
 		3A8DB3D71A257F2C0004E382 /* cuisine01.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cuisine01.jpg; sourceTree = "<group>"; };
@@ -252,6 +257,7 @@
 		3AF767EE1A19EB5200075F5B /* DiscoverDetailViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverDetailViewCell.swift; sourceTree = "<group>"; };
 		3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationTransition.swift; sourceTree = "<group>"; };
 		3AF767F21A1B1E6E00075F5B /* UICollectionViewExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UICollectionViewExtension.swift; sourceTree = "<group>"; };
+		3AFDEB8D1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CollectionViewStickyHeaderLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -306,6 +312,8 @@
 				3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */,
 				3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */,
 				3ABB63C21A2484550092027A /* MenuTransition.swift */,
+				3A7FF2BB1A2F99A20070F033 /* RestaurantCardView.swift */,
+				3A7FF2BD1A2F9B2D0070F033 /* RestaurantViewController.swift */,
 				3A18AF471A2090500094256D /* MenuViewCell.swift */,
 				3A18AF451A208C2C0094256D /* MenuViewController.swift */,
 				3A8DB3DC1A2589ED0004E382 /* CuisineDetailView.swift */,
@@ -313,6 +321,7 @@
 				3A8DB3D41A257CE10004E382 /* CuisineDetailViewController.swift */,
 				3A0FB0E81A22B251000C5C84 /* FilterView.swift */,
 				3A4DE1541A145FFC0030C116 /* FilterViewController.swift */,
+				3AFDEB8D1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift */,
 				3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */,
 				3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */,
 				3A1BBCCC1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift */,
@@ -662,12 +671,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A1BBCCD1A1349B90088AC6F /* CollectionViewDelegateWaterfallFlowLayout.swift in Sources */,
+				3A7FF2BE1A2F9B2D0070F033 /* RestaurantViewController.swift in Sources */,
 				3A18AF461A208C2C0094256D /* MenuViewController.swift in Sources */,
 				3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */,
 				3ABB63C31A2484550092027A /* MenuTransition.swift in Sources */,
 				3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */,
 				3A0FB0E91A22B251000C5C84 /* FilterView.swift in Sources */,
 				3A8DB3DD1A2589ED0004E382 /* CuisineDetailView.swift in Sources */,
+				3AFDEB8E1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift in Sources */,
 				3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */,
 				3ADB8F4D1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift in Sources */,
 				3A8DB3DF1A25A96E0004E382 /* UIImageExtension.swift in Sources */,
@@ -685,6 +696,7 @@
 				3A18AF481A2090500094256D /* MenuViewCell.swift in Sources */,
 				3AF767EF1A19EB5200075F5B /* DiscoverDetailViewCell.swift in Sources */,
 				3AF767F11A1B087E00075F5B /* DiscoverNavigationTransition.swift in Sources */,
+				3A7FF2BC1A2F99A20070F033 /* RestaurantCardView.swift in Sources */,
 				3A0FB0E11A21B6E8000C5C84 /* FilterNavigationTransition.swift in Sources */,
 				3A21E3DD1A2320250092BE39 /* QRCodeScannerViewController.swift in Sources */,
 			);

@@ -26,6 +26,7 @@ class FilterNavigationTransition: NSObject, UIViewControllerAnimatedTransitionin
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as UIViewController!
         let containerView = transitionContext.containerView()
         
+        containerView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         toViewController.view.layer.zPosition = fromViewController.view.layer.zPosition + 1;
         
         let screenWidth = UIScreen.mainScreen().bounds.size.width;

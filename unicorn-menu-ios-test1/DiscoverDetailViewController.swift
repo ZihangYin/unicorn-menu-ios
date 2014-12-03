@@ -92,7 +92,13 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
             self.navigationController!.popViewControllerAnimated(true)
         }
         discoverDetailCell.tappedAction = {() -> Void in
-            self.navigationController!.pushViewController(MenuViewController(), animated: true)
+            let restaurantLayout: CollectionViewStickyHeaderLayout = CollectionViewStickyHeaderLayout()
+            restaurantLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            restaurantLayout.minimumLineSpacing = 1
+            restaurantLayout.minimumInteritemSpacing = 0
+            self.navigationController!.pushViewController(RestaurantViewController(collectionViewLayout: restaurantLayout), animated: true)
+            
+//            self.navigationController!.pushViewController(MenuViewController(), animated: true)
         }
         
         discoverDetailCell.setNeedsLayout()

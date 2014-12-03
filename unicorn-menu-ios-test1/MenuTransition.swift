@@ -27,6 +27,7 @@ class MenuTransition: NSObject, UIViewControllerAnimatedTransitioning {
         let toViewController = transitionContext.viewControllerForKey(UITransitionContextToViewControllerKey) as UIViewController!
         let containerView = transitionContext.containerView()
         
+        containerView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         if presenting {
             containerView.addSubview(toViewController.view)
             containerView.addSubview(fromViewController.view)
@@ -38,7 +39,6 @@ class MenuTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 }, completion:{(Bool) in
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
-            
         } else {
             containerView.addSubview(toViewController.view)
             toViewController.view.transform = CGAffineTransformMakeTranslation(0, -toViewController.view.frame.size.height)

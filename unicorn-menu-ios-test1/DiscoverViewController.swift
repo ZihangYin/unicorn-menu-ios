@@ -227,8 +227,14 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         }
         let point = tap.locationInView(self.collectionView)
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
-            let menuViewController = MenuViewController()
-            self.navigationController!.pushViewController(menuViewController, animated: true)
+//            let menuViewController = MenuViewController()
+//            self.navigationController!.pushViewController(menuViewController, animated: true)
+            
+            let restaurantLayout: CollectionViewStickyHeaderLayout = CollectionViewStickyHeaderLayout()
+            restaurantLayout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            restaurantLayout.minimumLineSpacing = 1
+            restaurantLayout.minimumInteritemSpacing = 0
+            self.navigationController!.pushViewController(RestaurantViewController(collectionViewLayout: restaurantLayout), animated: true)
         }
     }
     
@@ -267,9 +273,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 //    }
     
     func leftButtonPressed() -> Void {
-//        self.navigationDelegate.interactiveTransition  = nil
+        self.navigationDelegate.interactiveTransition  = nil
         self.navigationController!.pushViewController(FilterViewController(), animated: true)
-        
     }
     
     func scanPressed() -> Void {

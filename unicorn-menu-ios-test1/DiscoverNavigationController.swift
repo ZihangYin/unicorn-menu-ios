@@ -31,6 +31,10 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 let menuTransition = MenuTransition()
                 menuTransition.presenting = true
                 return menuTransition
+            } else if (fromVC.isKindOfClass(RestaurantViewController)){
+                let restaurantTransition = FilterNavigationTransition()
+                restaurantTransition.presenting = false
+                return restaurantTransition
             } else if (fromVC.isKindOfClass(CuisineDetailViewController)) {
                 let cuisineDetailTransition = FilterNavigationTransition()
                 cuisineDetailTransition.presenting = false
@@ -55,11 +59,15 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 menuTransition.presenting = false
                 self.interactiveTransition = nil
                 return menuTransition
+            } else if (toVC.isKindOfClass(RestaurantViewController)) {
+                let restaurantTransition = FilterNavigationTransition()
+                restaurantTransition.presenting = true
+                self.interactiveTransition = nil
+                return restaurantTransition
             } else if (toVC.isKindOfClass(CuisineDetailViewController)) {
                 let cuisineDetailTransition = FilterNavigationTransition()
                 cuisineDetailTransition.presenting = true
                 self.interactiveTransition = nil
-                
                 return cuisineDetailTransition
             } else {
                 assertionFailure("non supported navigation transition animation")

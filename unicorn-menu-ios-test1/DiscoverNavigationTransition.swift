@@ -54,7 +54,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             toView.alpha = 0
             toView.transform = snapShot.transform
             let backgroundViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
-            backgroundViewContainer.backgroundColor = UIColor.darkGrayColor()
+            backgroundViewContainer.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
             containerView.addSubview(snapShot)
             containerView.insertSubview(backgroundViewContainer, belowSubview: toView)
             
@@ -91,7 +91,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             snapShot.frame.origin.x += leftUpperPoint.x
             snapShot.frame.origin.y += leftUpperPoint.y
             let backgroundViewContainer = UIView(frame: UIScreen.mainScreen().bounds)
-            backgroundViewContainer.backgroundColor = UIColor.darkGrayColor()
+            backgroundViewContainer.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
             containerView.addSubview(snapShot)
             containerView.insertSubview(backgroundViewContainer, belowSubview: fromView)
 
