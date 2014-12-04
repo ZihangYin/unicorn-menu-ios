@@ -65,7 +65,7 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         self.cuisineLikesLogo.clipsToBounds = true
         
         self.cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 8)
+        self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 12)
         self.cuisineLikesLabel.textAlignment = .Left
         self.cuisineLikesLabel.textColor = UIColor.darkGrayColor()
 
@@ -121,7 +121,7 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
 //        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterX, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterX, multiplier: 1, constant: 0))
 //        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[logoView]-5-[restaurantName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
 
-        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[logoView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[logoView]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantName, attribute: .Left, relatedBy: .Equal, toItem: self.logoView, attribute: .Right, multiplier: 1, constant: 5))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantName, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterY, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterY, multiplier: 1, constant: 0))
@@ -181,7 +181,7 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
         self.cuisineLikesLogo.clipsToBounds = true
         
         self.cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 8)
+        self.cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 12)
         self.cuisineLikesLabel.textAlignment = .Left
         self.cuisineLikesLabel.textColor = UIColor.blackColor()
         

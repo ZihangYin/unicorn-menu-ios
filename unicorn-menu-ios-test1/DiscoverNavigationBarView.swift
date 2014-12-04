@@ -10,7 +10,7 @@ import UIKit
 
 class DiscoverNavigationBarView: UINavigationBar {
     
-    var scanButton: UIButton!
+//    var scanButton: UIButton!
 //    private var gradientLayer = CAGradientLayer()
     
     required init(coder aDecoder: NSCoder) {
@@ -47,24 +47,24 @@ class DiscoverNavigationBarView: UINavigationBar {
     }
     
     private func setupViews() {
-        self.scanButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        self.scanButton.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.scanButton.setImage(UIImage(named: "barcode.png"), forState: UIControlState.Normal);
-        self.addSubview(scanButton);
+//        self.scanButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+//        self.scanButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+//        self.scanButton.setImage(UIImage(named: "barcode.png"), forState: UIControlState.Normal);
+//        self.addSubview(scanButton);
     }
     
     private func autoLayoutSubviews() {
-        
-        var viewsDictionary = ["scanButton": self.scanButton]
-        let scanButton_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[scanButton(64)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let scanButton_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[scanButton(64)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let scanButton_pos_constraint_H = NSLayoutConstraint(item: self.scanButton,attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1,  constant: 10)
-        let scanButton_pos_constraint_V = NSLayoutConstraint(item: self.scanButton,attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1,  constant: 0)
-        
-        self.scanButton.addConstraints(scanButton_constraint_H)
-        self.scanButton.addConstraints(scanButton_constraint_V)
-        self.addConstraint(scanButton_pos_constraint_H)
-        self.addConstraint(scanButton_pos_constraint_V)
+//        
+//        var viewsDictionary = ["scanButton": self.scanButton]
+//        let scanButton_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:[scanButton(64)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        let scanButton_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:[scanButton(64)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
+//        let scanButton_pos_constraint_H = NSLayoutConstraint(item: self.scanButton,attribute: .Right, relatedBy: .Equal, toItem: self, attribute: .Right, multiplier: 1,  constant: 10)
+//        let scanButton_pos_constraint_V = NSLayoutConstraint(item: self.scanButton,attribute: .CenterY, relatedBy: .Equal, toItem: self, attribute: .CenterY, multiplier: 1,  constant: 0)
+//        
+//        self.scanButton.addConstraints(scanButton_constraint_H)
+//        self.scanButton.addConstraints(scanButton_constraint_V)
+//        self.addConstraint(scanButton_pos_constraint_H)
+//        self.addConstraint(scanButton_pos_constraint_V)
     }
     
     private func addGradientColor() {

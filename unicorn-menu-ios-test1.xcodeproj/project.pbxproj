@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3A0670FC1A305CEF00D5059C /* FoodCategoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0670FB1A305CEF00D5059C /* FoodCategoryViewController.swift */; };
+		3A0670FE1A3063E900D5059C /* MealTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A0670FD1A3063E900D5059C /* MealTypeViewController.swift */; };
+		3A0671001A30763900D5059C /* check_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0670FF1A30763900D5059C /* check_red@3x.png */; };
 		3A0E8B981A1F1907000149AA /* logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B971A1F1907000149AA /* logo.png */; };
 		3A0E8B9A1A1F2BB9000149AA /* ProximaNova-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */; };
 		3A0EA4F51A2817D40047E1AA /* cuisine02.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3A0EA4F01A2817D40047E1AA /* cuisine02.jpg */; };
@@ -49,6 +52,9 @@
 		3A2ADADC1A2EEB0600D4505D /* barcode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */; };
 		3A2ADADE1A2EEB1200D4505D /* filter@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADD1A2EEB1200D4505D /* filter@3x.png */; };
 		3A2ADAE01A2EF12900D4505D /* left@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2ADADF1A2EF12900D4505D /* left@3x.png */; };
+		3A2E9A641A30423000268479 /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A621A30423000268479 /* check@3x.png */; };
+		3A2E9A651A30423000268479 /* x@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A631A30423000268479 /* x@3x.png */; };
+		3A2E9A671A3045A300268479 /* right_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A661A3045A300268479 /* right_red@3x.png */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
 		3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */; };
 		3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */; };
@@ -137,6 +143,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3A0670FB1A305CEF00D5059C /* FoodCategoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FoodCategoryViewController.swift; sourceTree = "<group>"; };
+		3A0670FD1A3063E900D5059C /* MealTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTypeViewController.swift; sourceTree = "<group>"; };
+		3A0670FF1A30763900D5059C /* check_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check_red@3x.png"; sourceTree = "<group>"; };
 		3A0E8B971A1F1907000149AA /* logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo.png; sourceTree = "<group>"; };
 		3A0E8B991A1F283F000149AA /* ProximaNova-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "ProximaNova-Bold.otf"; sourceTree = "<group>"; };
 		3A0EA4F01A2817D40047E1AA /* cuisine02.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cuisine02.jpg; sourceTree = "<group>"; };
@@ -179,6 +188,9 @@
 		3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "barcode@3x.png"; sourceTree = "<group>"; };
 		3A2ADADD1A2EEB1200D4505D /* filter@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "filter@3x.png"; sourceTree = "<group>"; };
 		3A2ADADF1A2EF12900D4505D /* left@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@3x.png"; sourceTree = "<group>"; };
+		3A2E9A621A30423000268479 /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@3x.png"; sourceTree = "<group>"; };
+		3A2E9A631A30423000268479 /* x@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@3x.png"; sourceTree = "<group>"; };
+		3A2E9A661A3045A300268479 /* right_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right_red@3x.png"; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationController.swift; sourceTree = "<group>"; };
 		3A76EA231A0CB3D2006DFD9A /* unicorn-menu-ios-test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unicorn-menu-ios-test1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +333,8 @@
 				3A8DB3D41A257CE10004E382 /* CuisineDetailViewController.swift */,
 				3A0FB0E81A22B251000C5C84 /* FilterView.swift */,
 				3A4DE1541A145FFC0030C116 /* FilterViewController.swift */,
+				3A0670FB1A305CEF00D5059C /* FoodCategoryViewController.swift */,
+				3A0670FD1A3063E900D5059C /* MealTypeViewController.swift */,
 				3AFDEB8D1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift */,
 				3ACB63A21A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift */,
 				3ADB8F4C1A1028D20002F130 /* CollectionViewWaterfallFlowLayout.swift */,
@@ -397,6 +411,10 @@
 		3AB4525B1A19D241006E4264 /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				3A0670FF1A30763900D5059C /* check_red@3x.png */,
+				3A2E9A661A3045A300268479 /* right_red@3x.png */,
+				3A2E9A621A30423000268479 /* check@3x.png */,
+				3A2E9A631A30423000268479 /* x@3x.png */,
 				3A2ADADF1A2EF12900D4505D /* left@3x.png */,
 				3A2ADADD1A2EEB1200D4505D /* filter@3x.png */,
 				3A2ADADB1A2EEB0600D4505D /* barcode@3x.png */,
@@ -574,6 +592,7 @@
 				3AACA4691A299E0400C0A251 /* dish09.jpg in Resources */,
 				3AACA4791A299E0400C0A251 /* dish25.jpg in Resources */,
 				3AACA4811A299E0400C0A251 /* dish33.jpg in Resources */,
+				3A2E9A641A30423000268479 /* check@3x.png in Resources */,
 				3A18AF3B1A208B750094256D /* image004.jpg in Resources */,
 				3AACA4751A299E0400C0A251 /* dish21.jpg in Resources */,
 				3AACA4391A2977A300C0A251 /* liked.png in Resources */,
@@ -592,6 +611,7 @@
 				3AACA4741A299E0400C0A251 /* dish20.jpg in Resources */,
 				3A76EA521A0CB909006DFD9A /* app_icon_80.png in Resources */,
 				3AACA4711A299E0400C0A251 /* dish17.jpg in Resources */,
+				3A0671001A30763900D5059C /* check_red@3x.png in Resources */,
 				3A0EA4F71A2817D40047E1AA /* cuisine04.jpg in Resources */,
 				3A18AF371A208B750094256D /* image000.jpg in Resources */,
 				3A2ADAE01A2EF12900D4505D /* left@3x.png in Resources */,
@@ -601,12 +621,14 @@
 				3A0FB0E71A228896000C5C84 /* right_big.png in Resources */,
 				3AACA4781A299E0400C0A251 /* dish24.jpg in Resources */,
 				3AACA4631A299E0400C0A251 /* dish03.jpg in Resources */,
+				3A2E9A671A3045A300268479 /* right_red@3x.png in Resources */,
 				3AACA4871A299E0400C0A251 /* dish34.jpg in Resources */,
 				3AACA4821A299E0400C0A251 /* dish35.jpg in Resources */,
 				3AACA47A1A299E0400C0A251 /* dish26.jpg in Resources */,
 				3A2791AA1A2DB564006DF4C7 /* heart@3x.png in Resources */,
 				3A2ADADA1A2EE97900D4505D /* yumbook@3x.png in Resources */,
 				3A0EA4F91A2817D40047E1AA /* cuisine06.jpg in Resources */,
+				3A2E9A651A30423000268479 /* x@3x.png in Resources */,
 				3AACA46E1A299E0400C0A251 /* dish14.jpg in Resources */,
 				3AACA4731A299E0400C0A251 /* dish19.jpg in Resources */,
 				3AACA4671A299E0400C0A251 /* dish07.jpg in Resources */,
@@ -676,6 +698,7 @@
 				3A1BBCCB1A1349990088AC6F /* DiscoverNavigationBarView.swift in Sources */,
 				3ABB63C31A2484550092027A /* MenuTransition.swift in Sources */,
 				3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */,
+				3A0670FC1A305CEF00D5059C /* FoodCategoryViewController.swift in Sources */,
 				3A0FB0E91A22B251000C5C84 /* FilterView.swift in Sources */,
 				3A8DB3DD1A2589ED0004E382 /* CuisineDetailView.swift in Sources */,
 				3AFDEB8E1A2F0B8200722618 /* CollectionViewStickyHeaderLayout.swift in Sources */,
@@ -688,6 +711,7 @@
 				3ACB63A31A1B553E00025550 /* CollectionViewHorizontalFlowLayout.swift in Sources */,
 				3AB452961A19E524006E4264 /* DiscoverDetailViewController.swift in Sources */,
 				3A21E3DB1A230FCF0092BE39 /* QRCodeReaderViewController.swift in Sources */,
+				3A0670FE1A3063E900D5059C /* MealTypeViewController.swift in Sources */,
 				3A21E3D91A230F180092BE39 /* QRCodeReaderView.swift in Sources */,
 				3AF767F31A1B1E6E00075F5B /* UICollectionViewExtension.swift in Sources */,
 				3A8DB3DB1A2580C20004E382 /* CuisineDetailViewCell.swift in Sources */,

@@ -40,7 +40,7 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 cuisineDetailTransition.presenting = false
                 return cuisineDetailTransition
             } else {
-                assertionFailure("non supported navigation transition animation")
+                return nil
             }
         case .Push:
             if (toVC.isKindOfClass(DiscoverDetailViewController)) {
@@ -70,11 +70,10 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 self.interactiveTransition = nil
                 return cuisineDetailTransition
             } else {
-                assertionFailure("non supported navigation transition animation")
+                return nil
             }
         default:
-            assertionFailure("non supported navigation transition animation")
-            break
+            return nil
         }
     }
     

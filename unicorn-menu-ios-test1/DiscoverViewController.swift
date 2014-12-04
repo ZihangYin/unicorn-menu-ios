@@ -33,6 +33,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         super.viewDidLoad()
         
         (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
+        
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "filter.png"), forState: UIControlState.Normal)
         leftButton.frame = CGRectMake(0.0, 0.0, 64, 64);
@@ -41,8 +42,16 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let leftNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
         leftNegativeSpacer.width = -25
         self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton]
-        (self.navigationController!.navigationBar as DiscoverNavigationBarView).scanButton.addTarget(self, action: "scanPressed", forControlEvents: UIControlEvents.TouchUpInside)
         
+        var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+        rightButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
+        rightButton.frame = CGRectMake(0.0, 0.0, 50, 50);
+        rightButton.addTarget(self, action: "scanPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        let rightBarButton = UIBarButtonItem.init(customView: rightButton)
+        let rightNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+        rightNegativeSpacer.width = -15
+        self.navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightBarButton]
+
         let titleView = UIImageView(image: UIImage(named: "yumbook.png"))
         self.navigationItem.titleView = titleView
         
@@ -101,13 +110,13 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
         
         if (Int(indexPath.item)%3 == 0) {
-            discoverCell.restaurantName.text = "RESTAURANT";
+            discoverCell.restaurantName.text = "RESTAURANTRESTAURANT";
         } else if (Int(indexPath.item)%3 == 1) {
             discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
         } else {
-            discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+            discoverCell.restaurantName.text = "RESTAURANT"
         }
-        discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 62
+        discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 65
 
         if (Int(indexPath.item)%3 == 0) {
             discoverCell.cuisineName.text = "CUISINE NAME\(indexPath.item)";
@@ -170,14 +179,14 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         paraStyle.lineBreakMode = .ByWordWrapping
         var restaurantText: NSString!
         if (Int(indexPath.item)%3 == 0) {
-            restaurantText = "RESTAURANT \(indexPath.item)";
+            restaurantText = "RESTAURANTRESTAURANT \(indexPath.item)";
         } else if (Int(indexPath.item)%3 == 1) {
             restaurantText = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
         } else {
-            restaurantText = "RESTAURANT NAME RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
+            restaurantText = "RESTAURANT"
         }
         
-        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 62, CGFloat.max), options: .UsesLineFragmentOrigin,
+        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 65, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
         var cuisinetext: NSString!
         if (Int(indexPath.item)%3 == 0) {
