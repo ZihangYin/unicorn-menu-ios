@@ -55,6 +55,7 @@
 		3A2E9A641A30423000268479 /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A621A30423000268479 /* check@3x.png */; };
 		3A2E9A651A30423000268479 /* x@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A631A30423000268479 /* x@3x.png */; };
 		3A2E9A671A3045A300268479 /* right_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 3A2E9A661A3045A300268479 /* right_red@3x.png */; };
+		3A39F8F21A31878B00C600E2 /* SlideAnimationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A39F8F11A31878B00C600E2 /* SlideAnimationTransition.swift */; };
 		3A4DE1551A145FFC0030C116 /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1541A145FFC0030C116 /* FilterViewController.swift */; };
 		3A4DE1571A1477CF0030C116 /* DiscoverNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */; };
 		3A76EA291A0CB3D2006DFD9A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3A76EA281A0CB3D2006DFD9A /* AppDelegate.swift */; };
@@ -191,6 +192,7 @@
 		3A2E9A621A30423000268479 /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@3x.png"; sourceTree = "<group>"; };
 		3A2E9A631A30423000268479 /* x@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "x@3x.png"; sourceTree = "<group>"; };
 		3A2E9A661A3045A300268479 /* right_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right_red@3x.png"; sourceTree = "<group>"; };
+		3A39F8F11A31878B00C600E2 /* SlideAnimationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideAnimationTransition.swift; sourceTree = "<group>"; };
 		3A4DE1541A145FFC0030C116 /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiscoverNavigationController.swift; sourceTree = "<group>"; };
 		3A76EA231A0CB3D2006DFD9A /* unicorn-menu-ios-test1.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "unicorn-menu-ios-test1.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +324,7 @@
 				3A1BBCCA1A1349990088AC6F /* DiscoverNavigationBarView.swift */,
 				3A4DE1561A1477CF0030C116 /* DiscoverNavigationController.swift */,
 				3AF767F01A1B087E00075F5B /* DiscoverNavigationTransition.swift */,
+				3A39F8F11A31878B00C600E2 /* SlideAnimationTransition.swift */,
 				3A0FB0E01A21B6E8000C5C84 /* FilterNavigationTransition.swift */,
 				3ABB63C21A2484550092027A /* MenuTransition.swift */,
 				3A7FF2BB1A2F99A20070F033 /* RestaurantCardView.swift */,
@@ -713,6 +716,7 @@
 				3A21E3DB1A230FCF0092BE39 /* QRCodeReaderViewController.swift in Sources */,
 				3A0670FE1A3063E900D5059C /* MealTypeViewController.swift in Sources */,
 				3A21E3D91A230F180092BE39 /* QRCodeReaderView.swift in Sources */,
+				3A39F8F21A31878B00C600E2 /* SlideAnimationTransition.swift in Sources */,
 				3AF767F31A1B1E6E00075F5B /* UICollectionViewExtension.swift in Sources */,
 				3A8DB3DB1A2580C20004E382 /* CuisineDetailViewCell.swift in Sources */,
 				3A8DB3D51A257CE10004E382 /* CuisineDetailViewController.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import QuartzCore
 
 class FilterCell {
     
@@ -66,12 +67,11 @@ class FilterViewCell: UITableViewCell {
 }
 
 
-class FoodCategoryViewController: UITableViewController, UITableViewDataSource, UITableViewDelegate {
+class FoodCategoryViewController: UITableViewController, UITableViewDelegate {
     
-    var foodCategories = [FilterCell(name: "Anything", checked: true), FilterCell(name: "American"), FilterCell(name: "Chinese"), FilterCell(name: "French"), FilterCell(name: "German"), FilterCell(name: "Greek"),
-        FilterCell(name: "Indian"), FilterCell(name: "Italian"), FilterCell(name: "Japanese"), FilterCell(name: "Korean"), FilterCell(name: "Taiwanese"), FilterCell(name: "Thai"), FilterCell(name: "Vietnamese")]
+    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
     
-    override func viewDidLoad() {
+        override func viewDidLoad() {
         super.viewDidLoad()
         
         self.title = "Food Categories"
@@ -97,45 +97,34 @@ class FoodCategoryViewController: UITableViewController, UITableViewDataSource, 
         // Dispose of any resources that can be recreated.
     }
     
-    // MARK: - Table view data source
-    
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 1
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
+        edgePanRecognizer.edges = .Left;
+        self.tableView.addGestureRecognizer(edgePanRecognizer)
+        (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = percentDrivenInteractiveTransition
     }
     
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return foodCategories.count
-    }
-    
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
-    {
-        let cell = tableView.dequeueReusableCellWithIdentifier("FoodCategoryTableCell") as FilterViewCell!
-        var foodCategory = foodCategories[indexPath.item]
-        cell.label.text = foodCategory.itemName
-        if foodCategory.checked {
-            cell.checkView.image = UIImage(named: "check_red.png")
-            cell.label.textColor = UIColor.redColor()
-        } else {
-            cell.checkView.image = nil
-            cell.label.textColor = UIColor.darkGrayColor()
+    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
+        
+        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width
+        progress = min(1.0, max(0.0, progress))
+
+        switch (recognizer.state) {
+        case .Began:
+            self.navigationController!.popViewControllerAnimated(true)
+        case .Changed:
+            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
+        default:
+            if recognizer.velocityInView(self.view).x >= 0 {
+                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
+                self.view.removeGestureRecognizer(recognizer)
+            } else {
+                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
+            }
+            break;
         }
-        cell.setNeedsLayout()
-        return cell
-    }
-    
-    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 50
-    }
-    
-    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        var tappedCategory = self.foodCategories[indexPath.row]
-        tappedCategory.checked = !tappedCategory.checked
-        tableView.reloadData()
     }
     
     func backButtonPressed() {

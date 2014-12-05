@@ -36,10 +36,12 @@ class FilterView: UIView {
         
         self.btnOne = UIButton.buttonWithType(UIButtonType.System) as? UIButton
         btnOne!.setTranslatesAutoresizingMaskIntoConstraints(false)
-        btnOne!.setTitle("Anything", forState: UIControlState.Normal)
         btnOne!.backgroundColor = UIColor.whiteColor()
         btnOne!.tintColor = UIColor.redColor()
         btnOne!.titleLabel!.font = UIFont(name: "ProximaNova-Regular", size: 16)
+        btnOne!.titleLabel!.textAlignment = .Center
+        btnOne!.titleLabel!.lineBreakMode = .ByTruncatingTail
+        btnOne!.titleLabel!.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.addSubview(btnOne!)
         
         self.btnArrowOne = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
@@ -57,10 +59,12 @@ class FilterView: UIView {
         
         self.btnTwo = UIButton.buttonWithType(UIButtonType.System) as? UIButton
         btnTwo!.setTranslatesAutoresizingMaskIntoConstraints(false)
-        btnTwo!.setTitle("Dinner", forState: UIControlState.Normal)
         btnTwo!.backgroundColor = UIColor.whiteColor()
         btnTwo!.tintColor = UIColor.redColor()
         btnTwo!.titleLabel!.font = UIFont(name: "ProximaNova-Regular", size: 16)
+        btnTwo!.titleLabel!.textAlignment = .Center
+        btnTwo!.titleLabel!.lineBreakMode = .ByTruncatingTail
+        btnTwo!.titleLabel!.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.addSubview(btnTwo!)
         
         self.btnArrowTwo = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
@@ -93,6 +97,13 @@ class FilterView: UIView {
         self.btnArrowTwo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btnArrowTwo(64)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.btnOne!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btnOne(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.btnTwo!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btnTwo(50)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.btnOne!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[titleLabel]-50-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["titleLabel": self.btnOne!.titleLabel!]))
+        self.btnOne!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["titleLabel": self.btnOne!.titleLabel!]))
+      //  self.btnOne!.addConstraint(NSLayoutConstraint(item: self.btnOne!.titleLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: self.btnOne!, attribute: .CenterX, multiplier: 1, constant: 0))
+        self.btnTwo!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-50-[titleLabel]-50-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["titleLabel": self.btnTwo!.titleLabel!]))
+        self.btnTwo!.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[titleLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: ["titleLabel": self.btnTwo!.titleLabel!]))
+      //  self.btnTwo!.addConstraint(NSLayoutConstraint(item: self.btnTwo!.titleLabel!, attribute: .CenterX, relatedBy: .Equal, toItem: self.btnTwo!, attribute: .CenterX, multiplier: 1, constant: 0))
+        
         self.btnThree.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btnThree(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.btnFour.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[btnFour(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         

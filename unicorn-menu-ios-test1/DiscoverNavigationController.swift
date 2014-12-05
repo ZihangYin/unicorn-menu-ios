@@ -27,6 +27,14 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 filterNavigationTransition.presenting = true
                 self.interactiveTransition = nil
                 return filterNavigationTransition
+            } else if (fromVC.isKindOfClass(FoodCategoryViewController)) {
+                let foodCategoryNavigationTransition = SlideAnimationTransition()
+                foodCategoryNavigationTransition.presenting = true
+                return foodCategoryNavigationTransition
+            } else if (fromVC.isKindOfClass(MealTypeViewController)) {
+                let mealTypeNavigationTransition = SlideAnimationTransition()
+                mealTypeNavigationTransition.presenting = true
+                return mealTypeNavigationTransition
             } else if (fromVC.isKindOfClass(MenuViewController)){
                 let menuTransition = MenuTransition()
                 menuTransition.presenting = true
@@ -54,6 +62,16 @@ class DiscoverNavigationControllerDelegate: NSObject, UINavigationControllerDele
                 filterNavigationTransition.presenting = false
                 self.interactiveTransition = nil
                 return filterNavigationTransition
+            } else if (toVC.isKindOfClass(FoodCategoryViewController)) {
+                let foodCategoryNavigationTransition = SlideAnimationTransition()
+                foodCategoryNavigationTransition.presenting = false
+                self.interactiveTransition = nil
+                return foodCategoryNavigationTransition
+            } else if (toVC.isKindOfClass(MealTypeViewController)) {
+                let mealTypeNavigationTransition = SlideAnimationTransition()
+                mealTypeNavigationTransition.presenting = false
+                self.interactiveTransition = nil
+                return mealTypeNavigationTransition
             } else if (toVC.isKindOfClass(MenuViewController)){
                 let menuTransition = MenuTransition()
                 menuTransition.presenting = false
