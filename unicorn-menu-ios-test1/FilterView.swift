@@ -10,8 +10,10 @@ import UIKit
 
 class FilterView: UIView {
 
+    var labelOne = UILabel()
     var btnOne : UIButton!
     var btnArrowOne : UIButton!
+    var labelTwo = UILabel()
     var btnTwo : UIButton!
     var btnArrowTwo : UIButton!
     var btnThree : UIButton!
@@ -26,7 +28,6 @@ class FilterView: UIView {
 
         self.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         
-        var labelOne = UILabel()
         labelOne.setTranslatesAutoresizingMaskIntoConstraints(false)
         labelOne.text = "I'm craving for"
         labelOne.textAlignment = NSTextAlignment.Center
@@ -49,7 +50,6 @@ class FilterView: UIView {
         btnArrowOne.setImage(UIImage(named: "right_red.png"), forState: UIControlState.Normal)
         self.addSubview(btnArrowOne)
         
-        var labelTwo = UILabel()
         labelTwo.setTranslatesAutoresizingMaskIntoConstraints(false)
         labelTwo.text = "for"
         labelTwo.textAlignment = NSTextAlignment.Center

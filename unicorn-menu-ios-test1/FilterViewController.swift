@@ -8,7 +8,11 @@
 
 import UIKit
 
-class FilterViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+@objc protocol FilterTableViewDelegate: UITableViewDelegate {
+    func ifAnyItemisChecked(tableView: UITableView) -> Bool
+}
+
+class FilterViewController: UIViewController, UITableViewDataSource, FilterTableViewDelegate {
     
     var filterView = FilterView(frame: CGRectZero)
     
@@ -106,7 +110,6 @@ class FilterViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        
         var tappedCell: FilterCell!
         if tableView.tag == 1 {
             tappedCell = self.foodCategories[indexPath.row]
@@ -168,6 +171,24 @@ class FilterViewController: UIViewController, UITableViewDataSource, UITableView
         }
         cell.setNeedsLayout()
         return cell
+    }
+    
+    func ifAnyItemisChecked(tableView: UITableView) -> Bool {
+        if tableView.tag == 1 {
+            for foodCategory in foodCategories {
+                if (foodCategory.checked) {
+                    return true
+                }
+            }
+        } else {
+            for mealType in mealTypes {
+                if (mealType.checked) {
+                   return true
+                }
+            }
+        }
+
+        return false
     }
     
     private func autoLayoutSubviews() {

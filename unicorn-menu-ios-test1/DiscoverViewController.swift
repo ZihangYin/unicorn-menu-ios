@@ -8,12 +8,14 @@
 
 import Foundation
 import UIKit
+import MapKit
+import CoreLocation
 
 @objc protocol DiscoverViewControllerProtocol : DiscoverNavigationTransitionProtocol {
     func viewWillAppearWithIndex(index : NSInteger)
 }
 
-class DiscoverViewController: UICollectionViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverViewControllerProtocol {
+class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverViewControllerProtocol, MKMapViewDelegate {
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
@@ -28,11 +30,16 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 //    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
     var columnWidth: CGFloat?
     
+    var isMapShowing = false
+    var collectionView: UICollectionView!
+    var mapView: MapView!
+    var userLocation = UserLocation()
+    var center: CLLocationCoordinate2D?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
+        self.userLocation.requestLocation()
+//        (self.navigationController! as DiscoverNavigationController).activatePullDownNavigationBar()
         
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "filter.png"), forState: UIControlState.Normal)
@@ -44,9 +51,9 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.navigationItem.leftBarButtonItems = [leftNegativeSpacer, leftBarButton]
         
         var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
-        rightButton.setImage(UIImage(named: "scan.png"), forState: UIControlState.Normal)
+        rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
         rightButton.frame = CGRectMake(0.0, 0.0, 50, 50);
-        rightButton.addTarget(self, action: "scanPressed", forControlEvents: UIControlEvents.TouchUpInside)
+        rightButton.addTarget(self, action: "mapPressed", forControlEvents: UIControlEvents.TouchUpInside)
         let rightBarButton = UIBarButtonItem.init(customView: rightButton)
         let rightNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
         rightNegativeSpacer.width = -15
@@ -56,6 +63,14 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.navigationItem.titleView = titleView
         
         self.edgesForExtendedLayout = .None
+        
+        let discoverLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
+        discoverLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        discoverLayout.columnCount = 2
+        discoverLayout.minimumColumnSpacing = 7
+        discoverLayout.minimumInteritemSpacing = 7
+        
+        self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: discoverLayout)
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -64,6 +79,11 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         self.collectionView.directionalLockEnabled = true
         self.collectionView.showsVerticalScrollIndicator = false
         
+        self.mapView = MapView(frame: CGRectZero)
+        self.mapView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.mapView.mapView.delegate = self
+        
+        self.view.addSubview(self.collectionView)
         autoLayoutSubviews()
         self.collectionView.reloadData()
     }
@@ -83,11 +103,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     }
     
     override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated);
-        self.columnWidth = CGFloat((self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth)
+        super.viewDidAppear(animated)
         self.navigationController!.delegate = navigationDelegate
-        self.navigationDelegate.discoverColumnWidth = (self.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth
-        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
+        self.navigationDelegate.discoverColumnWidth = (self.collectionView.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth
+        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation)
     }
     
     override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
@@ -97,26 +116,24 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     }
     
     // pragma mark - UICollectionViewDataSource
-    override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.images.count
     }
     
-    override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
+    func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         return 1
     }
     
-    override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
-        let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        
         if (Int(indexPath.item)%3 == 0) {
-            discoverCell.restaurantName.text = "RESTAURANTRESTAURANT";
+            discoverCell.restaurantName.text = "RESTAURANTRESTAURANT"
         } else if (Int(indexPath.item)%3 == 1) {
             discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
         } else {
             discoverCell.restaurantName.text = "RESTAURANT"
         }
-        discoverCell.restaurantName.preferredMaxLayoutWidth = columnWidth - 65
+        discoverCell.restaurantName.preferredMaxLayoutWidth = self.columnWidth! - 65
 
         if (Int(indexPath.item)%3 == 0) {
             discoverCell.cuisineName.text = "CUISINE NAME\(indexPath.item)";
@@ -125,7 +142,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
         } else {
             discoverCell.cuisineName.text = "CUISINE NAME CUISINE NAME CUISINE NAME CUISINE NAME \(indexPath.item)"
         }
-        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 20
+        discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
 
         discoverCell.logoView.image = UIImage(named: "logo.png")
         discoverCell.setCuisineImage(self.images[indexPath.item])
@@ -138,10 +155,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
 //        })
         
         discoverCell.setNeedsLayout()
-        let tapImage = UITapGestureRecognizer.init(target: self, action: "handleTapImage:")
+        let tapImage = UITapGestureRecognizer(target: self, action: "handleTapImage:")
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
 
-        let tapRestaurantLogo = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+        let tapRestaurantLogo = UITapGestureRecognizer(target: self, action: "handleTapRestaurant:")
         discoverCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
 
         return discoverCell
@@ -171,8 +188,8 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     // pragma mark - CollectionViewDelegateWaterfallFlowLayout
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let image = self.images[indexPath.row]
-        let columnWidth =  CGFloat((self.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        let imageHeight = image.size.height * columnWidth / image.size.width
+        self.columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
+        let imageHeight = image.size.height * self.columnWidth! / image.size.width
         
         // Find the size that the string occupies when displayed with the given font.
         let paraStyle = NSMutableParagraphStyle()
@@ -186,7 +203,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             restaurantText = "RESTAURANT"
         }
         
-        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(columnWidth - 65, CGFloat.max), options: .UsesLineFragmentOrigin,
+        let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(self.columnWidth! - 65, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
         var cuisinetext: NSString!
         if (Int(indexPath.item)%3 == 0) {
@@ -197,10 +214,10 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             cuisinetext = "CUISINE NAME CUISINE NAME CUISINE NAME CUISINE NAME \(indexPath.item)"
         }
         
-        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
+        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(self.columnWidth! - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
 
-        let itemSize = CGSizeMake(columnWidth, max(40, ceil(restaurantBoundingSize.height)) + imageHeight + ceil(cuisineBoundingSize.height) + 42)
+        let itemSize = CGSizeMake(self.columnWidth!, max(40, ceil(restaurantBoundingSize.height)) + imageHeight + ceil(cuisineBoundingSize.height) + 42)
         return itemSize
     }
     
@@ -257,30 +274,97 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
             self.images[indexPath.row] = self.images[0]
             discoverCell!.cuisineImage.image = self.images[0]
             self.collectionView.reloadItemsAtIndexPaths([indexPath])
-            
         }
     }
     
-//    func handleEdgePanRecognizer(recognizer: UIScreenEdgePanGestureRecognizer) {
-//        let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
-//        var progress: CGFloat = recognizer.translationInView(self.view).x / self.view.bounds.size.width / CGFloat(2.5)
-//        progress = min(1.0, max(0.0, progress))
-//        switch (recognizer.state) {
-//        case .Began:
-//            self.navigationController!.pushViewController(FilterViewController(), animated: true)
-//        case .Changed:
-//            self.percentDrivenInteractiveTransition.updateInteractiveTransition(progress);
-//        default:
-//            if recognizer.velocityInView(self.view).x >= 0 {
-//                self.percentDrivenInteractiveTransition.finishInteractiveTransition()
-//                self.view.removeGestureRecognizer(recognizer)
-//            } else {
-//                self.percentDrivenInteractiveTransition.cancelInteractiveTransition()
-//            }
-//            break;
+    func mapPressed() -> Void {
+        if (isMapShowing == false) {
+            isMapShowing = true
+            
+            UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionFlipFromRight, animations: {
+                self.collectionView.removeFromSuperview()
+                }, completion: nil)
+            
+            self.view.addSubview(self.mapView)
+            var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "mapView": self.mapView]
+            self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[mapView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+            self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[mapView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+            
+            var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+            rightButton.setImage(UIImage(named: "list.png"), forState: UIControlState.Normal)
+            rightButton.frame = CGRectMake(0.0, 0.0, 50, 50);
+            rightButton.addTarget(self, action: "mapPressed", forControlEvents: UIControlEvents.TouchUpInside)
+            let rightBarButton = UIBarButtonItem.init(customView: rightButton)
+            let rightNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+            rightNegativeSpacer.width = -15
+            self.navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightBarButton]
+            
+            self.center = self.userLocation.location.coordinate
+            let span = MKCoordinateSpanMake(0.15, 0.15)
+            self.mapView.mapView.setRegion(MKCoordinateRegion(center: self.center!, span: span), animated: false)
+            
+            let annotation1 = MKPointAnnotation()
+            annotation1.setCoordinate(CLLocationCoordinate2D(latitude: 47.620690, longitude: -122.349266))
+            annotation1.title = "Space Needle"
+            
+            let annotation2 = MKPointAnnotation()
+            annotation2.setCoordinate(CLLocationCoordinate2D(latitude: 47.655541, longitude: -122.303445))
+            annotation2.title = "University of Washington"
+            self.mapView.mapView.addAnnotations([annotation1, annotation2])
+            
+            self.mapView.mapView.selectAnnotation(annotation1, animated: false)
+        } else {
+            isMapShowing = false
+            UIView.transitionWithView(self.view, duration: 0.5, options: .TransitionFlipFromRight, animations: {
+                self.mapView.removeFromSuperview()
+                }, completion: nil)
+            self.view.addSubview(self.collectionView)
+            autoLayoutSubviews()
+            var rightButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
+            rightButton.setImage(UIImage(named: "map.png"), forState: UIControlState.Normal)
+            rightButton.frame = CGRectMake(0.0, 0.0, 50, 50);
+            rightButton.addTarget(self, action: "mapPressed", forControlEvents: UIControlEvents.TouchUpInside)
+            let rightBarButton = UIBarButtonItem.init(customView: rightButton)
+            let rightNegativeSpacer: UIBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target:nil, action:nil)
+            rightNegativeSpacer.width = -15
+            self.navigationItem.rightBarButtonItems = [rightNegativeSpacer, rightBarButton]
+        }
+    }
+    
+    func mapView(mapView: MKMapView!, viewForAnnotation anotacion: MKAnnotation!) -> MKAnnotationView! {
+        if !(anotacion is MKPointAnnotation) {
+            return nil
+        }
+        let reusarId = "anotacion"
+        var anotacionView = mapView.dequeueReusableAnnotationViewWithIdentifier(reusarId)
+        if anotacionView == nil {
+            anotacionView = MKAnnotationView(annotation: anotacion, reuseIdentifier: reusarId)
+            anotacionView.image = UIImage(named:"pin_selected.png")
+            anotacionView.canShowCallout = false
+        }
+        else {
+            anotacionView.annotation = anotacion
+        }
+        
+        return anotacionView
+    }
+    
+    func mapView(mapView: MKMapView!, didSelectAnnotationView view: MKAnnotationView!) {
+        
+        if !view.annotation.isKindOfClass(MKUserLocation) {
+//           view.image = UIImage(named:"pin_selected.png")
+            self.mapView.restaurantName.text = "RESTAURANT @ \(view.annotation.title!)"
+            self.mapView.logoView.image = UIImage(named: "logo.png")
+            self.mapView.detailView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Left, animated: true)
+        }
+    }
+    
+//    func mapView(mapView: MKMapView!,didDeselectAnnotationView view: MKAnnotationView!) {
+//        if !view.annotation.isKindOfClass(MKUserLocation) {
+//            view.image = UIImage(named:"pin.png")
 //        }
 //    }
-    
+//    
     func leftButtonPressed() -> Void {
         self.navigationDelegate.interactiveTransition  = nil
         self.navigationController!.pushViewController(FilterViewController(), animated: true)
@@ -297,10 +381,7 @@ class DiscoverViewController: UICollectionViewController, CollectionViewDelegate
     
     private func autoLayoutSubviews() {
         var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView]
-        let collectionView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let collectionview_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
-        self.view.addConstraints(collectionView_constraint_H)
-        self.view.addConstraints(collectionview_constraint_V)
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 }

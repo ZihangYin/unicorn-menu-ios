@@ -70,9 +70,10 @@ class MealTypeViewController: UITableViewController, UITableViewDataSource, UITa
     }
 
     func backButtonPressed() {
+        if !(self.tableView.delegate as FilterTableViewDelegate).ifAnyItemisChecked(self.tableView) {
+            self.tableView.delegate!.tableView!(self.tableView, didSelectRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+        }
         (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = nil
         self.navigationController!.popViewControllerAnimated(true)
-        
     }
-
 }

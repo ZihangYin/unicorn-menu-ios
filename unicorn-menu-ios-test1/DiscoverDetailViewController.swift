@@ -106,7 +106,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count;
+        return self.images.count
     }
     
     // pragma mark - DiscoverDetailViewControllerProtocol

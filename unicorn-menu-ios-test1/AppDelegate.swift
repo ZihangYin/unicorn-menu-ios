@@ -22,20 +22,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.scanWindow?.makeKeyAndVisible()
         
         self.window = UIWindow(frame: UIScreen.mainScreen().bounds)
-        self.window!.backgroundColor = UIColor.darkGrayColor();
+        self.window!.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         
         let discoverNavigationController = DiscoverNavigationController.init(navigationBarClass: DiscoverNavigationBarView.self, toolbarClass: nil)
 //        discoverNavigationController.navigationBar.titleTextAttributes = [NSFontAttributeName: UIFont(name: "ProximaNova-Regular", size:17)!]
 //        UINavigationBar.appearance().translucent = true
 //        UINavigationBar.appearance().barStyle = .Black
         
-        let discoverLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
-        discoverLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
-        discoverLayout.columnCount = 2
-//        discoverLayout.headerHeight = 30
-        discoverLayout.minimumColumnSpacing = 7
-        discoverLayout.minimumInteritemSpacing = 7
-        discoverNavigationController.pushViewController(DiscoverViewController(collectionViewLayout: discoverLayout), animated: false)
+        discoverNavigationController.pushViewController(DiscoverViewController(), animated: false)
         
         self.window!.rootViewController = discoverNavigationController
         self.window!.makeKeyAndVisible()
