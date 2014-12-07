@@ -38,6 +38,7 @@ class MenuTransition: NSObject, UIViewControllerAnimatedTransitioning {
                 fromViewController.view.alpha = 0
                 toViewController.view.alpha = 1
                 }, completion:{(Bool) in
+                    fromViewController.view.transform = CGAffineTransformIdentity
                     transitionContext.completeTransition(!transitionContext.transitionWasCancelled())
             })
         } else {

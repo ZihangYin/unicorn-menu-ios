@@ -102,12 +102,13 @@ class MapView: UIView, UICollectionViewDataSource {
         }
         
         if showDetail {
-            UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseIn, animations: {
+            UIView.animateWithDuration(0.35, delay: 0.0, options: .CurveEaseIn, animations: {
                 self.detailView.transform = CGAffineTransformMakeTranslation(0, -100)
                 self.detailView.alpha = 0.0
                 self.expandCollapseView.image = UIImage(named: "down.png")
                 }, completion: {(Bool) in
-                self.detailView.removeFromSuperview()
+                    self.detailView.removeFromSuperview()
+                    self.detailView.transform = CGAffineTransformIdentity
             })
         } else {
             self.detailView.alpha = 0.0
@@ -117,7 +118,8 @@ class MapView: UIView, UICollectionViewDataSource {
             self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[detailView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
             self.addConstraint(NSLayoutConstraint(item: self.detailView, attribute: .Top, relatedBy: .Equal, toItem: self.restaurantInfoView, attribute: .Bottom, multiplier: 1, constant: 0))
             self.detailView.transform = CGAffineTransformMakeTranslation(0, -100)
-            UIView.animateWithDuration(0.5, delay: 0.0, options: .CurveEaseOut, animations: {
+            
+            UIView.animateWithDuration(0.35, delay: 0.0, options: .CurveEaseOut, animations: {
                 self.detailView.transform = CGAffineTransformIdentity
                 self.detailView.alpha = 1
                 self.expandCollapseView.image = UIImage(named: "up@3x.png")
