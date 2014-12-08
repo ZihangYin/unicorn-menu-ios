@@ -44,13 +44,13 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         layout.parallaxHeaderAlwaysOnTop = true
         
         // Also insets the scroll indicator so it appears below the search bar
-        self.collectionView.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
-        self.collectionView.registerClass(MenuViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        self.collectionView.registerClass(RestaurantCardView.self, forSupplementaryViewOfKind: CollectionViewStickyHeaderLayoutElementKindSectionHeader, withReuseIdentifier: "Header")
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.showsVerticalScrollIndicator = false
-        self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
+        self.collectionView!.scrollIndicatorInsets = UIEdgeInsetsMake(0, 0, 0, 0);
+        self.collectionView!.registerClass(MenuViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView!.registerClass(RestaurantCardView.self, forSupplementaryViewOfKind: CollectionViewStickyHeaderLayoutElementKindSectionHeader, withReuseIdentifier: "Header")
+        self.collectionView!.dataSource = self
+        self.collectionView!.delegate = self
+        self.collectionView!.showsVerticalScrollIndicator = false
+        self.collectionView!.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         
     }
     
@@ -59,7 +59,7 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         
         var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
         edgePanRecognizer.edges = .Left;
-        self.collectionView.addGestureRecognizer(edgePanRecognizer)
+        self.collectionView!.addGestureRecognizer(edgePanRecognizer)
         (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = percentDrivenInteractiveTransition
     }
 
@@ -86,11 +86,11 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         let menuCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as MenuViewCell
         menuCell.text.text = self.name[indexPath.item]
         menuCell.imageView.image = self.images[indexPath.item]
-        let yOffset = ((self.collectionView.contentOffset.y - menuCell.frame.origin.y) / 200) * 25
+        let yOffset = ((self.collectionView!.contentOffset.y - menuCell.frame.origin.y) / 200) * 25
         menuCell.imageOffset = CGPointMake(0.0, yOffset);
         
         dispatch_async(dispatch_get_main_queue(), {
-            if let menuCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? MenuViewCell {
+            if let menuCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as? MenuViewCell {
                 menuCell.imageView.image = self.images[indexPath.item]
             }
         })
@@ -126,8 +126,8 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
     
     // pragma mark - UIScrollViewdelegate methods
     override func scrollViewDidScroll(scrollView: UIScrollView) {
-        for visibleCell in self.collectionView.visibleCells() as [MenuViewCell] {
-            let yOffset = ((self.collectionView.contentOffset.y - visibleCell.frame.origin.y) / 200) * 25;
+        for visibleCell in self.collectionView!.visibleCells() as [MenuViewCell] {
+            let yOffset = ((self.collectionView!.contentOffset.y - visibleCell.frame.origin.y) / 200) * 25;
             visibleCell.imageOffset = CGPointMake(0.0, yOffset);
         }
     }

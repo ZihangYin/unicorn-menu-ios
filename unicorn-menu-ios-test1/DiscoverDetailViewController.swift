@@ -21,17 +21,17 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     init(collectionViewLayout layout: UICollectionViewLayout!, currentIndexPath indexPath: NSIndexPath) {
         super.init(collectionViewLayout:layout)
         
-        self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
-        self.collectionView.pagingEnabled = true
-        self.collectionView.setToIndexPath(indexPath)
-        self.collectionView.registerClass(DiscoverDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DiscoverDetailCollectionViewCell")
-        self.collectionView.performBatchUpdates({self.collectionView.reloadData()}, completion: {finished in
+        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView!.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
+        self.collectionView!.pagingEnabled = true
+        self.collectionView!.setToIndexPath(indexPath)
+        self.collectionView!.registerClass(DiscoverDetailCollectionViewCell.self, forCellWithReuseIdentifier: "DiscoverDetailCollectionViewCell")
+        self.collectionView!.performBatchUpdates({self.collectionView!.reloadData()}, completion: {finished in
             if finished {
-                self.collectionView.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
+                self.collectionView!.scrollToItemAtIndexPath(indexPath, atScrollPosition:.CenteredHorizontally, animated: false)
             }});
-        self.collectionView.dataSource = self
-        self.collectionView.showsHorizontalScrollIndicator = false
+        self.collectionView!.dataSource = self
+        self.collectionView!.showsHorizontalScrollIndicator = false
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -70,7 +70,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     }
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        self.page = self.collectionView.contentOffset.x / UIScreen.mainScreen().bounds.size.width;
+        self.page = self.collectionView!.contentOffset.x / UIScreen.mainScreen().bounds.size.width;
         super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
     }
     
@@ -120,14 +120,14 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     
     private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
  
-        let discoverDetailLayout = self.collectionView.collectionViewLayout as? CollectionViewHorizontalFlowLayout
+        let discoverDetailLayout = self.collectionView!.collectionViewLayout as? CollectionViewHorizontalFlowLayout
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
         
         discoverDetailLayout!.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - statusBarHeight - navigationBarHeight!)
         discoverDetailLayout!.page = self.page
         
-        self.collectionView.collectionViewLayout.invalidateLayout()
+        self.collectionView!.collectionViewLayout.invalidateLayout()
     }
     
     func backButtonPressed() {
@@ -136,7 +136,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     }
     
     private func autoLayoutSubviews() {
-        var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView]
+        var viewsDictionary = ["topLayoutGuide": self.topLayoutGuide, "collectionView": self.collectionView!]
         let collectionView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         let collectionview_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[topLayoutGuide]-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
         

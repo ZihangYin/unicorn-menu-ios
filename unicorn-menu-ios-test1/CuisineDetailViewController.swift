@@ -24,13 +24,13 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     override init(collectionViewLayout layout: UICollectionViewLayout!) {
         super.init(collectionViewLayout:layout)
         
-        self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
-        self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
-        self.collectionView.pagingEnabled = true
-        self.collectionView.registerClass(CuisineDetailViewCell.self, forCellWithReuseIdentifier: "CuisineDetailViewCell")
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.collectionView.showsHorizontalScrollIndicator = false
+        self.collectionView!.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.collectionView!.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
+        self.collectionView!.pagingEnabled = true
+        self.collectionView!.registerClass(CuisineDetailViewCell.self, forCellWithReuseIdentifier: "CuisineDetailViewCell")
+        self.collectionView!.dataSource = self
+        self.collectionView!.delegate = self
+        self.collectionView!.showsHorizontalScrollIndicator = false
     }
     
     required init(coder aDecoder: NSCoder) {
@@ -65,7 +65,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         
         var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
         edgePanRecognizer.edges = .Left;
-        self.collectionView.addGestureRecognizer(edgePanRecognizer)
+        self.collectionView!.addGestureRecognizer(edgePanRecognizer)
         (self.navigationController!.delegate as DiscoverNavigationControllerDelegate).interactiveTransition = percentDrivenInteractiveTransition
     }
     
@@ -89,8 +89,8 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
 
     override func scrollViewDidScroll(scrollView: UIScrollView) {
         var index = 0
-        for visibleCell in self.collectionView.visibleCells() as [CuisineDetailViewCell] {
-            let ratio = (self.collectionView.contentOffset.x - visibleCell.frame.origin.x) / scrollView.frame.size.width;
+        for visibleCell in self.collectionView!.visibleCells() as [CuisineDetailViewCell] {
+            let ratio = (self.collectionView!.contentOffset.x - visibleCell.frame.origin.x) / scrollView.frame.size.width;
             visibleCell.cuisineDetailView.scrollHorizontalRatio(ratio)
         }
     }

@@ -189,7 +189,7 @@ class DiscoverNavigationController : UINavigationController {
             if let popViewController = self.viewControllers[childrenCount - 1] as? DiscoverDetailViewController {
                 let toViewController = self.viewControllers[childrenCount - 2] as DiscoverViewControllerProtocol
                 let toView = toViewController.transitionCollectionView()
-                let popView  = popViewController.collectionView
+                let popView  = popViewController.collectionView!
                 let indexPath = popView.fromIndexPath()
                 toViewController.viewWillAppearWithIndex(indexPath.item)
                 toView.setToIndexPath(indexPath)
