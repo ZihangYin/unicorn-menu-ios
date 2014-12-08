@@ -29,7 +29,7 @@ class UserLocation: NSObject, CLLocationManagerDelegate {
                 self.locationManager.delegate = self
                 self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
                 // IOS8
-                // self.locationManager.requestWhenInUseAuthorization()
+                self.locationManager.requestWhenInUseAuthorization()
                 self.locationManager.startUpdatingLocation()
                 self.requested = true
             }
