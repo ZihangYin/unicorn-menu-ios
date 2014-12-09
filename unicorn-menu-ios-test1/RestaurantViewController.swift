@@ -21,11 +21,13 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        for index in 0 ... 13 {
-            let imgName = String(format: "image%03ld.jpg", index)
-            self.images.append(UIImage(named: imgName)!)
+        for _ in 0 ... 13 {
+            for index in 0 ... 13 {
+                let imgName = String(format: "image%03ld.jpg", index)
+                self.images.append(UIImage(named: imgName)!)
+            }
         }
+        
         self.title = "RESTAURANT"
         var leftButton = UIButton.buttonWithType(UIButtonType.Custom) as UIButton
         leftButton.setImage(UIImage(named: "left.png"), forState: UIControlState.Normal)
@@ -68,14 +70,12 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         // Dispose of any resources that can be recreated.
     }
 
-
     // MARK: UICollectionViewDataSource
 
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
         //#warning Incomplete method implementation -- Return the number of sections
         return 1
     }
-
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
@@ -84,8 +84,8 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let menuCell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as MenuViewCell
-        menuCell.text.text = self.name[indexPath.item]
-        menuCell.imageView.image = self.images[indexPath.item]
+        menuCell.text.text = self.name[indexPath.item % 13]
+        
         let yOffset = ((self.collectionView!.contentOffset.y - menuCell.frame.origin.y) / 200) * 25
         menuCell.imageOffset = CGPointMake(0.0, yOffset);
         
@@ -120,7 +120,7 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         cuisineDetailLayout.scrollDirection = .Horizontal
         
         let cuisineDetailViewController = CuisineDetailViewController(collectionViewLayout: cuisineDetailLayout)
-        cuisineDetailViewController.title = self.name[indexPath.item]
+        cuisineDetailViewController.title = self.name[indexPath.item % 13]
         self.navigationController!.pushViewController(cuisineDetailViewController, animated: true)
     }
     

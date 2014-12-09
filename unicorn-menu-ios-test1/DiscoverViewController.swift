@@ -19,9 +19,12 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 1 ... 30 {
-            let imageName = String(format: "dish%02ld.jpg", index)
-            _images.append(UIImage(named: imageName)!)
+        
+        for _ in 1 ... 10 {
+            for index in 1 ... 30 {
+                let imageName = String(format: "dish%02ld.jpg", index)
+                _images.append(UIImage(named: imageName)!)
+            }
         }
         return _images
     }()
@@ -106,13 +109,6 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         super.viewDidAppear(animated)
         self.navigationController!.delegate = navigationDelegate
         self.navigationDelegate.discoverColumnWidth = (self.collectionView.collectionViewLayout as? CollectionViewWaterfallFlowLayout)!.columnWidth
-        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation)
-    }
-    
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-        self.updateLayoutForOrientation(toInterfaceOrientation);
-        self.collectionView.reloadData()
     }
     
     // pragma mark - UICollectionViewDataSource
@@ -126,9 +122,9 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
-        if (Int(indexPath.item)%3 == 0) {
+        if (Int(indexPath.item) % 3 == 0) {
             discoverCell.restaurantName.text = "RESTAURANTRESTAURANT"
-        } else if (Int(indexPath.item)%3 == 1) {
+        } else if (Int(indexPath.item) % 3  == 1) {
             discoverCell.restaurantName.text = "RESTAURANT NAME RESTAURANT NAME \(indexPath.item)"
         } else {
             discoverCell.restaurantName.text = "RESTAURANT"
@@ -202,7 +198,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         } else {
             restaurantText = "RESTAURANT"
         }
-        
+    
         let restaurantBoundingSize = restaurantText.boundingRectWithSize(CGSizeMake(self.columnWidth! - 65, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
         var cuisinetext: NSString!
@@ -221,8 +217,8 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         return itemSize
     }
     
-    func generateDiscoverDetailViewLayout() -> CollectionViewHorizontalFlowLayout {
-        let discoverDetailLayout = CollectionViewHorizontalFlowLayout()
+    func generateDiscoverDetailViewLayout() -> UICollectionViewFlowLayout {
+        let discoverDetailLayout = UICollectionViewFlowLayout()
         let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
         let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
 
@@ -339,7 +335,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         var anotacionView = mapView.dequeueReusableAnnotationViewWithIdentifier(reusarId)
         if anotacionView == nil {
             anotacionView = MKAnnotationView(annotation: anotacion, reuseIdentifier: reusarId)
-            anotacionView.image = UIImage(named:"pin_selected.png")
+            anotacionView.image = UIImage(named:"pin_red.png")
             anotacionView.canShowCallout = false
         }
         else {
@@ -372,11 +368,6 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func scanPressed() -> Void {
         (self.navigationController! as DiscoverNavigationController).pullDownAndUpNavigationBar()
-    }
-
-    private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
-        let discoverLayout = self.collectionView.collectionViewLayout as? CollectionViewWaterfallFlowLayout
-        discoverLayout!.columnCount = UIInterfaceOrientationIsPortrait(orientation) ? 2 : 3;
     }
     
     private func autoLayoutSubviews() {

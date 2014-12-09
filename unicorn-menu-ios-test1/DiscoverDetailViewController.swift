@@ -16,7 +16,6 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     
     var images = [UIImage]()
     var pullingOffset = CGPointZero
-    var page: CGFloat = 0.0
     
     init(collectionViewLayout layout: UICollectionViewLayout!, currentIndexPath indexPath: NSIndexPath) {
         super.init(collectionViewLayout:layout)
@@ -58,27 +57,6 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
         // Dispose of any resources that can be recreated.
     }
     
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        var edgePanRecognizer = UIScreenEdgePanGestureRecognizer.init(target: self, action: "handleEdgePanRecognizer:")
-    }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated);
-        self.updateLayoutForOrientation(UIApplication.sharedApplication().statusBarOrientation);
-    }
-    
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        self.page = self.collectionView!.contentOffset.x / UIScreen.mainScreen().bounds.size.width;
-        super.willRotateToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-    }
-    
-    override func willAnimateRotationToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        super.willAnimateRotationToInterfaceOrientation(toInterfaceOrientation, duration: duration)
-        self.updateLayoutForOrientation(toInterfaceOrientation);
-    }
-    
     // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverDetailCollectionViewCell", forIndexPath: indexPath) as DiscoverDetailCollectionViewCell
@@ -97,10 +75,9 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
             restaurantLayout.minimumLineSpacing = 1
             restaurantLayout.minimumInteritemSpacing = 0
             self.navigationController!.pushViewController(RestaurantViewController(collectionViewLayout: restaurantLayout), animated: true)
-            
-//            self.navigationController!.pushViewController(MenuViewController(), animated: true)
         }
         
+        discoverDetailCell.collectionView.reloadData()
         discoverDetailCell.setNeedsLayout()
         return discoverDetailCell
     }
@@ -116,18 +93,6 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     
     func detailViewCellScrollViewContentOffset() -> CGPoint {
         return self.pullingOffset
-    }
-    
-    private func updateLayoutForOrientation(orientation: UIInterfaceOrientation){
- 
-        let discoverDetailLayout = self.collectionView!.collectionViewLayout as? CollectionViewHorizontalFlowLayout
-        let statusBarHeight = UIApplication.sharedApplication().statusBarFrame.size.height
-        let navigationBarHeight = self.navigationController?.navigationBar.frame.size.height
-        
-        discoverDetailLayout!.itemSize = CGSizeMake(UIScreen.mainScreen().bounds.size.width, UIScreen.mainScreen().bounds.size.height - statusBarHeight - navigationBarHeight!)
-        discoverDetailLayout!.page = self.page
-        
-        self.collectionView!.collectionViewLayout.invalidateLayout()
     }
     
     func backButtonPressed() {

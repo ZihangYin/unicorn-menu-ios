@@ -12,9 +12,11 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 0 ... 6 {
-            let imageName = String(format: "cuisine%02ld.jpg", index)
-            _images.append(UIImage(named: imageName)!)
+        for _ in 0 ... 20 {
+            for index in 0 ... 6 {
+                let imageName = String(format: "cuisine%02ld.jpg", index)
+                _images.append(UIImage(named: imageName)!)
+            }
         }
         return _images
         }()
@@ -51,10 +53,6 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         self.navigationItem.leftBarButtonItems = [negativeSpacer, leftBarButton]
     }
     
-//    override func viewWillLayoutSubviews() {
-//        self.cuisineDetailView.setTopLayoutGuideLength(self.topLayoutGuide.length)
-//    }
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -71,10 +69,31 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cuisineDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("CuisineDetailViewCell", forIndexPath: indexPath) as CuisineDetailViewCell
+        var cuisineName: NSString!
+        if (Int(indexPath.item) % 3 == 0) {
+            cuisineName = "Cuisine Name \(indexPath.item)";
+        } else if (Int(indexPath.item) % 3 == 1) {
+            cuisineName = "Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name \(indexPath.item)"
+        } else {
+            cuisineName = "Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine \(indexPath.item)"
+        }
+        cuisineDetailCell.setCuisineName(cuisineName)
         
-        cuisineDetailCell.cuisineDetailView._backgroundImage = images[indexPath.item]
-        cuisineDetailCell.cuisineDetailView._foregroundView = self.customView("Cuisine Name \(indexPath.item)", cuisineDescription: "Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans", cuisineLikes: 100 - Int(indexPath.item))
-        cuisineDetailCell.backgroundColor = UIColor.blueColor()
+        cuisineDetailCell.backgroundImageView.image = images[indexPath.item]
+        cuisineDetailCell.blurredBackgroundImageView.image = cuisineDetailCell.backgroundImageView.image!.applyBlurWithRadius(BLUR_RADIUS, tintColor: BLUR_TINT_COLOR, saturationDeltaFactor: BLUR_DELTA_FACTOR, maskImage: nil)
+        cuisineDetailCell.cuisineLikesLabel.text = String(1000 - Int(indexPath.item))
+        cuisineDetailCell.cuisinePriceLabel.text = "$ 25.00"
+        cuisineDetailCell.scrollVerticallyToOffset(0.0)
+        
+        var cuisineDescription: NSString!
+        if (Int(indexPath.item) % 3 == 0) {
+            cuisineDescription = "Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans \(indexPath.item)";
+        } else if (Int(indexPath.item) % 3 == 1) {
+            cuisineDescription = "Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream, mixed berries and candied pecans Whipped mascarpone cream, mixed berries and candied pecans, Whipped mascarpone cream \(indexPath.item)"
+        } else {
+            cuisineDescription = "Description"
+        }
+        cuisineDetailCell.cuisineDescriptionLabel.text = cuisineDescription
         cuisineDetailCell.setNeedsLayout()
         return cuisineDetailCell
     }
@@ -91,7 +110,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
         var index = 0
         for visibleCell in self.collectionView!.visibleCells() as [CuisineDetailViewCell] {
             let ratio = (self.collectionView!.contentOffset.x - visibleCell.frame.origin.x) / scrollView.frame.size.width;
-            visibleCell.cuisineDetailView.scrollHorizontalRatio(ratio)
+            visibleCell.scrollHorizontalRatio(ratio)
         }
     }
     
@@ -117,99 +136,5 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
             }
             break;
         }
-    }
-    
-    private func customView(cuisineName: String, cuisineDescription: String, cuisineLikes: Int) -> UIView {
-        
-        let view = UIView(frame: CGRectMake(0, 0, self.view.frame.width, 300))
-        
-//        var cuisineNameLabel = UILabel(frame: CGRectMake(5, 5, self.view.frame.width - 10, 120))
-        var cuisineNameLabel = UILabel()
-        cuisineNameLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineNameLabel.text = cuisineName
-        cuisineNameLabel.font = UIFont(name: "ProximaNova-Bold", size: 24)
-        cuisineNameLabel.textAlignment = .Left
-        cuisineNameLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
-        cuisineNameLabel.numberOfLines = 10
-        cuisineNameLabel.lineBreakMode = .ByWordWrapping
-        cuisineNameLabel.textColor = UIColor.whiteColor()
-        cuisineNameLabel.shadowColor = UIColor.blackColor()
-        cuisineNameLabel.shadowOffset = CGSizeMake(1, 1)
-        
-        var cuisineLikesLogo  = UIImageView(image: UIImage(named: "like.png"))
-        cuisineLikesLogo.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineLikesLogo.clipsToBounds = true
-        
-        var cuisineLikesLabel = UILabel()
-        cuisineLikesLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineLikesLabel.text = String(cuisineLikes)
-        cuisineLikesLabel.font = UIFont(name: "ProximaNova-Light", size: 18)
-        cuisineLikesLabel.textAlignment = .Center
-        cuisineLikesLabel.textColor = UIColor.whiteColor()
-        cuisineLikesLabel.shadowColor = UIColor.blackColor()
-        cuisineLikesLabel.shadowOffset = CGSizeMake(1, 1)
-        
-        var cuisinePriceBox = UIView()
-        cuisinePriceBox.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisinePriceBox.layer.cornerRadius = 3;
-        cuisinePriceBox.backgroundColor = UIColor(white: 0, alpha: 0.15)
-        
-        var cuisinePriceLabel = UILabel()
-        cuisinePriceLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisinePriceLabel.text = "$" + String(arc4random()%20 + 15)
-        cuisinePriceLabel.font = UIFont(name: "ProximaNova-Light", size: 22)
-        cuisinePriceLabel.textAlignment = .Left
-        cuisinePriceLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
-        cuisinePriceLabel.textColor = UIColor.whiteColor()
-        
-        var cuisineDescriptionBox = UIView()
-        cuisineDescriptionBox.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineDescriptionBox.layer.cornerRadius = 3;
-        cuisineDescriptionBox.backgroundColor = UIColor(white: 0, alpha: 0.15)
-        
-//        var cuisineDescriptionLabel = UILabel(frame: CGRectMake(5, 60, self.view.frame.width - 10, 120))
-        var cuisineDescriptionLabel = UILabel()
-        cuisineDescriptionLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        cuisineDescriptionLabel.text = cuisineDescription
-        cuisineDescriptionLabel.font = UIFont(name: "ProximaNova-Regualr", size: 20)
-        cuisineDescriptionLabel.textAlignment = .Left
-        cuisineDescriptionLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
-        cuisineDescriptionLabel.numberOfLines = 20
-        cuisineDescriptionLabel.lineBreakMode = .ByWordWrapping
-        cuisineDescriptionLabel.textColor = UIColor.whiteColor()
-        
-        view.addSubview(cuisineNameLabel)
-        view.addSubview(cuisineLikesLogo)
-        view.addSubview(cuisineLikesLabel)
-        view.addSubview(cuisineDescriptionLabel)
-        view.addSubview(cuisineDescriptionBox)
-        
-        view.addSubview(cuisinePriceBox)
-        view.addSubview(cuisinePriceLabel)
-        
-        var viewsDictionary = ["cuisineName": cuisineNameLabel, "cuisineDescriptionBox": cuisineDescriptionBox, "cuisineDescription": cuisineDescriptionLabel, "cuisineLikesLogo": cuisineLikesLogo, "cuisineLikesLabel": cuisineLikesLabel,
-            "cuisinePriceBox": cuisinePriceBox, "cuisinePriceLabel": cuisinePriceLabel]
-        
-        cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cuisineLikesLogo(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cuisineLikesLogo(40)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cuisineName]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cuisineLikesLabel]-10-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[cuisineDescriptionBox]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-15-[cuisineDescription]-15-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-5-[cuisinePriceBox]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-20-[cuisinePriceLabel]-20-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        
-        view.addConstraint(NSLayoutConstraint(item: cuisinePriceLabel, attribute: .Top, relatedBy: .Equal, toItem: cuisinePriceBox, attribute: .Top, multiplier: 1, constant: 20))
-        view.addConstraint(NSLayoutConstraint(item: cuisinePriceBox, attribute: .Height, relatedBy: .Equal, toItem: cuisinePriceLabel, attribute: .Height, multiplier: 1, constant: 20))
-        
-        view.addConstraint(NSLayoutConstraint(item: cuisineDescriptionLabel, attribute: .Top, relatedBy: .Equal, toItem: cuisineDescriptionBox, attribute: .Top, multiplier: 1, constant: 10))
-        view.addConstraint(NSLayoutConstraint(item: cuisineLikesLogo, attribute: .CenterY, relatedBy: .Equal, toItem: cuisineNameLabel, attribute: .CenterY, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: cuisineLikesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: cuisineNameLabel, attribute: .CenterY, multiplier: 1, constant: 0))
-        view.addConstraint(NSLayoutConstraint(item: cuisineLikesLogo, attribute: .Right, relatedBy: .Equal, toItem: cuisineLikesLabel, attribute: .Left, multiplier: 1, constant: 5))
-        view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-10-[cuisineName]-10-[cuisinePriceBox]-0-[cuisineDescriptionBox(>=150)]-5-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        
-        return view
-
     }
 }

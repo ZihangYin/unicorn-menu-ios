@@ -20,8 +20,6 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
     private var bottomBorderForCuisineName = UIView()
     var restaurantView = UIView()
     
-    //    private var bottomBorderForRestaurantName = UIView()
-    
     private var aspectConstraint : NSLayoutConstraint? {
         didSet {
             if oldValue != nil {
@@ -49,7 +47,7 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
         
         self.cuisineNameLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisineNameLabel.font = UIFont(name: "ProximaNova-Bold", size: 24)
-        self.cuisineNameLabel.textAlignment = .Left
+        self.cuisineNameLabel.textAlignment = .Center
         self.cuisineNameLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
         self.cuisineNameLabel.numberOfLines = 10
         self.cuisineNameLabel.lineBreakMode = .ByWordWrapping
@@ -65,7 +63,7 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
         
         self.cuisinePriceLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.cuisinePriceLabel.font = UIFont(name: "ProximaNova-Light", size: 18)
-        self.cuisinePriceLabel.textAlignment = .Left
+        self.cuisinePriceLabel.textAlignment = .Center
         self.cuisinePriceLabel.preferredMaxLayoutWidth = UIScreen.mainScreen().bounds.width
         self.cuisinePriceLabel.numberOfLines = 20
         self.cuisinePriceLabel.lineBreakMode = .ByWordWrapping
@@ -84,13 +82,10 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
         self.restaurantName.lineBreakMode = .ByWordWrapping
         self.restaurantName.textColor = UIColor.blackColor()
         
-//        self.bottomBorderForRestaurantName.setTranslatesAutoresizingMaskIntoConstraints(false)
-//        self.bottomBorderForRestaurantName.backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.4)
-        
         self.restaurantView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.restaurantView.addSubview(logoView)
         self.restaurantView.addSubview(restaurantName)
-//        self.restaurantView.addSubview(bottomBorderForRestaurantName)
+
         
         self.addSubview(cuisineImage)
         self.addSubview(cuisineNameLabel)
@@ -112,7 +107,11 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
     func setCuisineImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        cuisineImage.image = image
+        cuisineImage.backgroundColor = UIColor.whiteColor()
+   
+        dispatch_async(dispatch_get_main_queue(), {
+            self.cuisineImage.image = image
+        })
     }
     
     private func autoLayoutSubviews() {
@@ -124,25 +123,21 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:[cuisineLikesLogo(30)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.cuisineLikesLogo.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[cuisineLikesLogo(30)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.bottomBorderForCuisineName.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bottomBorderForCuisineName(1)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-//        self.bottomBorderForRestaurantName.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[bottomBorderForRestaurantName(1)]", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         
         self.restaurantView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[logoView]-10-[restaurantName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.logoView, attribute: .CenterX, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterX, multiplier: 1, constant: 0))
         self.restaurantView.addConstraint(NSLayoutConstraint(item: self.restaurantName, attribute: .CenterX, relatedBy: .Equal, toItem: self.restaurantView, attribute: .CenterX, multiplier: 1, constant: 0))
-//        self.restaurantView.addConstraint(NSLayoutConstraint(item: self.bottomBorderForRestaurantName, attribute: .Width, relatedBy: .Equal, toItem: self.restaurantView, attribute: .Width, multiplier: 1, constant: 0))
         
-//        self.addConstraint(NSLayoutConstraint(item: self.cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: self, attribute: .Width, multiplier: 1, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisineImage]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-//        self.addConstraint(NSLayoutConstraint(item: self.bottomBorderForCuisineName, attribute: .Width, relatedBy: .Equal, toItem: self, attribute: .Width, multiplier: 1, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[bottomBorderForCuisineName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.addConstraint(NSLayoutConstraint(item: self.cuisineNameLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
-//        self.addConstraint(NSLayoutConstraint(item: self.restaurantView, attribute: .Width, relatedBy: .Equal, toItem: self, attribute: .Width, multiplier: 1, constant: 0))
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[restaurantView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
-        self.addConstraint(NSLayoutConstraint(item: self.cuisinePriceLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 0))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisineImage]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[bottomBorderForCuisineName]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisineNameLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[cuisinePriceLabel]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterX, relatedBy: .Equal, toItem: self, attribute: .CenterX, multiplier: 1, constant: 10))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLogo, attribute: .Right, relatedBy: .Equal, toItem: self.cuisineLikesLabel, attribute: .Left, multiplier: 1, constant: 0))
         self.addConstraint(NSLayoutConstraint(item: self.cuisineLikesLabel, attribute: .CenterY, relatedBy: .Equal, toItem: self.cuisineLikesLogo, attribute: .CenterY, multiplier: 1, constant: 0))
-        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-10-[cuisineNameLabel]-10-[cuisineLikesLabel]-10-[cuisinePriceLabel]-10-[bottomBorderForCuisineName]-10-[restaurantView]-10-|",
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-10-[cuisineNameLabel]-10-[cuisineLikesLabel]-10-[cuisinePriceLabel]-10-[bottomBorderForCuisineName]-10-[restaurantView]",
             options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 
@@ -157,12 +152,15 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     var pulledAction: ((offset : CGPoint) -> Void)?
     var tappedAction: (() -> Void)?
     var collectionView: UICollectionView!
-
+    private var columnWidth: CGFloat?
+    
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 31 ... 39 {
-            let imageName = String(format: "dish%02ld.jpg", index)
-            _images.append(UIImage(named: imageName)!)
+        for _ in 1 ... 10 {
+            for index in 31 ... 39 {
+                let imageName = String(format: "dish%02ld.jpg", index)
+                _images.append(UIImage(named: imageName)!)
+            }
         }
         return _images
     }()
@@ -180,26 +178,23 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
         super.init(frame: frame)
         
         let collectionViewLayout: CollectionViewWaterfallFlowLayout = CollectionViewWaterfallFlowLayout()
-        collectionViewLayout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        collectionViewLayout.sectionInset = UIEdgeInsets(top: 0, left: 10, bottom: 10, right: 10)
         collectionViewLayout.columnCount = 2
         collectionViewLayout.minimumColumnSpacing = 7
         collectionViewLayout.minimumInteritemSpacing = 7
+        
         self.collectionView = UICollectionView(frame: CGRectZero, collectionViewLayout: collectionViewLayout)
         self.collectionView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.collectionView.registerClass(DiscoverRelatedViewCell.self, forCellWithReuseIdentifier: "DiscoverRelatedViewCell")
-        self.collectionView!.registerClass(DiscoverDetailTableViewCell.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverHeader")
+        self.collectionView.registerClass(DiscoverDetailTableViewCell.self, forSupplementaryViewOfKind: CollectionViewWaterfallFlowLayoutElementKindSectionHeader, withReuseIdentifier: "DiscoverDetailHeader")
         self.collectionView.backgroundColor = UIColor(red: 0.925, green: 0.925, blue: 0.925, alpha: 1)
         self.collectionView.directionalLockEnabled = true
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         self.collectionView.showsVerticalScrollIndicator = false
-        
         self.contentView.addSubview(collectionView)
         self.autoLayoutSubviews()
-    }
-    
-    override func layoutSubviews() {
-        super.layoutSubviews()
+        
         self.collectionView.reloadData()
     }
     
@@ -213,10 +208,8 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverRelatedViewCell", forIndexPath: indexPath) as DiscoverRelatedViewCell
-        let columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        
         discoverCell.cuisineName.text = "CUISINE NAME \(indexPath.item)"
-        discoverCell.cuisineName.preferredMaxLayoutWidth = columnWidth - 20
+        discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
         
         discoverCell.setCuisineImage(images[indexPath.item])
         discoverCell.cuisineLikesLabel.text = String(500 - indexPath.item)
@@ -227,23 +220,23 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         let image = images[indexPath.item]
-        let columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
-        let imageHeight = image.size.height * columnWidth / image.size.width
+        self.columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
+        let imageHeight = image.size.height * self.columnWidth! / image.size.width
         
         // Find the size that the string occupies when displayed with the given font.
         let paraStyle = NSMutableParagraphStyle()
         paraStyle.lineBreakMode = .ByWordWrapping
         let cuisinetext = "CUISINE NAME \(indexPath.item)" as NSString
-        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(columnWidth - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
+        let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(self.columnWidth! - 20, CGFloat.max), options: .UsesLineFragmentOrigin,
             attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Light", size:12)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-        let itemSize = CGSizeMake(columnWidth, imageHeight + ceil(cuisineBoundingSize.height) + 35)
+        let itemSize = CGSizeMake(columnWidth!, imageHeight + ceil(cuisineBoundingSize.height) + 35)
         return itemSize
     }
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         var reusableView : UICollectionReusableView! = nil
         if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
-            var discoverDetailTableViewCell = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverHeader", forIndexPath: indexPath) as DiscoverDetailTableViewCell
+            var discoverDetailTableViewCell = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverDetailHeader", forIndexPath: indexPath) as DiscoverDetailTableViewCell
             
             discoverDetailTableViewCell.setCuisineImage(cuisineImage!)
             discoverDetailTableViewCell.cuisineNameLabel.text = "\(cuisineName!)"
@@ -251,7 +244,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
             discoverDetailTableViewCell.restaurantName.text = restaurantName!
             discoverDetailTableViewCell.cuisineLikesLabel.text = cuisineLikes!
 
-            let tapRestaurantLogo = UITapGestureRecognizer.init(target: self, action: "handleTapRestaurant:")
+            let tapRestaurantLogo = UITapGestureRecognizer(target: self, action: "handleTapRestaurant:")
             discoverDetailTableViewCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
             
             reusableView = discoverDetailTableViewCell
@@ -272,8 +265,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
                 attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:18)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
             let cuisinetext = cuisineName!
             let cuisineBoundingSize = cuisinetext.boundingRectWithSize(CGSizeMake(collectionView.frame.width, CGFloat.max), options: .UsesLineFragmentOrigin,
-                attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:24)!, NSParagraphStyleAttributeName: paraStyle], context: nil)
-            
+                attributes: [NSFontAttributeName: UIFont(name: "ProximaNova-Bold", size:24)!, NSParagraphStyleAttributeName: paraStyle], context: nil)    
             let itemSize = Float(ceil(restaurantBoundingSize.height)) + imageHeight +  Float(ceil(cuisineBoundingSize.height)) + 150.0
             return itemSize
             
@@ -296,10 +288,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     
     private func autoLayoutSubviews() {
         var viewsDictionary = ["collectionView": self.collectionView]
-        let tableView_constraint_H = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        let tableView_constraint_V = NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary)
-        
-        self.addConstraints(tableView_constraint_H)
-        self.addConstraints(tableView_constraint_V)
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
+        self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[collectionView]-0-|", options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
 }

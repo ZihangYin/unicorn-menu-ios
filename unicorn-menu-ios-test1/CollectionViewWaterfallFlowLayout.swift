@@ -75,6 +75,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
     private var unionRects = [CGRect]()
     
     override func prepareLayout() {
+        
         super.prepareLayout()
         
         let numberOfSections = self.collectionView!.numberOfSections()
@@ -243,12 +244,20 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
         return contentSize
     }
     
-    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
-//        invalidateLayoutWithContext(invalidationContextForBoundsChange(newBounds))
+//    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+////        invalidateLayoutWithContext(invalidationContextForBoundsChange(newBounds))
 //        let oldBounds = self.collectionView!.bounds
 //        if CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds) {
 //            return true
 //        }
+//        return false
+//    }
+    
+    override func shouldInvalidateLayoutForBoundsChange(newBounds: CGRect) -> Bool {
+        let oldBounds = self.collectionView!.bounds
+        if CGRectGetWidth(newBounds) != CGRectGetWidth(oldBounds) {
+            return true
+        }
         
         return false
     }
@@ -301,7 +310,18 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
 //        return attribute
 //    }
     
+    override func layoutAttributesForSupplementaryViewOfKind(elementKind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionViewLayoutAttributes! {
+        var attribute: UICollectionViewLayoutAttributes?
+        if elementKind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader {
+            attribute = self.headersAttribute[indexPath.section]
+        } else if elementKind == CollectionViewWaterfallFlowLayoutElementKindSectionFooter {
+            attribute = self.footersAttribute[indexPath.section]
+        }
+        return attribute
+    }
+    
     override func layoutAttributesForElementsInRect(rect: CGRect) -> [AnyObject]? {
+
         var begin: Int = 0
         var end: Int = self.unionRects.count
         var attrs = [UICollectionViewLayoutAttributes]()
@@ -323,16 +343,7 @@ class CollectionViewWaterfallFlowLayout: UICollectionViewLayout {
         for var i = begin; i < end; i++ {
             let attribute = self.allItemAttributes[i]
             if CGRectIntersectsRect(rect, attribute.frame) {
-                // nil when representedElementCategory is UICollectionElementCategoryCell
-//                if let representedElementKind = attribute.representedElementKind {
-//                    if (representedElementKind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
-//                        attrs.append(layoutAttributesForSupplementaryViewOfKind(representedElementKind, atIndexPath: attribute.indexPath))
-//                    } else{
-//                        attrs.append(attribute)
-//                    }
-//                } else {
                     attrs.append(attribute)
- //               }
             }
         }
         

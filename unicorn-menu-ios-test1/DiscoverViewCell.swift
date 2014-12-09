@@ -98,7 +98,9 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     func setCuisineImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        cuisineImage.image = image
+        dispatch_async(dispatch_get_main_queue(), {
+            self.cuisineImage.image = image
+        })
     }
     
     // pragma mark - DiscoverTansitionViewCellProtocol
@@ -202,7 +204,9 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
     func setCuisineImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        cuisineImage.image = image
+        dispatch_async(dispatch_get_main_queue(), {
+            self.cuisineImage.image = image
+        })
     }
     
     // pragma mark - DiscoverTansitionViewCellProtocol

@@ -22,9 +22,11 @@ class MapView: UIView, UICollectionViewDataSource {
     
     lazy var images: [UIImage] = {
         var _images = [UIImage]()
-        for index in 33 ... 39 {
-            let imageName = String(format: "dish%02ld.jpg", index)
-            _images.append(UIImage(named: imageName)!)
+        for _ in 1 ... 15 {
+            for index in 33 ... 39 {
+                let imageName = String(format: "dish%02ld.jpg", index)
+                _images.append(UIImage(named: imageName)!)
+            }
         }
         return _images
         }()
@@ -67,6 +69,7 @@ class MapView: UIView, UICollectionViewDataSource {
         
         self.mapView = MKMapView(frame: CGRectZero)
         self.mapView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        self.mapView.rotateEnabled = false
         self.mapView.showsBuildings = false
         self.mapView.showsPointsOfInterest = false
         self.mapView.showsUserLocation = true
