@@ -15,7 +15,7 @@ import UIKit
 class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransitioning {
     
     var presenting = false
-    var animationDuration = 0.75
+    var animationDuration = 0.35
     var animationScale: CGFloat = 1.0
     
     func transitionDuration(transitionContext: UIViewControllerContextTransitioning) -> NSTimeInterval{
@@ -59,7 +59,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             containerView.addSubview(snapShot)
             containerView.insertSubview(backgroundViewContainer, belowSubview: toView)
             
-            UIView.animateWithDuration(self.animationDuration, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.0, options: .CurveEaseInOut, animations: {
+            UIView.animateWithDuration(self.animationDuration, delay: 0.0, options: .CurveEaseInOut, animations: {
                 snapShot.transform = CGAffineTransformMakeScale(1/self.animationScale, 1/self.animationScale)
                 snapShot.frame = CGRectMake(leftUpperPoint.x, leftUpperPoint.y, snapShot.frame.size.width, snapShot.frame.size.height)
                 toView.transform = CGAffineTransformIdentity
@@ -96,7 +96,7 @@ class DiscoverNavigationTransition: NSObject, UIViewControllerAnimatedTransition
             containerView.addSubview(snapShot)
             containerView.insertSubview(backgroundViewContainer, belowSubview: fromView)
 
-            UIView.animateWithDuration(self.animationDuration, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.0, options: .CurveEaseInOut, animations: {
+            UIView.animateWithDuration(self.animationDuration, delay: 0.0, options: .CurveEaseInOut, animations: {
                 snapShot.transform = CGAffineTransformMakeScale(self.animationScale, self.animationScale)
                 snapShot.frame = CGRectMake(0, toView.frame.origin.y, snapShot.frame.size.width, snapShot.frame.size.height)
                 fromView.alpha = 0

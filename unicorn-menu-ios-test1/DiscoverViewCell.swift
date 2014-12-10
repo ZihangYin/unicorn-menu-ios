@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 @objc protocol DiscoverTansitionViewCellProtocol{
     func snapShotForDiscoverTransition() -> UIImageView!
@@ -14,6 +15,7 @@ import UIKit
 
 class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol {
     
+    var request: Alamofire.Request?
     var logoView = UIImageView()
     var cuisineImage = UIImageView()
     var restaurantName = UILabel()
@@ -94,8 +96,7 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
         aspectConstraint = nil
     }
     
-    func setCuisineImage(imageName: String) {
-        var image = UIImage(named: imageName)!
+    func setCuisineImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
         self.cuisineImage.image = image
@@ -142,6 +143,7 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
 
 class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol {
     
+    var request: Alamofire.Request?
     var cuisineImage = UIImageView()
     var cuisineName = UILabel()
     var cuisineLikesLogo = UIImageView(image: UIImage(named: "heart.png"))
@@ -198,8 +200,7 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
         aspectConstraint = nil
     }
     
-    func setCuisineImage(imageName: String) {
-        var image = UIImage(named: imageName)!
+    func setCuisineImage(image: UIImage) {
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
         self.cuisineImage.image = image

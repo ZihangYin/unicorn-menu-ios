@@ -10,6 +10,7 @@ import Foundation
 import UIKit
 import MapKit
 import CoreLocation
+import Alamofire
 
 @objc protocol DiscoverViewControllerProtocol : DiscoverNavigationTransitionProtocol {
     func viewWillAppearWithIndex(index : NSInteger)
@@ -28,6 +29,22 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         }
         return _imageNames
     }()
+    
+    lazy var imageUrls: [String] = {
+        var _imageUrls = [String]()
+        
+        for _ in 1 ... 10 {
+            for index in 1 ... 30 {
+                let imagUrl = String(format: "http://test-yinz.s3.amazonaws.com/images/dish%02ld.jpg", index)
+                _imageUrls.append(imagUrl)
+            }
+        }
+        return _imageUrls
+    }()
+
+    let imageCache = NSCache()
+    var populatingPhotos = false
+    let refreshControl = UIRefreshControl()
     
     let navigationDelegate = DiscoverNavigationControllerDelegate()
 //    let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
@@ -82,6 +99,10 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         self.collectionView.directionalLockEnabled = true
         self.collectionView.showsVerticalScrollIndicator = false
         
+//        self.refreshControl.tintColor = UIColor.redColor()
+//        self.refreshControl.addTarget(self, action: "handleRefresh", forControlEvents: .ValueChanged)
+//        self.collectionView!.addSubview(refreshControl)
+        
         self.mapView = MapView(frame: CGRectZero)
         self.mapView.setTranslatesAutoresizingMaskIntoConstraints(false)
         self.mapView.mapView.delegate = self
@@ -94,6 +115,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        self.imageCache.removeAllObjects()
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -113,7 +135,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     // pragma mark - UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.imageNames.count
+        return self.imageUrls.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -122,7 +144,36 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
-        discoverCell.cuisineImage.image = nil
+        let imageURL = self.imageUrls[indexPath.item]
+        
+        // Cancel the request if it's not for the same photo after dequeue
+        if discoverCell.request?.request.URLString != imageURL {
+            discoverCell.request?.cancel()
+        }
+        
+        if let image = self.imageCache.objectForKey(imageURL) as? UIImage { // Use the local cache if possible
+            discoverCell.setCuisineImage(image)
+        } else { // Download from the internet
+             discoverCell.cuisineImage.image = nil
+            discoverCell.request = Alamofire.request(.GET, imageURL).validate(contentType: ["image/*"]).responseImage {
+                (request, _, image, error) in
+                if error == nil && image != nil {
+                    // The image is downloaded, cache it anyways even if the cell is dequeued and we're not displaying the image
+                     self.imageCache.setObject(image!, forKey: request.URLString)
+                    
+                    // Make sure that by the time this line is executed, the cell is supposed the display the same image with the same URL.
+                    if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
+                        discoverCell.setCuisineImage(image!)
+                    }
+                } else {
+                    /*
+                    If the cell went off-screen before the image was downloaded, we cancel it and
+                    an NSURLErrorDomain (-999: cancelled) is returned. This is a normal behavior.
+                    */
+                }
+            }
+        }
+       
         if (Int(indexPath.item) % 3 == 0) {
             discoverCell.restaurantName.text = "RESTAURANTRESTAURANT"
         } else if (Int(indexPath.item) % 3  == 1) {
@@ -142,13 +193,14 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
         discoverCell.logoView.image = UIImage(named: "logo.png")
         discoverCell.cuisineLikesLabel.text = String(1000 - indexPath.item)
+    
+//        
+//        dispatch_async(dispatch_get_main_queue(), {
+//            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
+//                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
+//           }
+//        })
 
-        dispatch_async(dispatch_get_main_queue(), {
-            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
-                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
-           }
-        })
-        
         let tapImage = UITapGestureRecognizer(target: self, action: "handleTapImage:")
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
         
@@ -258,18 +310,18 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         }
     }
     
-    func handleLongPress(longPress: UILongPressGestureRecognizer) {
-        if (longPress.state != .Ended) {
-            return
-        }
-        let point = longPress.locationInView(self.collectionView)
-        if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
-            let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell
-            self.imageNames[indexPath.row] = self.imageNames[0]
-            discoverCell!.setCuisineImage(self.imageNames[0])
-            self.collectionView.reloadItemsAtIndexPaths([indexPath])
-        }
-    }
+//    func handleLongPress(longPress: UILongPressGestureRecognizer) {
+//        if (longPress.state != .Ended) {
+//            return
+//        }
+//        let point = longPress.locationInView(self.collectionView)
+//        if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
+//            let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell
+//            self.imageNames[indexPath.row] = self.imageNames[0]
+//            discoverCell!.setCuisineImage(self.imageNames[0])
+//            self.collectionView.reloadItemsAtIndexPaths([indexPath])
+//        }
+//    }
     
     func mapPressed() -> Void {
         if (isMapShowing == false) {
@@ -366,6 +418,25 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func scanPressed() -> Void {
         (self.navigationController! as DiscoverNavigationController).pullDownAndUpNavigationBar()
+    }
+    
+    func handleRefresh() {
+        refreshControl.beginRefreshing()
+        imageUrls.removeAll(keepCapacity: true)
+        
+        println("refreshing")
+        
+        for _ in 1 ... 10 {
+            for index in 1 ... 30 {
+                let imagUrl = String(format: "http://test-yinz.s3.amazonaws.com/images/dish%02ld.jpg", index)
+                imageUrls.append(imagUrl)
+            }
+        }
+
+        // Refresh the UI
+        self.collectionView!.reloadData()
+        // We have our own spinner
+        refreshControl.endRefreshing()
     }
     
     private func autoLayoutSubviews() {

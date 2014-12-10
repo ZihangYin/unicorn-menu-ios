@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class DiscoverDetailTableViewCell : UICollectionReusableView {
     
@@ -163,6 +164,19 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
         return _imageNames
     }()
     
+    lazy var imageUrls: [String] = {
+        var _imageUrls = [String]()
+        for _ in 1 ... 10 {
+            for index in 31 ... 39 {
+                let imagUrl = String(format: "http://test-yinz.s3.amazonaws.com/images/dish%02ld.jpg", index)
+                _imageUrls.append(imagUrl)
+            }
+        }
+        return _imageUrls
+        }()
+
+    let imageCache = NSCache()
+    
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -206,17 +220,39 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverRelatedViewCell", forIndexPath: indexPath) as DiscoverRelatedViewCell
-        discoverCell.cuisineImage.image = nil
+        let imageURL = self.imageUrls[indexPath.item]
+        
+        // Cancel the request if it's not for the same photo after dequeue
+        if discoverCell.request?.request.URLString != imageURL {
+            discoverCell.request?.cancel()
+        }
+        if let image = self.imageCache.objectForKey(imageURL) as? UIImage { // Use the local cache if possible
+            discoverCell.setCuisineImage(image)
+        } else { // Download from the internet
+            discoverCell.cuisineImage.image = nil
+            discoverCell.request = Alamofire.request(.GET, imageURL).validate(contentType: ["image/*"]).responseImage {
+                (request, _, image, error) in
+                if error == nil && image != nil {
+                    // The image is downloaded, cache it anyways even if the cell is dequeued and we're not displaying the image
+                    self.imageCache.setObject(image!, forKey: request.URLString)
+                    
+                    // Make sure that by the time this line is executed, the cell is supposed the display the same image with the same URL.
+                    if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverRelatedViewCell {
+                        discoverCell.setCuisineImage(image!)
+                    }
+                }
+            }
+        }
         
         discoverCell.cuisineName.text = "CUISINE NAME \(indexPath.item)"
         discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
         discoverCell.cuisineLikesLabel.text = String(500 - indexPath.item)
         
-        dispatch_async(dispatch_get_main_queue(), {
-            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverRelatedViewCell {
-                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
-            }
-        })
+//        dispatch_async(dispatch_get_main_queue(), {
+//            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverRelatedViewCell {
+//                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
+//            }
+//        })
         discoverCell.setNeedsLayout()
         return discoverCell
     }
