@@ -12,7 +12,7 @@ let reuseIdentifier = "Cell"
 
 class RestaurantViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
 
-    var images = [UIImage]()
+    var imageNames = [String]()
     var name = ["APPETIZER", "BARBEQUE", "BEER", "BEVERAGE", "DIM SUM", "DESSERT", "ENTREE",
         "HOT POT", "RAMEN", "PIZZA", "SANDWICHES",
         "SALAD", "SPECIAL", "SUSHI"]
@@ -24,7 +24,7 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         for _ in 0 ... 13 {
             for index in 0 ... 13 {
                 let imgName = String(format: "image%03ld.jpg", index)
-                self.images.append(UIImage(named: imgName)!)
+                self.imageNames.append(imgName)
             }
         }
         
@@ -79,7 +79,7 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         //#warning Incomplete method implementation -- Return the number of items in the section
-        return self.images.count
+        return self.imageNames.count
     }
 
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -91,7 +91,7 @@ class RestaurantViewController: UICollectionViewController, UICollectionViewData
         
         dispatch_async(dispatch_get_main_queue(), {
             if let menuCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as? MenuViewCell {
-                menuCell.imageView.image = self.images[indexPath.item]
+                menuCell.imageView.image = UIImage(named: self.imageNames[indexPath.item])
             }
         })
         menuCell.setNeedsLayout()

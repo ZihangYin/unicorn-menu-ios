@@ -20,15 +20,15 @@ class MapView: UIView, UICollectionViewDataSource {
     private var expandCollapseView = UIImageView(image: UIImage(named: "down.png"))
     private var showDetail = false
     
-    lazy var images: [UIImage] = {
-        var _images = [UIImage]()
+    lazy var imageNames: [String] = {
+        var _imageNames = [String]()
         for _ in 1 ... 15 {
             for index in 33 ... 39 {
                 let imageName = String(format: "dish%02ld.jpg", index)
-                _images.append(UIImage(named: imageName)!)
+                _imageNames.append(imageName)
             }
         }
-        return _images
+        return _imageNames
         }()
     
     required init(coder aDecoder: NSCoder) {
@@ -134,7 +134,8 @@ class MapView: UIView, UICollectionViewDataSource {
     // pragma mark - UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("DetailViewCell", forIndexPath: indexPath) as UICollectionViewCell
-        var imageView = UIImageView(image: self.images[indexPath.item])
+
+        var imageView = UIImageView(image: UIImage(named: self.imageNames[indexPath.item]))
         imageView.clipsToBounds = true
         imageView.contentMode = .ScaleAspectFill
         cell.backgroundView = imageView
@@ -142,7 +143,7 @@ class MapView: UIView, UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return imageNames.count
     }
     
     private func autoLayoutSubviews() {

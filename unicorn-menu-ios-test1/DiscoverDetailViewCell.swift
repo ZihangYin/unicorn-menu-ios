@@ -101,14 +101,12 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
-        
     }
     
-    func setCuisineImage(image: UIImage) {
+    func setCuisineImage(imageName: String) {
+        let image = UIImage(named: imageName)!
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        cuisineImage.backgroundColor = UIColor.whiteColor()
-   
         dispatch_async(dispatch_get_main_queue(), {
             self.cuisineImage.image = image
         })
@@ -140,12 +138,11 @@ class DiscoverDetailTableViewCell : UICollectionReusableView {
         self.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-0-[cuisineImage]-10-[cuisineNameLabel]-10-[cuisineLikesLabel]-10-[cuisinePriceLabel]-10-[bottomBorderForCuisineName]-10-[restaurantView]",
             options: NSLayoutFormatOptions(0), metrics: nil, views: viewsDictionary))
     }
-
 }
 
-class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource {
+class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverTansitionViewCellProtocol {
     
-    var cuisineImage: UIImage?
+    var cuisineImageName: String?
     var cuisineName: String?
     var restaurantName: String?
     var cuisineLikes: String?
@@ -153,16 +150,17 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     var tappedAction: (() -> Void)?
     var collectionView: UICollectionView!
     private var columnWidth: CGFloat?
+    private var headerView: DiscoverDetailTableViewCell?
     
-    lazy var images: [UIImage] = {
-        var _images = [UIImage]()
+    lazy var imageNames: [String] = {
+        var _imageNames = [String]()
         for _ in 1 ... 10 {
             for index in 31 ... 39 {
-                let imageName = String(format: "dish%02ld.jpg", index)
-                _images.append(UIImage(named: imageName)!)
+                var imageName = String(format: "dish%02ld.jpg", index)
+                _imageNames.append(imageName)
             }
         }
-        return _images
+        return _imageNames
     }()
     
     required init(coder aDecoder: NSCoder) {
@@ -199,7 +197,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        return self.imageNames.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -208,18 +206,23 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverRelatedViewCell", forIndexPath: indexPath) as DiscoverRelatedViewCell
+        discoverCell.cuisineImage.image = nil
+        
         discoverCell.cuisineName.text = "CUISINE NAME \(indexPath.item)"
         discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
-        
-        discoverCell.setCuisineImage(images[indexPath.item])
         discoverCell.cuisineLikesLabel.text = String(500 - indexPath.item)
         
+        dispatch_async(dispatch_get_main_queue(), {
+            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverRelatedViewCell {
+                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
+            }
+        })
         discoverCell.setNeedsLayout()
         return discoverCell
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let image = images[indexPath.item]
+        let image = UIImage(named: imageNames[indexPath.item])!
         self.columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
         let imageHeight = image.size.height * self.columnWidth! / image.size.width
         
@@ -238,7 +241,7 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
         if (kind == CollectionViewWaterfallFlowLayoutElementKindSectionHeader) {
             var discoverDetailTableViewCell = collectionView.dequeueReusableSupplementaryViewOfKind(kind, withReuseIdentifier: "DiscoverDetailHeader", forIndexPath: indexPath) as DiscoverDetailTableViewCell
             
-            discoverDetailTableViewCell.setCuisineImage(cuisineImage!)
+            discoverDetailTableViewCell.setCuisineImage(cuisineImageName!)
             discoverDetailTableViewCell.cuisineNameLabel.text = "\(cuisineName!)"
             discoverDetailTableViewCell.cuisinePriceLabel.text = "$ 25.00"
             discoverDetailTableViewCell.restaurantName.text = restaurantName!
@@ -248,15 +251,17 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
             discoverDetailTableViewCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
             
             reusableView = discoverDetailTableViewCell
+            self.headerView = discoverDetailTableViewCell
             reusableView.setNeedsLayout()
         }
-        
         return reusableView
     }
     
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, heightForHeaderInSection section: Int) -> Float {
+        
+        let cuisineImage = UIImage(named: cuisineImageName!)!
         if (section == 0) {
-            let imageHeight =  Float(cuisineImage!.size.height * collectionView.frame.width / cuisineImage!.size.width)
+            let imageHeight =  Float(cuisineImage.size.height * collectionView.frame.width / cuisineImage.size.width)
             
             let paraStyle = NSMutableParagraphStyle()
             paraStyle.lineBreakMode = .ByWordWrapping
@@ -271,6 +276,12 @@ class DiscoverDetailCollectionViewCell: UICollectionViewCell, CollectionViewDele
             
         }
         return 0.0
+    }
+    
+    func snapShotForDiscoverTransition() -> UIImageView! {
+        let snapShotView = UIImageView(image: headerView!.cuisineImage.image)
+        snapShotView.frame = headerView!.cuisineImage.frame
+        return snapShotView
     }
     
     func scrollViewWillBeginDecelerating(scrollView: UIScrollView) {

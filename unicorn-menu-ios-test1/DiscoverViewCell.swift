@@ -9,7 +9,7 @@
 import UIKit
 
 @objc protocol DiscoverTansitionViewCellProtocol{
-    func snapShotForDiscoverTransition() -> UIView!
+    func snapShotForDiscoverTransition() -> UIImageView!
 }
 
 class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol {
@@ -92,19 +92,17 @@ class DiscoverViewCell: UICollectionViewCell, DiscoverTansitionViewCellProtocol 
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
-        
     }
     
-    func setCuisineImage(image: UIImage) {
+    func setCuisineImage(imageName: String) {
+        var image = UIImage(named: imageName)!
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        dispatch_async(dispatch_get_main_queue(), {
-            self.cuisineImage.image = image
-        })
+        self.cuisineImage.image = image
     }
     
     // pragma mark - DiscoverTansitionViewCellProtocol
-    func snapShotForDiscoverTransition() -> UIView! {
+    func snapShotForDiscoverTransition() -> UIImageView! {
         let snapShotView = UIImageView(image: self.cuisineImage.image)
         snapShotView.frame = self.cuisineImage.frame
         return snapShotView
@@ -198,19 +196,17 @@ class DiscoverRelatedViewCell: UICollectionViewCell, DiscoverTansitionViewCellPr
     override func prepareForReuse() {
         super.prepareForReuse()
         aspectConstraint = nil
-        
     }
     
-    func setCuisineImage(image: UIImage) {
+    func setCuisineImage(imageName: String) {
+        var image = UIImage(named: imageName)!
         let aspect = image.size.width / image.size.height
         aspectConstraint = NSLayoutConstraint(item: cuisineImage, attribute: .Width, relatedBy: .Equal, toItem: cuisineImage, attribute: .Height, multiplier: aspect, constant: 0.0)
-        dispatch_async(dispatch_get_main_queue(), {
-            self.cuisineImage.image = image
-        })
+        self.cuisineImage.image = image
     }
     
     // pragma mark - DiscoverTansitionViewCellProtocol
-    func snapShotForDiscoverTransition() -> UIView! {
+    func snapShotForDiscoverTransition() -> UIImageView! {
         let snapShotView = UIImageView(image: self.cuisineImage.image)
         snapShotView.frame = self.cuisineImage.frame
         return snapShotView

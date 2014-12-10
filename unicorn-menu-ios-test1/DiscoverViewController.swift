@@ -17,16 +17,16 @@ import CoreLocation
 
 class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallFlowLayout, UICollectionViewDataSource, DiscoverViewControllerProtocol, MKMapViewDelegate {
     
-    lazy var images: [UIImage] = {
-        var _images = [UIImage]()
+    lazy var imageNames: [String] = {
+        var _imageNames = [String]()
         
         for _ in 1 ... 10 {
             for index in 1 ... 30 {
                 let imageName = String(format: "dish%02ld.jpg", index)
-                _images.append(UIImage(named: imageName)!)
+                _imageNames.append(imageName)
             }
         }
-        return _images
+        return _imageNames
     }()
     
     let navigationDelegate = DiscoverNavigationControllerDelegate()
@@ -113,7 +113,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     // pragma mark - UICollectionViewDataSource
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        return self.imageNames.count
     }
     
     func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
@@ -122,6 +122,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverCell = self.collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverCell", forIndexPath: indexPath) as DiscoverViewCell
+        discoverCell.cuisineImage.image = nil
         if (Int(indexPath.item) % 3 == 0) {
             discoverCell.restaurantName.text = "RESTAURANTRESTAURANT"
         } else if (Int(indexPath.item) % 3  == 1) {
@@ -139,24 +140,21 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
             discoverCell.cuisineName.text = "CUISINE NAME CUISINE NAME CUISINE NAME CUISINE NAME \(indexPath.item)"
         }
         discoverCell.cuisineName.preferredMaxLayoutWidth = self.columnWidth! - 20
-
         discoverCell.logoView.image = UIImage(named: "logo.png")
-        discoverCell.setCuisineImage(self.images[indexPath.item])
         discoverCell.cuisineLikesLabel.text = String(1000 - indexPath.item)
 
-//        dispatch_async(dispatch_get_main_queue(), {
-//            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
-//                discoverCell.cuisineImage.image = self.images[indexPath.item]
-//           }
-//        })
+        dispatch_async(dispatch_get_main_queue(), {
+            if let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell {
+                discoverCell.setCuisineImage(self.imageNames[indexPath.item])
+           }
+        })
         
-        discoverCell.setNeedsLayout()
         let tapImage = UITapGestureRecognizer(target: self, action: "handleTapImage:")
         discoverCell.cuisineImage.addGestureRecognizer(tapImage)
-
+        
         let tapRestaurantLogo = UITapGestureRecognizer(target: self, action: "handleTapRestaurant:")
         discoverCell.restaurantView.addGestureRecognizer(tapRestaurantLogo)
-
+        discoverCell.setNeedsLayout()
         return discoverCell
     }
     
@@ -167,23 +165,23 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
     
     func viewWillAppearWithIndex(index : NSInteger) {
         var position : UICollectionViewScrollPosition = .CenteredHorizontally & .CenteredVertically
-        let image: UIImage! = self.images[index]
+        let image: UIImage! = UIImage(named: self.imageNames[index])
         let imageHeight = image.size.height *  self.columnWidth! / image.size.width
         if imageHeight > 400 {//whatever you like, it's the max value for height of image
             position = .Top
         }
         let currentIndexPath = NSIndexPath(forRow: index, inSection: 0)
-        collectionView.setToIndexPath(currentIndexPath)
+        self.collectionView.setToIndexPath(currentIndexPath)
         if index < 2 {
-            collectionView.setContentOffset(CGPointZero, animated: false)
+            self.collectionView.setContentOffset(CGPointZero, animated: false)
         } else {
-            collectionView.scrollToItemAtIndexPath(currentIndexPath, atScrollPosition: position, animated: false)
+            self.collectionView.scrollToItemAtIndexPath(currentIndexPath, atScrollPosition: position, animated: false)
         }
     }
     
     // pragma mark - CollectionViewDelegateWaterfallFlowLayout
     func collectionView(collectionView: UICollectionView, layout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        let image = self.images[indexPath.row]
+        let image = UIImage(named: self.imageNames[indexPath.item])!
         self.columnWidth =  CGFloat((self.collectionView.collectionViewLayout as CollectionViewWaterfallFlowLayout).columnWidth)
         let imageHeight = image.size.height * self.columnWidth! / image.size.width
         
@@ -237,7 +235,7 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         let point = tap.locationInView(self.collectionView)
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             let discoverDetailViewController = DiscoverDetailViewController(collectionViewLayout: generateDiscoverDetailViewLayout(), currentIndexPath:indexPath)
-            discoverDetailViewController.images = self.images
+            discoverDetailViewController.imageNames = self.imageNames
             self.collectionView.setToIndexPath(indexPath)
             self.navigationController!.pushViewController(discoverDetailViewController, animated: true)
         }
@@ -267,8 +265,8 @@ class DiscoverViewController: UIViewController, CollectionViewDelegateWaterfallF
         let point = longPress.locationInView(self.collectionView)
         if let indexPath = self.collectionView.indexPathForItemAtPoint(point) {
             let discoverCell = self.collectionView.cellForItemAtIndexPath(indexPath) as? DiscoverViewCell
-            self.images[indexPath.row] = self.images[0]
-            discoverCell!.cuisineImage.image = self.images[0]
+            self.imageNames[indexPath.row] = self.imageNames[0]
+            discoverCell!.setCuisineImage(self.imageNames[0])
             self.collectionView.reloadItemsAtIndexPaths([indexPath])
         }
     }

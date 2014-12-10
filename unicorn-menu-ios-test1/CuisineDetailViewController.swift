@@ -10,15 +10,15 @@ import UIKit
 
 class CuisineDetailViewController: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
     
-    lazy var images: [UIImage] = {
-        var _images = [UIImage]()
+    lazy var imageNames: [String] = {
+        var _imageNames = [String]()
         for _ in 0 ... 20 {
             for index in 0 ... 6 {
                 let imageName = String(format: "cuisine%02ld.jpg", index)
-                _images.append(UIImage(named: imageName)!)
+                _imageNames.append(imageName)
             }
         }
-        return _images
+        return _imageNames
         }()
     
     let percentDrivenInteractiveTransition = UIPercentDrivenInteractiveTransition()
@@ -69,6 +69,9 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cuisineDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("CuisineDetailViewCell", forIndexPath: indexPath) as CuisineDetailViewCell
+        cuisineDetailCell.backgroundImageView.image = nil
+        cuisineDetailCell.blurredBackgroundImageView.image = nil
+        
         var cuisineName: NSString!
         if (Int(indexPath.item) % 3 == 0) {
             cuisineName = "Cuisine Name \(indexPath.item)";
@@ -78,9 +81,12 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
             cuisineName = "Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine Name Cuisine \(indexPath.item)"
         }
         cuisineDetailCell.setCuisineName(cuisineName)
-        
-        cuisineDetailCell.backgroundImageView.image = images[indexPath.item]
-        cuisineDetailCell.blurredBackgroundImageView.image = cuisineDetailCell.backgroundImageView.image!.applyBlurWithRadius(BLUR_RADIUS, tintColor: BLUR_TINT_COLOR, saturationDeltaFactor: BLUR_DELTA_FACTOR, maskImage: nil)
+        dispatch_async(dispatch_get_main_queue(), {
+            if let cuisineDetailCell = self.collectionView!.cellForItemAtIndexPath(indexPath) as? CuisineDetailViewCell {
+                cuisineDetailCell.backgroundImageView.image = UIImage(named: self.imageNames[indexPath.item])!
+                cuisineDetailCell.blurredBackgroundImageView.image = cuisineDetailCell.backgroundImageView.image!.applyBlurWithRadius(BLUR_RADIUS, tintColor: BLUR_TINT_COLOR, saturationDeltaFactor: BLUR_DELTA_FACTOR, maskImage: nil)
+            }
+        })
         cuisineDetailCell.cuisineLikesLabel.text = String(1000 - Int(indexPath.item))
         cuisineDetailCell.cuisinePriceLabel.text = "$ 25.00"
         cuisineDetailCell.scrollVerticallyToOffset(0.0)
@@ -99,7 +105,7 @@ class CuisineDetailViewController: UICollectionViewController, UICollectionViewD
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return images.count
+        return imageNames.count
     }
     
     override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {

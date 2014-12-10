@@ -14,7 +14,7 @@ import UIKit
 
 class DiscoverDetailViewController: UICollectionViewController, UICollectionViewDataSource, DiscoverDetailViewControllerProtocol {
     
-    var images = [UIImage]()
+    var imageNames = [String]()
     var pullingOffset = CGPointZero
     
     init(collectionViewLayout layout: UICollectionViewLayout!, currentIndexPath indexPath: NSIndexPath) {
@@ -60,7 +60,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     // pragma mark - UICollectionViewDataSource
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var discoverDetailCell = collectionView.dequeueReusableCellWithReuseIdentifier("DiscoverDetailCollectionViewCell", forIndexPath: indexPath) as DiscoverDetailCollectionViewCell
-        discoverDetailCell.cuisineImage = self.images[indexPath.item]
+        discoverDetailCell.cuisineImageName = self.imageNames[indexPath.item]
         discoverDetailCell.cuisineName = "CUISINE NAME \(indexPath.item)"
         discoverDetailCell.restaurantName = "RESTAURANT NAME \(indexPath.item)"
         discoverDetailCell.cuisineLikes =  String(1000 - indexPath.item)
@@ -83,7 +83,7 @@ class DiscoverDetailViewController: UICollectionViewController, UICollectionView
     }
     
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.images.count
+        return self.imageNames.count
     }
     
     // pragma mark - DiscoverDetailViewControllerProtocol
